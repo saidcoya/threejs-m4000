@@ -9,281 +9,713 @@
 <meta name="viewport"
    content="width=device-width, initial-scale=1.0">
 
-<title>Demo Perfil 3D M4000</title>
+<title>M4000 - Demo Perfil 3D</title>
 
 <style>
 
+/* ================================= */
+/* RESET */
+/* ================================= */
+
 * {
-
     box-sizing: border-box;
-
 }
 
+
+/* ================================= */
+/* BODY */
+/* ================================= */
 
 body {
 
     margin: 0;
 
+    background:
+
+        radial-gradient(
+
+            circle at top right,
+
+            #1b2735,
+
+            #0b0f14 60%
+
+        );
+
+    color: #ffffff;
+
+    font-family:
+
+        Arial,
+
+        Helvetica,
+
+        sans-serif;
+
+    min-height: 100vh;
+
     overflow: hidden;
 
-    background: #111;
+}
 
-    color: white;
 
-    font-family: Arial, sans-serif;
+/* ================================= */
+/* HEADER */
+/* ================================= */
+
+.header {
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 25px;
+
+    background: rgba(
+
+        10,
+
+        15,
+
+        20,
+
+        0.95
+
+    );
+
+    border-bottom: 1px solid #303840;
+
+    position: relative;
+
+    z-index: 20;
 
 }
 
 
-/* ============================= */
-/* PANEL INFORMACIÓN */
-/* ============================= */
+.header-title {
 
-#info {
-
-    position: absolute;
-
-    top: 15px;
-
-    left: 15px;
-
-    z-index: 10;
-
-    background: rgba(0, 0, 0, 0.88);
-
-    padding: 18px;
-
-    border-radius: 8px;
-
-    min-width: 340px;
-
-    max-width: 380px;
-
-    line-height: 1.7;
-
-}
-
-
-#title {
-
-    font-size: 20px;
-
-    font-weight: bold;
-
-    margin-bottom: 10px;
-
-}
-
-
-#status {
-
-    color: #ff0000;
-
-    margin-bottom: 10px;
-
-}
-
-
-.value {
-
-    color: #00ffff;
+    font-size: 22px;
 
     font-weight: bold;
 
 }
 
 
-.ok {
+.header-subtitle {
 
-    color: #00ff00 !important;
+    color: #888;
 
-}
+    font-size: 12px;
 
-
-.error {
-
-    color: #ff0000 !important;
+    margin-top: 4px;
 
 }
 
 
-/* ============================= */
-/* BOTONES */
-/* ============================= */
+/* ================================= */
+/* NAVEGACIÓN */
+/* ================================= */
 
-button {
+.navigation {
 
-    margin-top: 8px;
+    display: flex;
 
-    margin-right: 5px;
+    gap: 10px;
 
-    padding: 8px 12px;
+}
 
-    border: none;
 
-    border-radius: 5px;
+.nav-button {
+
+    background: #1b232c;
+
+    color: #bbb;
+
+    border: 1px solid #3b4650;
+
+    border-radius: 6px;
+
+    padding: 10px 16px;
 
     cursor: pointer;
 
     font-weight: bold;
 
-}
-
-
-button:hover {
-
-    opacity: 0.8;
+    transition: 0.2s;
 
 }
 
 
-button:disabled {
+.nav-button:hover {
 
-    opacity: 0.4;
-
-    cursor: not-allowed;
-
-}
-
-
-#btnNueva {
-
-    background: #00aa00;
+    background: #2d3944;
 
     color: white;
 
 }
 
 
-#btnParar {
+/* ================================= */
+/* CONEXIÓN */
+/* ================================= */
 
-    background: #aa6600;
+.connection {
 
-    color: white;
+    display: flex;
 
-}
+    align-items: center;
 
+    gap: 8px;
 
-#btnReanudar {
-
-    background: #0066aa;
-
-    color: white;
-
-}
-
-
-#btnBorrar {
-
-    background: #aa0000;
-
-    color: white;
+    font-size: 13px;
 
 }
 
 
-#btnCSV,
+.connection-dot {
 
-#btnJSON,
+    width: 10px;
 
-#btnGuardar,
+    height: 10px;
 
-#btnComparar {
+    border-radius: 50%;
 
-    background: #333;
-
-    color: white;
-
-    border: 1px solid #777;
+    background: #ff3333;
 
 }
 
 
-/* ============================= */
+.connection-dot.connected {
+
+    background: #00ff66;
+
+    box-shadow:
+
+        0 0 10px #00ff66;
+
+}
+
+
+/* ================================= */
+/* CONTENEDOR PRINCIPAL */
+/* ================================= */
+
+.main {
+
+    height: calc(
+
+        100vh - 70px
+
+    );
+
+    padding: 20px;
+
+    display: grid;
+
+    grid-template-columns:
+
+        360px
+
+        1fr;
+
+    gap: 20px;
+
+}
+
+
+/* ================================= */
+/* PANEL GENERAL */
+/* ================================= */
+
+.panel {
+
+    background:
+
+        linear-gradient(
+
+            145deg,
+
+            #151b21,
+
+            #0f1318
+
+        );
+
+    border: 1px solid #303840;
+
+    border-radius: 10px;
+
+    padding: 18px;
+
+    box-shadow:
+
+        0 8px 20px
+
+        rgba(
+
+            0,
+
+            0,
+
+            0,
+
+            0.35
+
+        );
+
+}
+
+
+.panel-title {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #ddd;
+
+    border-bottom: 1px solid #303840;
+
+    padding-bottom: 10px;
+
+    margin-bottom: 15px;
+
+}
+
+
+/* ================================= */
+/* PANEL IZQUIERDO */
+/* ================================= */
+
+.sidebar {
+
+    overflow-y: auto;
+
+    padding-right: 4px;
+
+}
+
+
+/* ================================= */
+/* TÍTULO DE DEMO */
+/* ================================= */
+
+.demo-title {
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+
+}
+
+
+.demo-subtitle {
+
+    color: #888;
+
+    font-size: 13px;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* ================================= */
+/* ESTADO */
+/* ================================= */
+
+.status {
+
+    font-weight: bold;
+
+    margin-bottom: 15px;
+
+}
+
+
+.status.connected {
+
+    color: #00ff66;
+
+}
+
+
+.status.disconnected {
+
+    color: #ff4444;
+
+}
+
+
+/* ================================= */
+/* MÉTRICAS */
+/* ================================= */
+
+.metric-grid {
+
+    display: grid;
+
+    grid-template-columns:
+
+        repeat(
+
+            2,
+
+            1fr
+
+        );
+
+    gap: 10px;
+
+}
+
+
+.metric {
+
+    background: #202830;
+
+    border: 1px solid #3c4852;
+
+    border-radius: 7px;
+
+    padding: 10px;
+
+}
+
+
+.metric-label {
+
+    font-size: 11px;
+
+    color: #999;
+
+    margin-bottom: 5px;
+
+}
+
+
+.metric-value {
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+    color: #00d9ff;
+
+}
+
+
+.metric-unit {
+
+    font-size: 11px;
+
+    color: #888;
+
+}
+
+
+/* ================================= */
 /* PROGRESO */
-/* ============================= */
+/* ================================= */
 
-#progressContainer {
+.progress-container {
 
-    margin-top: 12px;
+    margin-top: 18px;
 
 }
 
 
-#progressBar {
+.progress-text {
+
+    color: #aaa;
+
+    font-size: 13px;
+
+    margin-bottom: 7px;
+
+}
+
+
+.progress-bar {
 
     width: 100%;
 
     height: 18px;
 
-    background: #333;
+    background: #111;
 
     border-radius: 10px;
 
     overflow: hidden;
 
+    border: 1px solid #303840;
+
 }
 
 
-#progressFill {
+.progress-fill {
 
     height: 100%;
 
     width: 0%;
 
-    background: #00aa00;
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            #006d77,
+
+            #00d9ff
+
+        );
 
     transition: width 0.3s;
 
 }
 
 
-#progressText {
+/* ================================= */
+/* BOTONES */
+/* ================================= */
 
-    font-size: 13px;
+.button-group {
 
-    color: #aaa;
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 15px;
 
 }
 
 
-/* ============================= */
-/* PERFIL 2D */
-/* ============================= */
+button {
 
-#profile {
+    border: 1px solid #46515b;
+
+    border-radius: 6px;
+
+    padding: 9px 12px;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+
+}
+
+
+button:hover {
+
+    filter: brightness(1.25);
+
+}
+
+
+button:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+}
+
+
+.btn-new {
+
+    background: #006d77;
+
+}
+
+
+.btn-stop {
+
+    background: #805400;
+
+}
+
+
+.btn-clear {
+
+    background: #8b2020;
+
+}
+
+
+.btn-secondary {
+
+    background: #252d35;
+
+}
+
+
+/* ================================= */
+/* ERROR */
+/* ================================= */
+
+#error {
+
+    color: #ff5555;
+
+    margin-top: 12px;
+
+    font-size: 13px;
+
+    word-wrap: break-word;
+
+}
+
+
+/* ================================= */
+/* COMPARACIÓN */
+/* ================================= */
+
+.comparison {
+
+    display: none;
+
+    margin-top: 18px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #3c4852;
+
+}
+
+
+.comparison-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 5px 0;
+
+    font-size: 13px;
+
+}
+
+
+.comparison-value {
+
+    color: #00d9ff;
+
+    font-weight: bold;
+
+}
+
+
+/* ================================= */
+/* ÁREA 3D */
+/* ================================= */
+
+.visual-area {
+
+    position: relative;
+
+    min-width: 0;
+
+    min-height: 0;
+
+}
+
+
+#threeContainer {
 
     position: absolute;
 
-    right: 20px;
+    inset: 0;
 
-    top: 20px;
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    border: 1px solid #303840;
+
+    background: #111;
+
+}
+
+
+/* ================================= */
+/* PERFIL 2D */
+/* ================================= */
+
+.profile-panel {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 15px;
 
     z-index: 10;
 
-    background: rgba(0, 0, 0, 0.88);
+    background:
 
-    padding: 15px;
+        rgba(
+
+            10,
+
+            15,
+
+            20,
+
+            0.92
+
+        );
+
+    border: 1px solid #3c4852;
 
     border-radius: 8px;
+
+    padding: 12px;
+
+}
+
+
+.profile-title {
+
+    font-size: 13px;
+
+    color: #ccc;
+
+    margin-bottom: 8px;
 
 }
 
 
 #profileCanvas {
 
-    border: 1px solid #555;
+    width: 300px;
 
-    background: #222;
+    height: 180px;
+
+    border: 1px solid #3c4852;
+
+    background: #151b21;
 
 }
 
 
-/* ============================= */
+/* ================================= */
 /* AYUDA */
-/* ============================= */
+/* ================================= */
 
-#help {
+.help {
 
     position: absolute;
 
@@ -293,64 +725,88 @@ button:disabled {
 
     z-index: 10;
 
-    background: rgba(0, 0, 0, 0.75);
+    background:
 
-    padding: 10px 15px;
+        rgba(
 
-    border-radius: 6px;
+            10,
 
-    color: #aaa;
+            15,
 
-    font-size: 13px;
+            20,
 
-}
+            0.9
 
+        );
 
-/* ============================= */
-/* ERROR */
-/* ============================= */
+    border: 1px solid #303840;
 
-#error {
+    border-radius: 7px;
 
-    color: red;
+    padding: 10px 14px;
 
-    margin-top: 10px;
+    color: #999;
 
-    max-width: 400px;
-
-    word-wrap: break-word;
+    font-size: 12px;
 
 }
 
 
-/* ============================= */
-/* COMPARACIÓN */
-/* ============================= */
+/* ================================= */
+/* RESPONSIVE */
+/* ================================= */
 
-#comparison {
+@media (
 
-    display: none;
+    max-width: 900px
 
-    margin-top: 10px;
-
-    padding-top: 10px;
-
-    border-top: 1px solid #555;
-
-}
+) {
 
 
-/* ============================= */
-/* ESTADO ADQUISICIÓN */
-/* ============================= */
+    body {
 
-#acquisitionStatus {
+        overflow: auto;
 
-    margin-top: 8px;
+    }
 
-    color: #ffaa00;
 
-    font-weight: bold;
+    .header {
+
+        height: auto;
+
+        min-height: 70px;
+
+        flex-wrap: wrap;
+
+        gap: 10px;
+
+        padding: 15px;
+
+    }
+
+
+    .main {
+
+        height: auto;
+
+        min-height: calc(
+
+            100vh - 100px
+
+        );
+
+        grid-template-columns:
+
+            1fr;
+
+    }
+
+
+    .visual-area {
+
+        min-height: 600px;
+
+    }
 
 }
 
@@ -361,197 +817,26 @@ button:disabled {
 
 <body>
 
-<!-- ================================= -->
+<!-- ================================= */
+/* HEADER */
+/* ================================= -->
 
-<!-- INFORMACIÓN -->
-
-<!-- ================================= -->
-
-<div id="info">
+<header class="header">
 
 ```
-<div id="title">
-
-    Demo Perfil 3D M4000
-
-</div>
-
-
-<div id="status">
-
-    Node-RED: DESCONECTADO
-
-</div>
-
-
-<div id="acquisitionStatus">
-
-    Adquisición parada
-
-</div>
-
-
 <div>
 
 
-    Ángulo:
+    <div class="header-title">
 
-    <span id="angle"
-
-          class="value">
-
-        ---
-
-    </span>
-
-    °
-
-
-</div>
-
-
-<div>
-
-
-    Perfiles:
-
-    <span id="profileCount"
-
-          class="value">
-
-        0
-
-    </span>
-
-    /
-
-    <span id="maxProfiles"
-
-          class="value">
-
-        72
-
-    </span>
-
-
-</div>
-
-
-<div>
-
-
-    Sensores por perfil:
-
-    <span id="sensorCount"
-
-          class="value">
-
-        ---
-
-    </span>
-
-
-</div>
-
-
-<div>
-
-
-    Distancia mínima:
-
-    <span id="sensorMin"
-
-          class="value">
-
-        ---
-
-    </span>
-
-    mm
-
-
-</div>
-
-
-<div>
-
-
-    Distancia máxima:
-
-    <span id="sensorMax"
-
-          class="value">
-
-        ---
-
-    </span>
-
-    mm
-
-
-</div>
-
-
-<div>
-
-
-    Diámetro mínimo:
-
-    <span id="diameterMin"
-
-          class="value">
-
-        ---
-
-    </span>
-
-    mm
-
-
-</div>
-
-
-<div>
-
-
-    Diámetro máximo:
-
-    <span id="diameterMax"
-
-          class="value">
-
-        ---
-
-    </span>
-
-    mm
-
-
-</div>
-
-
-<!-- ============================= -->
-
-<!-- PROGRESO -->
-
-<!-- ============================= -->
-
-
-<div id="progressContainer">
-
-
-    <div id="progressText">
-
-        Progreso: 0 / 72 perfiles
+        M4000 INDUSTRIAL DASHBOARD
 
     </div>
 
 
-    <div id="progressBar">
+    <div class="header-subtitle">
 
-
-        <div id="progressFill"></div>
-
+        Demo de perfil 3D de troncos
 
     </div>
 
@@ -559,226 +844,801 @@ button:disabled {
 </div>
 
 
-<!-- ============================= -->
-
-<!-- BOTONES CONTROL -->
-
-<!-- ============================= -->
+<nav class="navigation">
 
 
-<div>
+    <button
+
+        class="nav-button"
+
+        onclick="window.location.href='/'">
 
 
-    <button id="btnNueva">
+        ← Dashboard
 
-        Nueva medición
 
     </button>
 
 
-    <button id="btnParar">
-
-        Parar adquisición
-
-    </button>
+</nav>
 
 
-    <button id="btnReanudar">
-
-        Reanudar adquisición
-
-    </button>
+<div class="connection">
 
 
-    <button id="btnBorrar">
+    <span
 
-        Borrar perfiles
+        class="connection-dot"
 
-    </button>
+        id="connectionDot">
+
+
+    </span>
+
+
+    <span id="connectionText">
+
+
+        DESCONECTADO
+
+
+    </span>
 
 
 </div>
+```
 
+</header>
 
+<!-- ================================= */
+/* CONTENIDO */
+/* ================================= -->
+
+<main class="main">
+
+```
 <!-- ============================= -->
-
-<!-- BOTONES EXPORTACIÓN -->
-
-<!-- ============================= -->
-
-
-<div>
-
-
-    <button id="btnCSV">
-
-        Exportar CSV
-
-    </button>
-
-
-    <button id="btnJSON">
-
-        Exportar JSON
-
-    </button>
-
-
-</div>
-
-
-<!-- ============================= -->
-
-<!-- BOTONES MEDICIÓN -->
-
+<!-- PANEL IZQUIERDO -->
 <!-- ============================= -->
 
 
-<div>
+<aside class="sidebar">
 
 
-    <button id="btnGuardar">
-
-        Guardar medición
-
-    </button>
+    <section class="panel">
 
 
-    <button id="btnComparar">
+        <div class="demo-title">
 
-        Comparar mediciones
+            Perfil 3D M4000
 
-    </button>
+        </div>
 
 
-</div>
+        <div class="demo-subtitle">
+
+            Adquisición y visualización de perfiles
+
+        </div>
+
+
+        <div
+
+            id="status"
+
+            class="status disconnected">
+
+
+            Node-RED: DESCONECTADO
+
+
+        </div>
+
+
+        <!-- ===================== -->
+
+
+        <!-- MÉTRICAS -->
+
+
+        <!-- ===================== -->
+
+
+        <div class="panel-title">
+
+            Estado de adquisición
+
+        </div>
+
+
+        <div class="metric-grid">
+
+
+            <div class="metric">
+
+
+                <div class="metric-label">
+
+                    ÁNGULO
+
+                </div>
+
+
+                <div
+
+                    id="angle"
+
+                    class="metric-value">
+
+
+                    ---
+
+
+                </div>
+
+
+                <div class="metric-unit">
+
+                    grados
+
+                </div>
+
+
+            </div>
+
+
+            <div class="metric">
+
+
+                <div class="metric-label">
+
+                    PERFILES
+
+                </div>
+
+
+                <div
+
+                    class="metric-value">
+
+
+                    <span id="profileCount">
+
+                        0
+
+                    </span>
+
+
+                    /
+
+                    <span id="maxProfiles">
+
+                        72
+
+                    </span>
+
+
+                </div>
+
+
+                <div class="metric-unit">
+
+                    perfiles
+
+                </div>
+
+
+            </div>
+
+
+            <div class="metric">
+
+
+                <div class="metric-label">
+
+                    SENSORES
+
+                </div>
+
+
+                <div
+
+                    id="sensorCount"
+
+                    class="metric-value">
+
+
+                    ---
+
+
+                </div>
+
+
+                <div class="metric-unit">
+
+                    por perfil
+
+                </div>
+
+
+            </div>
+
+
+            <div class="metric">
+
+
+                <div class="metric-label">
+
+                    ESTADO
+
+                </div>
+
+
+                <div
+
+                    id="acquisitionState"
+
+                    class="metric-value">
+
+
+                    ---
+
+
+                </div>
+
+
+                <div class="metric-unit">
+
+                    adquisición
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ===================== -->
+
+
+        <!-- DISTANCIAS -->
+
+
+        <!-- ===================== -->
+
+
+        <div
+
+            class="panel-title"
+
+            style="margin-top:20px;">
+
+
+            Medición
+
+
+        </div>
+
+
+        <div class="metric-grid">
+
+
+            <div class="metric">
+
+
+                <div class="metric-label">
+
+                    DISTANCIA MÍNIMA
+
+                </div>
+
+
+                <div
+
+                    id="sensorMin"
+
+                    class="metric-value">
+
+
+                    ---
+
+
+                </div>
+
+
+                <div class="metric-unit">
+
+                    mm
+
+                </div>
+
+
+            </div>
+
+
+            <div class="metric">
+
+
+                <div class="metric-label">
+
+                    DISTANCIA MÁXIMA
+
+                </div>
+
+
+                <div
+
+                    id="sensorMax"
+
+                    class="metric-value">
+
+
+                    ---
+
+
+                </div>
+
+
+                <div class="metric-unit">
+
+                    mm
+
+                </div>
+
+
+            </div>
+
+
+            <div class="metric">
+
+
+                <div class="metric-label">
+
+                    DIÁMETRO MÍNIMO
+
+                </div>
+
+
+                <div
+
+                    id="diameterMin"
+
+                    class="metric-value">
+
+
+                    ---
+
+
+                </div>
+
+
+                <div class="metric-unit">
+
+                    mm
+
+                </div>
+
+
+            </div>
+
+
+            <div class="metric">
+
+
+                <div class="metric-label">
+
+                    DIÁMETRO MÁXIMO
+
+                </div>
+
+
+                <div
+
+                    id="diameterMax"
+
+                    class="metric-value">
+
+
+                    ---
+
+
+                </div>
+
+
+                <div class="metric-unit">
+
+                    mm
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ===================== -->
+
+
+        <!-- PROGRESO -->
+
+
+        <!-- ===================== -->
+
+
+        <div class="progress-container">
+
+
+            <div
+
+                id="progressText"
+
+                class="progress-text">
+
+
+                Progreso: 0 / 72 perfiles
+
+
+            </div>
+
+
+            <div class="progress-bar">
+
+
+                <div
+
+                    id="progressFill"
+
+                    class="progress-fill">
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ===================== -->
+
+
+        <!-- CONTROLES -->
+
+
+        <!-- ===================== -->
+
+
+        <div class="panel-title"
+
+             style="margin-top:20px;">
+
+
+            Control de adquisición
+
+
+        </div>
+
+
+        <div class="button-group">
+
+
+            <button
+
+                id="btnNueva"
+
+                class="btn-new">
+
+
+                Nueva medición
+
+
+            </button>
+
+
+            <button
+
+                id="btnParar"
+
+                class="btn-stop">
+
+
+                Parar adquisición
+
+
+            </button>
+
+
+            <button
+
+                id="btnReanudar"
+
+                class="btn-new">
+
+
+                Reanudar adquisición
+
+
+            </button>
+
+
+            <button
+
+                id="btnBorrar"
+
+                class="btn-clear">
+
+
+                Borrar perfiles
+
+
+            </button>
+
+
+        </div>
+
+
+        <!-- ===================== -->
+
+
+        <!-- EXPORTACIÓN -->
+
+
+        <!-- ===================== -->
+
+
+        <div class="panel-title"
+
+             style="margin-top:20px;">
+
+
+            Medición
+
+
+        </div>
+
+
+        <div class="button-group">
+
+
+            <button
+
+                id="btnCSV"
+
+                class="btn-secondary">
+
+
+                Exportar CSV
+
+
+            </button>
+
+
+            <button
+
+                id="btnJSON"
+
+                class="btn-secondary">
+
+
+                Exportar JSON
+
+
+            </button>
+
+
+            <button
+
+                id="btnGuardar"
+
+                class="btn-secondary">
+
+
+                Guardar medición
+
+
+            </button>
+
+
+            <button
+
+                id="btnComparar"
+
+                class="btn-secondary">
+
+
+                Comparar mediciones
+
+
+            </button>
+
+
+        </div>
+
+
+        <!-- ===================== -->
+
+
+        <!-- COMPARACIÓN -->
+
+
+        <!-- ===================== -->
+
+
+        <div
+
+            id="comparison"
+
+            class="comparison">
+
+
+            <div class="panel-title">
+
+                Comparación
+
+            </div>
+
+
+            <div class="comparison-row">
+
+
+                <span>
+
+                    Medición actual
+
+                </span>
+
+
+                <span
+
+                    id="actualDiameter"
+
+                    class="comparison-value">
+
+
+                    ---
+
+
+                </span>
+
+
+            </div>
+
+
+            <div class="comparison-row">
+
+
+                <span>
+
+                    Medición guardada
+
+                </span>
+
+
+                <span
+
+                    id="savedDiameter"
+
+                    class="comparison-value">
+
+
+                    ---
+
+
+                </span>
+
+
+            </div>
+
+
+            <div class="comparison-row">
+
+
+                <span>
+
+                    Diferencia
+
+                </span>
+
+
+                <span
+
+                    id="differenceDiameter"
+
+                    class="comparison-value">
+
+
+                    ---
+
+
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div id="error"></div>
+
+
+    </section>
+
+
+</aside>
 
 
 <!-- ============================= -->
-
-<!-- COMPARACIÓN -->
-
+<!-- ÁREA 3D -->
 <!-- ============================= -->
 
 
-<div id="comparison">
+<section class="visual-area">
 
 
-    <b>Comparación</b>
+    <div id="threeContainer"></div>
 
 
-    <div>
+    <div class="profile-panel">
 
 
-        Medición actual:
+        <div class="profile-title">
 
-        <span id="actualDiameter">
 
-            ---
+            Último perfil de sensores
 
-        </span>
+
+        </div>
+
+
+        <canvas
+
+            id="profileCanvas"
+
+            width="400"
+
+            height="250">
+
+
+        </canvas>
 
 
     </div>
 
 
-    <div>
+    <div class="help">
 
 
-        Medición guardada:
+        Ratón izquierdo: Rotar<br>
 
-        <span id="savedDiameter">
+        Rueda: Zoom<br>
 
-            ---
-
-        </span>
-
-
-    </div>
-
-
-    <div>
-
-
-        Diferencia:
-
-        <span id="differenceDiameter">
-
-            ---
-
-        </span>
+        Ratón derecho: Desplazar
 
 
     </div>
 
 
-</div>
-
-
-<div id="error"></div>
+</section>
 ```
 
-</div>
+</main>
 
-<!-- ================================= -->
-
-<!-- PERFIL 2D -->
-
-<!-- ================================= -->
-
-<div id="profile">
-
-```
-<div>
-
-    Último perfil de sensores
-
-</div>
-
-
-<canvas
-
-    id="profileCanvas"
-
-    width="400"
-
-    height="250">
-
-</canvas>
-```
-
-</div>
-
-<!-- ================================= -->
-
-<!-- AYUDA -->
-
-<!-- ================================= -->
-
-<div id="help">
-
-```
-Ratón izquierdo: Rotar<br>
-
-Rueda: Zoom<br>
-
-Ratón derecho: Desplazar
-```
-
-</div>
-
-<!-- ================================= -->
-
-<!-- THREE.JS -->
-
-<!-- ================================= -->
+<!-- ================================= */
+/* THREE.JS */
+/* ================================= -->
 
 <script type="module">
 
 
 import * as THREE from
 
-    'https://esm.sh/three@0.178.0';
+'https://esm.sh/three@0.178.0';
 
 
 import {
@@ -789,7 +1649,7 @@ import {
 
 from
 
-    'https://esm.sh/three@0.178.0/examples/jsm/controls/OrbitControls.js';
+'https://esm.sh/three@0.178.0/examples/jsm/controls/OrbitControls.js';
 
 
 // =================================
@@ -799,17 +1659,17 @@ from
 
 const PROFILE_URL =
 
-    '/api/m4000/demo/profile';
+'/api/m4000/demo/profile';
 
 
 const NUM_SENSORES =
 
-    32;
+32;
 
 
 const MAX_PERFILES =
 
-    72;
+72;
 
 
 // =================================
@@ -823,7 +1683,7 @@ let currentData = null;
 let troncoMesh = null;
 
 
-let adquisicionActiva = false;
+let adquisicionActiva = true;
 
 
 let ultimaCantidadPerfiles = 0;
@@ -839,16 +1699,16 @@ let savedMeasurement = null;
 
 const scene =
 
-    new THREE.Scene();
+new THREE.Scene();
 
 
 scene.background =
 
-    new THREE.Color(
+new THREE.Color(
 
-        0x111111
+0x111111
 
-    );
+);
 
 
 // =================================
@@ -858,28 +1718,28 @@ scene.background =
 
 const camera =
 
-    new THREE.PerspectiveCamera(
+new THREE.PerspectiveCamera(
 
-        60,
+60,
 
-        window.innerWidth /
+window.innerWidth /
 
-        window.innerHeight,
+window.innerHeight,
 
-        0.1,
+0.1,
 
-        10000
+10000
 
-    );
+);
 
 
 camera.position.set(
 
-    3000,
+3000,
 
-    2000,
+2000,
 
-    3000
+3000
 
 );
 
@@ -891,34 +1751,42 @@ camera.position.set(
 
 const renderer =
 
-    new THREE.WebGLRenderer({
+new THREE.WebGLRenderer({
 
-        antialias: true
+    antialias: true
 
-    });
+});
 
 
 renderer.setSize(
 
-    window.innerWidth,
+window.innerWidth,
 
-    window.innerHeight
+window.innerHeight
 
 );
 
 
 renderer.setPixelRatio(
 
-    window.devicePixelRatio
+window.devicePixelRatio
 
 );
 
 
-document.body.appendChild(
+document
 
-    renderer.domElement
+    .getElementById(
 
-);
+        'threeContainer'
+
+    )
+
+    .appendChild(
+
+        renderer.domElement
+
+    );
 
 
 // =================================
@@ -928,32 +1796,28 @@ document.body.appendChild(
 
 const controls =
 
-    new OrbitControls(
+new OrbitControls(
 
-        camera,
+camera,
 
-        renderer.domElement
+renderer.domElement
 
-    );
-
-
-controls.enableDamping =
-
-    true;
+);
 
 
-controls.dampingFactor =
+controls.enableDamping = true;
 
-    0.08;
+
+controls.dampingFactor = 0.08;
 
 
 controls.target.set(
 
-    0,
+0,
 
-    0,
+0,
 
-    0
+0
 
 );
 
@@ -965,47 +1829,47 @@ controls.target.set(
 
 const ambientLight =
 
-    new THREE.AmbientLight(
+new THREE.AmbientLight(
 
-        0xffffff,
+0xffffff,
 
-        1.5
+1.5
 
-    );
+);
 
 
 scene.add(
 
-    ambientLight
+ambientLight
 
 );
 
 
 const directionalLight =
 
-    new THREE.DirectionalLight(
+new THREE.DirectionalLight(
 
-        0xffffff,
+0xffffff,
 
-        2
+2
 
-    );
+);
 
 
 directionalLight.position.set(
 
-    1000,
+1000,
 
-    1000,
+1000,
 
-    1000
+1000
 
 );
 
 
 scene.add(
 
-    directionalLight
+directionalLight
 
 );
 
@@ -1017,16 +1881,16 @@ scene.add(
 
 const axesHelper =
 
-    new THREE.AxesHelper(
+new THREE.AxesHelper(
 
-        1500
+1500
 
-    );
+);
 
 
 scene.add(
 
-    axesHelper
+axesHelper
 
 );
 
@@ -1038,120 +1902,104 @@ scene.add(
 
 function calcularEstadisticas(
 
-    sensores
+sensores
 
 ) {
 
 
-    const min =
+const min =
 
-        Math.min(
+Math.min(
 
-            ...sensores
+...sensores
 
-        );
-
-
-    const max =
-
-        Math.max(
-
-            ...sensores
-
-        );
+);
 
 
-    return {
+const max =
+
+Math.max(
+
+...sensores
+
+);
 
 
-        min,
+return {
 
-        max,
+    min,
 
+    max,
 
-        diametroMin:
+    diametroMin:
 
-            min * 2,
+        min * 2,
 
+    diametroMax:
 
-        diametroMax:
+        max * 2
 
-            max * 2
-
-
-    };
-
+};
 
 }
 
 
 // =================================
-// COLOR SEGÚN DISTANCIA
+// COLOR
 // =================================
 
 
 function obtenerColor(
 
-    valor,
+valor,
 
-    min,
+min,
 
-    max
+max
 
 ) {
 
 
-    const normalizado =
+const normalizado =
 
-        (
+(
 
-            valor -
+valor - min
 
-            min
+)
 
-        )
+/
 
-        /
+(
 
-        (
+max - min || 1
 
-            max -
-
-            min ||
-
-            1
-
-        );
+);
 
 
-    const color =
+const color =
 
-        new THREE.Color();
-
-
-    color.setHSL(
-
-        (
-
-            1 -
-
-            normalizado
-
-        )
-
-        *
-
-        0.65,
-
-        1,
-
-        0.5
-
-    );
+new THREE.Color();
 
 
-    return color;
+color.setHSL(
 
+(
+
+1 - normalizado
+
+)
+
+* 0.65,
+
+1,
+
+0.5
+
+);
+
+
+return color;
 
 }
 
@@ -1163,522 +2011,469 @@ function obtenerColor(
 
 function crearTronco3D(
 
-    perfiles
+perfiles
 
 ) {
 
 
-    if (
+if (
 
-        !Array.isArray(
+!Array.isArray(
 
-            perfiles
+perfiles
 
-        )
+)
 
-        ||
+||
 
-        perfiles.length < 2
+perfiles.length < 2
 
-    ) {
+) {
 
 
-        return;
+return;
 
+}
 
-    }
 
+const vertices = [];
 
-    const vertices = [];
 
+const colores = [];
 
-    const colores = [];
 
+const indices = [];
 
-    const indices = [];
 
+const numPerfiles =
 
-    const numPerfiles =
+perfiles.length;
 
-        perfiles.length;
 
+const numSensores =
 
-    const numSensores =
+NUM_SENSORES;
 
-        NUM_SENSORES;
 
+let valorMin = Infinity;
 
-    let valorMin =
 
-        Infinity;
+let valorMax = -Infinity;
 
 
-    let valorMax =
+for (
 
-        -Infinity;
+const perfil of perfiles
 
+) {
 
-    // Buscar mínimo y máximo global
 
-    for (
+if (
 
-        const perfil of perfiles
+!Array.isArray(
 
-    ) {
+perfil.sensors
 
+)
 
-        if (
+) {
 
-            !Array.isArray(
 
-                perfil.sensors
+continue;
 
-            )
+}
 
-        ) {
 
+for (
 
-            continue;
+const valor of
 
+perfil.sensors
 
-        }
+) {
 
 
-        for (
+valorMin =
 
-            const valor of
+Math.min(
 
-            perfil.sensors
+valorMin,
 
-        ) {
+valor
 
+);
 
-            valorMin =
 
-                Math.min(
+valorMax =
 
-                    valorMin,
+Math.max(
 
-                    valor
+valorMax,
 
-                );
+valor
 
+);
 
-            valorMax =
+}
 
-                Math.max(
+}
 
-                    valorMax,
 
-                    valor
+for (
 
-                );
+let p = 0;
 
+p < numPerfiles;
 
-        }
+p++
 
+) {
 
-    }
 
+const perfil =
 
-    // Crear vértices
+perfiles[p];
 
-    for (
 
-        let p = 0;
+const sensores =
 
-        p < numPerfiles;
+perfil.sensors;
 
-        p++
 
-    ) {
+if (
 
+!Array.isArray(
 
-        const perfil =
+sensores
 
-            perfiles[p];
+)
 
+) {
 
-        const sensores =
 
-            perfil.sensors;
+continue;
 
+}
 
-        if (
 
-            !Array.isArray(
+for (
 
-                sensores
+let s = 0;
 
-            )
+s < numSensores;
 
-        ) {
+s++
 
+) {
 
-            continue;
 
+const valor =
 
-        }
+sensores[s];
 
 
-        for (
+const anguloSensor =
 
-            let s = 0;
+(
 
-            s < numSensores;
+s /
 
-            s++
+numSensores
 
-        ) {
+)
 
+* Math.PI * 2;
 
-            const valor =
 
-                sensores[s];
+const radio =
 
+valor;
 
-            const anguloSensor =
 
-                (
+const x =
 
-                    s /
+radio *
 
-                    numSensores
+Math.cos(
 
-                )
+anguloSensor
 
-                *
+);
 
-                Math.PI *
 
-                2;
+const y =
 
+radio *
 
-            const radio =
+Math.sin(
 
-                valor;
+anguloSensor
 
+);
 
-            const x =
 
-                radio *
+const z =
 
-                Math.cos(
+(
 
-                    anguloSensor
+p -
 
-                );
+(
 
+numPerfiles - 1
 
-            const y =
+) / 2
 
-                radio *
+)
 
-                Math.sin(
+* 20;
 
-                    anguloSensor
 
-                );
+vertices.push(
 
+x,
 
-            const z =
+y,
 
-                (
+z
 
-                    p -
+);
 
-                    (
 
-                        numPerfiles -
+const color =
 
-                        1
+obtenerColor(
 
-                    )
+valor,
 
-                    /
+valorMin,
 
-                    2
+valorMax
 
-                )
+);
 
-                *
 
-                20;
+colores.push(
 
+color.r,
 
-            vertices.push(
+color.g,
 
-                x,
+color.b
 
-                y,
+);
 
-                z
+}
 
-            );
+}
 
 
-            const color =
+for (
 
-                obtenerColor(
+let p = 0;
 
-                    valor,
+p < numPerfiles - 1;
 
-                    valorMin,
+p++
 
-                    valorMax
+) {
 
-                );
 
+for (
 
-            colores.push(
+let s = 0;
 
-                color.r,
+s < numSensores;
 
-                color.g,
+s++
 
-                color.b
+) {
 
-            );
 
+const siguiente =
 
-        }
+(
 
+s + 1
 
-    }
+)
 
+% numSensores;
 
-    // Crear caras
 
-    for (
+const a =
 
-        let p = 0;
+p *
 
-        p < numPerfiles - 1;
+numSensores +
 
-        p++
+s;
 
-    ) {
 
+const b =
 
-        for (
+p *
 
-            let s = 0;
+numSensores +
 
-            s < numSensores;
+siguiente;
 
-            s++
 
-        ) {
+const c =
 
+(
 
-            const siguiente =
+p + 1
 
-                (
+)
 
-                    s +
+* numSensores +
 
-                    1
+siguiente;
 
-                )
 
-                %
+const d =
 
-                numSensores;
+(
 
+p + 1
 
-            const a =
+)
 
-                p *
+* numSensores +
 
-                numSensores +
+s;
 
-                s;
 
+indices.push(
 
-            const b =
+a,
 
-                p *
+b,
 
-                numSensores +
+d
 
-                siguiente;
+);
 
 
-            const c =
+indices.push(
 
-                (
+b,
 
-                    p +
+c,
 
-                    1
+d
 
-                )
+);
 
-                *
+}
 
-                numSensores +
+}
 
-                siguiente;
 
+const geometry =
 
-            const d =
+new THREE.BufferGeometry();
 
-                (
 
-                    p +
+geometry.setAttribute(
 
-                    1
+'position',
 
-                )
+new THREE.Float32BufferAttribute(
 
-                *
+vertices,
 
-                numSensores +
+3
 
-                s;
+)
 
+);
 
-            indices.push(
 
-                a,
+geometry.setAttribute(
 
-                b,
+'color',
 
-                d
+new THREE.Float32BufferAttribute(
 
-            );
+colores,
 
+3
 
-            indices.push(
+)
 
-                b,
+);
 
-                c,
 
-                d
+geometry.setIndex(
 
-            );
+indices
 
+);
 
-        }
 
+geometry.computeVertexNormals();
 
-    }
 
+const material =
 
-    // Geometría
+new THREE.MeshStandardMaterial({
 
-    const geometry =
+    vertexColors: true,
 
-        new THREE.BufferGeometry();
+    roughness: 0.8,
 
+    metalness: 0.0,
 
-    geometry.setAttribute(
+    side: THREE.DoubleSide
 
-        'position',
+});
 
-        new THREE.Float32BufferAttribute(
 
-            vertices,
+const nuevoMesh =
 
-            3
+new THREE.Mesh(
 
-        )
+geometry,
 
-    );
+material
 
+);
 
-    geometry.setAttribute(
 
-        'color',
+scene.add(
 
-        new THREE.Float32BufferAttribute(
+nuevoMesh
 
-            colores,
+);
 
-            3
 
-        )
+if (
 
-    );
+troncoMesh
 
+) {
 
-    geometry.setIndex(
 
-        indices
+scene.remove(
 
-    );
+troncoMesh
 
+);
 
-    geometry.computeVertexNormals();
 
+troncoMesh.geometry.dispose();
 
-    // Material
 
-    const material =
+troncoMesh.material.dispose();
 
-        new THREE.MeshStandardMaterial({
+}
 
-            vertexColors: true,
 
-            roughness: 0.8,
+troncoMesh =
 
-            metalness: 0.0,
-
-            side: THREE.DoubleSide
-
-        });
-
-
-    const nuevoMesh =
-
-        new THREE.Mesh(
-
-            geometry,
-
-            material
-
-        );
-
-
-    scene.add(
-
-        nuevoMesh
-
-    );
-
-
-    // Eliminar modelo anterior
-
-    if (
-
-        troncoMesh
-
-    ) {
-
-
-        scene.remove(
-
-            troncoMesh
-
-        );
-
-
-        troncoMesh.geometry.dispose();
-
-
-        troncoMesh.material.dispose();
-
-
-    }
-
-
-    troncoMesh =
-
-        nuevoMesh;
-
-
-    // No se toca la cámara
+nuevoMesh;
 
 }
 
@@ -1690,286 +2485,258 @@ function crearTronco3D(
 
 function dibujarPerfil(
 
-    sensores
+sensores
 
 ) {
 
 
-    const canvas =
+const canvas =
 
-        document.getElementById(
+document.getElementById(
 
-            'profileCanvas'
+'profileCanvas'
 
-        );
+);
 
 
-    const ctx =
+const ctx =
 
-        canvas.getContext(
+canvas.getContext(
 
-            '2d'
+'2d'
 
-        );
+);
 
 
-    ctx.clearRect(
+ctx.clearRect(
 
-        0,
+0,
 
-        0,
+0,
 
-        canvas.width,
+canvas.width,
 
-        canvas.height
+canvas.height
 
-    );
+);
 
 
-    if (
+if (
 
-        !Array.isArray(
+!Array.isArray(
 
-            sensores
+sensores
 
-        )
+)
 
-        ||
+||
 
-        sensores.length === 0
+sensores.length === 0
 
-    ) {
+) {
 
 
-        return;
+return;
 
+}
 
-    }
 
+const min =
 
-    const min =
+Math.min(
 
-        Math.min(
+...sensores
 
-            ...sensores
+);
 
-        );
 
+const max =
 
-    const max =
+Math.max(
 
-        Math.max(
+...sensores
 
-            ...sensores
+);
 
-        );
 
+const rango =
 
-    const rango =
+max - min || 1;
 
-        max -
 
-        min ||
+ctx.beginPath();
 
-        1;
 
+sensores.forEach(
 
-    ctx.beginPath();
+(
 
+valor,
 
-    sensores.forEach(
+index
 
-        (
+) => {
 
-            valor,
 
-            index
+const x =
 
-        ) => {
+index *
 
+(
 
-            const x =
+canvas.width /
 
-                index *
+(
 
-                (
+sensores.length - 1
 
-                    canvas.width /
+)
 
-                    (
+);
 
-                        sensores.length -
 
-                        1
+const y =
 
-                    )
+canvas.height -
 
-                );
+(
 
+(
 
-            const y =
+valor - min
 
-                canvas.height -
+)
 
-                (
+/
 
-                    (
+rango
 
-                        valor -
+)
 
-                        min
+* canvas.height;
 
-                    )
 
-                    /
+if (
 
-                    rango
+index === 0
 
-                )
+) {
 
-                *
 
-                canvas.height;
+ctx.moveTo(
 
+x,
 
-            if (
+y
 
-                index === 0
+);
 
-            ) {
+}
 
+else {
 
-                ctx.moveTo(
 
-                    x,
+ctx.lineTo(
 
-                    y
+x,
 
-                );
+y
 
+);
 
-            }
+}
 
-            else {
+});
 
 
-                ctx.lineTo(
+ctx.strokeStyle =
 
-                    x,
+'#00d9ff';
 
-                    y
 
-                );
+ctx.lineWidth =
 
+2;
 
-            }
 
+ctx.stroke();
 
-        }
 
+sensores.forEach(
 
-    );
+(
 
+valor,
 
-    ctx.strokeStyle =
+index
 
-        '#00ffff';
+) => {
 
 
-    ctx.lineWidth =
+const x =
 
-        2;
+index *
 
+(
 
-    ctx.stroke();
+canvas.width /
 
+(
 
-    sensores.forEach(
+sensores.length - 1
 
-        (
+)
 
-            valor,
+);
 
-            index
 
-        ) => {
+const y =
 
+canvas.height -
 
-            const x =
+(
 
-                index *
+(
 
-                (
+valor - min
 
-                    canvas.width /
+)
 
-                    (
+/
 
-                        sensores.length -
+rango
 
-                        1
+)
 
-                    )
+* canvas.height;
 
-                );
 
+ctx.beginPath();
 
-            const y =
 
-                canvas.height -
+ctx.arc(
 
-                (
+x,
 
-                    (
+y,
 
-                        valor -
+3,
 
-                        min
+0,
 
-                    )
+Math.PI * 2
 
-                    /
+);
 
-                    rango
 
-                )
+ctx.fillStyle =
 
-                *
+'#ffffff';
 
-                canvas.height;
 
+ctx.fill();
 
-            ctx.beginPath();
-
-
-            ctx.arc(
-
-                x,
-
-                y,
-
-                3,
-
-                0,
-
-                Math.PI * 2
-
-            );
-
-
-            ctx.fillStyle =
-
-                '#ffffff';
-
-
-            ctx.fill();
-
-
-        }
-
-
-    );
-
+});
 
 }
 
@@ -1982,599 +2749,474 @@ function dibujarPerfil(
 async function actualizarDatos() {
 
 
-    try {
+if (
 
+!adquisicionActiva
 
-        const response =
+) {
 
-            await fetch(
 
-                PROFILE_URL +
-
-                '?t=' +
-
-                Date.now()
-
-            );
-
-
-        if (
-
-            !response.ok
-
-        ) {
-
-
-            if (
-
-                response.status ===
-
-                404
-
-            ) {
-
-
-                actualizarInterfazVacia();
-
-
-                return;
-
-
-            }
-
-
-            throw new Error(
-
-                'HTTP ' +
-
-                response.status
-
-            );
-
-
-        }
-
-
-        const data =
-
-            await response.json();
-
-
-        if (
-
-            !data
-
-            ||
-
-            !Array.isArray(
-
-                data.profiles
-
-            )
-
-        ) {
-
-
-            throw new Error(
-
-                'La respuesta no contiene profiles[]'
-
-            );
-
-
-        }
-
-
-        const perfiles =
-
-            data.profiles;
-
-
-        if (
-
-            perfiles.length ===
-
-            0
-
-        ) {
-
-
-            actualizarInterfazVacia();
-
-
-            return;
-
-
-        }
-
-
-        const ultimoPerfil =
-
-            perfiles[
-
-                perfiles.length -
-
-                1
-
-            ];
-
-
-        if (
-
-            !Array.isArray(
-
-                ultimoPerfil.sensors
-
-            )
-
-        ) {
-
-
-            throw new Error(
-
-                'El último perfil no contiene sensors[]'
-
-            );
-
-
-        }
-
-
-        currentData =
-
-            data;
-
-
-        // Estado conexión
-
-        const status =
-
-            document.getElementById(
-
-                'status'
-
-            );
-
-
-        status.textContent =
-
-            'Node-RED: CONECTADO';
-
-
-        status.className =
-
-            'ok';
-
-
-        // Datos
-
-        document.getElementById(
-
-            'angle'
-
-        ).textContent =
-
-            ultimoPerfil.angle;
-
-
-        document.getElementById(
-
-            'profileCount'
-
-        ).textContent =
-
-            perfiles.length;
-
-
-        document.getElementById(
-
-            'sensorCount'
-
-        ).textContent =
-
-            ultimoPerfil.sensors.length;
-
-
-        // Estadísticas
-
-        const stats =
-
-            calcularEstadisticas(
-
-                ultimoPerfil.sensors
-
-            );
-
-
-        document.getElementById(
-
-            'sensorMin'
-
-        ).textContent =
-
-            stats.min;
-
-
-        document.getElementById(
-
-            'sensorMax'
-
-        ).textContent =
-
-            stats.max;
-
-
-        document.getElementById(
-
-            'diameterMin'
-
-        ).textContent =
-
-            stats.diametroMin;
-
-
-        document.getElementById(
-
-            'diameterMax'
-
-        ).textContent =
-
-            stats.diametroMax;
-
-
-        // Progreso
-
-        const porcentaje =
-
-            Math.min(
-
-                (
-
-                    perfiles.length /
-
-                    MAX_PERFILES
-
-                )
-
-                *
-
-                100,
-
-                100
-
-            );
-
-
-        document.getElementById(
-
-            'progressFill'
-
-        ).style.width =
-
-            porcentaje +
-
-            '%';
-
-
-        document.getElementById(
-
-            'progressText'
-
-        ).textContent =
-
-            'Progreso: ' +
-
-            perfiles.length +
-
-            ' / ' +
-
-            MAX_PERFILES +
-
-            ' perfiles';
-
-
-        // Perfil 2D
-
-        dibujarPerfil(
-
-            ultimoPerfil.sensors
-
-        );
-
-
-        // Solo reconstruir si cambia número de perfiles
-
-        if (
-
-            perfiles.length !==
-
-            ultimaCantidadPerfiles
-
-        ) {
-
-
-            crearTronco3D(
-
-                perfiles
-
-            );
-
-
-            ultimaCantidadPerfiles =
-
-                perfiles.length;
-
-
-        }
-
-
-        // Si se completan los 72 perfiles
-
-        if (
-
-            perfiles.length >=
-
-            MAX_PERFILES
-
-        ) {
-
-
-            adquisicionActiva =
-
-                false;
-
-
-            actualizarEstadoAdquisicion();
-
-        }
-
-
-        document.getElementById(
-
-            'error'
-
-        ).textContent =
-
-            '';
-
-
-    }
-
-
-    catch (
-
-        error
-
-    ) {
-
-
-        console.error(
-
-            'Error leyendo Node-RED:',
-
-            error
-
-        );
-
-
-        const status =
-
-            document.getElementById(
-
-                'status'
-
-            );
-
-
-        status.textContent =
-
-            'Node-RED: DESCONECTADO';
-
-
-        status.className =
-
-            'error';
-
-
-        document.getElementById(
-
-            'error'
-
-        ).textContent =
-
-            error.message;
-
-
-    }
-
+return;
 
 }
 
 
-// =================================
-// INTERFAZ SIN PERFILES
-// =================================
+try {
 
 
-function actualizarInterfazVacia() {
+const response =
+
+await fetch(
+
+PROFILE_URL +
+
+'?t=' +
+
+Date.now()
+
+);
 
 
-    currentData =
+if (
 
-        null;
+!response.ok
 
-
-    document.getElementById(
-
-        'status'
-
-    ).textContent =
-
-        'Node-RED: CONECTADO';
+) {
 
 
-    document.getElementById(
+throw new Error(
 
-        'status'
+'HTTP ' +
 
-    ).className =
+response.status
 
-        'ok';
+);
+
+}
 
 
-    document.getElementById(
+const data =
+
+await response.json();
+
+
+if (
+
+!data ||
+
+!Array.isArray(
+
+data.profiles
+
+)
+
+) {
+
+
+throw new Error(
+
+'La respuesta no contiene profiles[]'
+
+);
+
+}
+
+
+const perfiles =
+
+data.profiles;
+
+
+if (
+
+perfiles.length === 0
+
+) {
+
+
+throw new Error(
+
+'No hay perfiles disponibles'
+
+);
+
+}
+
+
+const ultimoPerfil =
+
+perfiles[
+
+perfiles.length - 1
+
+];
+
+
+if (
+
+!Array.isArray(
+
+ultimoPerfil.sensors
+
+)
+
+) {
+
+
+throw new Error(
+
+'El último perfil no contiene sensors[]'
+
+);
+
+}
+
+
+currentData =
+
+data;
+
+
+const status =
+
+document.getElementById(
+
+'status'
+
+);
+
+
+status.textContent =
+
+'Node-RED: CONECTADO';
+
+
+status.className =
+
+'status connected';
+
+
+document
+
+    .getElementById(
+
+        'connectionDot'
+
+    )
+
+    .classList
+
+    .add(
+
+        'connected'
+
+    );
+
+
+document
+
+    .getElementById(
+
+        'connectionText'
+
+    )
+
+    .textContent =
+
+    'CONECTADO';
+
+
+document
+
+    .getElementById(
 
         'angle'
 
-    ).textContent =
+    )
 
-        '---';
+    .textContent =
+
+    ultimoPerfil.angle;
 
 
-    document.getElementById(
+document
+
+    .getElementById(
 
         'profileCount'
 
-    ).textContent =
+    )
 
-        '0';
+    .textContent =
+
+    perfiles.length;
 
 
-    document.getElementById(
+document
+
+    .getElementById(
 
         'sensorCount'
 
-    ).textContent =
+    )
 
-        '---';
+    .textContent =
+
+    ultimoPerfil.sensors.length;
 
 
-    document.getElementById(
+const stats =
+
+calcularEstadisticas(
+
+ultimoPerfil.sensors
+
+);
+
+
+document
+
+    .getElementById(
 
         'sensorMin'
 
-    ).textContent =
+    )
 
-        '---';
+    .textContent =
+
+    stats.min;
 
 
-    document.getElementById(
+document
+
+    .getElementById(
 
         'sensorMax'
 
-    ).textContent =
+    )
 
-        '---';
+    .textContent =
+
+    stats.max;
 
 
-    document.getElementById(
+document
+
+    .getElementById(
 
         'diameterMin'
 
-    ).textContent =
+    )
 
-        '---';
+    .textContent =
+
+    stats.diametroMin;
 
 
-    document.getElementById(
+document
+
+    .getElementById(
 
         'diameterMax'
 
-    ).textContent =
+    )
 
-        '---';
+    .textContent =
+
+    stats.diametroMax;
 
 
-    document.getElementById(
+document
+
+    .getElementById(
+
+        'acquisitionState'
+
+    )
+
+    .textContent =
+
+    'ACTIVA';
+
+
+const porcentaje =
+
+Math.min(
+
+(
+
+perfiles.length /
+
+MAX_PERFILES
+
+) * 100,
+
+100
+
+);
+
+
+document
+
+    .getElementById(
 
         'progressFill'
 
-    ).style.width =
+    )
 
-        '0%';
+    .style
+
+    .width =
+
+    porcentaje +
+
+    '%';
 
 
-    document.getElementById(
+document
+
+    .getElementById(
 
         'progressText'
 
-    ).textContent =
+    )
 
-        'Progreso: 0 / ' +
+    .textContent =
 
-        MAX_PERFILES +
+    'Progreso: ' +
 
-        ' perfiles';
+    perfiles.length +
 
+    ' / ' +
 
-    document.getElementById(
+    MAX_PERFILES +
 
-        'error'
-
-    ).textContent =
-
-        'No hay perfiles disponibles';
+    ' perfiles';
 
 
-    ultimaCantidadPerfiles =
+dibujarPerfil(
 
-        0;
+ultimoPerfil.sensors
 
+);
+
+
+if (
+
+perfiles.length !==
+
+ultimaCantidadPerfiles
+
+) {
+
+
+crearTronco3D(
+
+perfiles
+
+);
+
+
+ultimaCantidadPerfiles =
+
+perfiles.length;
 
 }
 
 
-// =================================
-// ESTADO ADQUISICIÓN
-// =================================
+document
+
+    .getElementById(
+
+        'error'
+
+    )
+
+    .textContent =
+
+    '';
 
 
-function actualizarEstadoAdquisicion() {
+}
+
+catch (
+
+error
+
+) {
 
 
-    const estado =
+console.error(
 
-        document.getElementById(
+'Error leyendo Node-RED:',
 
-            'acquisitionStatus'
+error
 
-        );
-
-
-    if (
-
-        adquisicionActiva
-
-    ) {
+);
 
 
-        estado.textContent =
+const status =
 
-            'Adquisición activa';
+document.getElementById(
 
+'status'
 
-        estado.style.color =
-
-            '#00ff00';
-
-
-    }
-
-    else {
+);
 
 
-        estado.textContent =
+status.textContent =
 
-            'Adquisición parada';
-
-
-        estado.style.color =
-
-            '#ffaa00';
+'Node-RED: DESCONECTADO';
 
 
-    }
+status.className =
 
+'status disconnected';
+
+
+document
+
+    .getElementById(
+
+        'connectionDot'
+
+    )
+
+    .classList
+
+    .remove(
+
+        'connected'
+
+    );
+
+
+document
+
+    .getElementById(
+
+        'connectionText'
+
+    )
+
+    .textContent =
+
+    'DESCONECTADO';
+
+
+document
+
+    .getElementById(
+
+        'error'
+
+    )
+
+    .textContent =
+
+    error.message;
+
+}
 
 }
 
@@ -2587,464 +3229,261 @@ function actualizarEstadoAdquisicion() {
 async function nuevaMedicion() {
 
 
-    if (
+try {
 
-        adquisicionActiva
 
-    ) {
+await fetch(
 
+'/api/m4000/demo/new',
 
-        alert(
+{
 
-            'No se puede iniciar una nueva medición mientras la adquisición está activa.'
+    method: 'POST'
 
-        );
+}
 
+);
 
-        return;
 
+ultimaCantidadPerfiles =
 
-    }
+0;
 
 
-    try {
+adquisicionActiva =
 
+true;
 
-        const response =
 
-            await fetch(
+document
 
-                '/api/m4000/demo/new',
+    .getElementById(
 
-                {
+        'acquisitionState'
 
-                    method: 'POST'
+    )
 
-                }
+    .textContent =
 
-            );
+    'ACTIVA';
 
 
-        if (
+await actualizarDatos();
 
-            !response.ok
 
-        ) {
+}
 
+catch (
 
-            const errorData =
+error
 
-                await response.json().catch(
+) {
 
-                    () => ({})
 
-                );
+console.error(
 
+error
 
-            throw new Error(
+);
 
-                errorData.error ||
-
-                'Error iniciando nueva medición'
-
-            );
-
-
-        }
-
-
-        ultimaCantidadPerfiles =
-
-            0;
-
-
-        currentData =
-
-            null;
-
-
-        adquisicionActiva =
-
-            true;
-
-
-        actualizarEstadoAdquisicion();
-
-
-        await actualizarDatos();
-
-
-    }
-
-
-    catch (
-
-        error
-
-    ) {
-
-
-        console.error(
-
-            'Error iniciando medición:',
-
-            error
-
-        );
-
-
-        alert(
-
-            error.message
-
-        );
-
-
-    }
-
+}
 
 }
 
 
 // =================================
-// PARAR ADQUISICIÓN
+// PARAR
 // =================================
 
 
-async function pararAdquisicion() {
+function pararAdquisicion() {
 
 
-    if (
+adquisicionActiva =
 
-        !adquisicionActiva
-
-    ) {
+false;
 
 
-        return;
+document
 
+    .getElementById(
 
-    }
+        'acquisitionState'
 
+    )
 
-    try {
+    .textContent =
 
-
-        const response =
-
-            await fetch(
-
-                '/api/m4000/demo/stop',
-
-                {
-
-                    method: 'POST'
-
-                }
-
-
-            );
-
-
-        if (
-
-            !response.ok
-
-        ) {
-
-
-            throw new Error(
-
-                'Error parando adquisición'
-
-            );
-
-
-        }
-
-
-        adquisicionActiva =
-
-            false;
-
-
-        actualizarEstadoAdquisicion();
-
-
-    }
-
-
-    catch (
-
-        error
-
-    ) {
-
-
-        console.error(
-
-            'Error parando adquisición:',
-
-            error
-
-        );
-
-
-    }
-
+    'PARADA';
 
 }
 
 
 // =================================
-// REANUDAR ADQUISICIÓN
+// REANUDAR
 // =================================
 
 
-async function reanudarAdquisicion() {
+function reanudarAdquisicion() {
 
 
-    if (
+adquisicionActiva =
 
-        adquisicionActiva
+true;
 
-    ) {
 
+document
 
-        alert(
+    .getElementById(
 
-            'La adquisición ya está activa.'
+        'acquisitionState'
 
-        );
+    )
 
+    .textContent =
 
-        return;
+    'ACTIVA';
 
 
-    }
-
-
-    try {
-
-
-        const response =
-
-            await fetch(
-
-                '/api/m4000/demo/resume',
-
-                {
-
-                    method: 'POST'
-
-                }
-
-
-            );
-
-
-        if (
-
-            !response.ok
-
-        ) {
-
-
-            const errorData =
-
-                await response.json().catch(
-
-                    () => ({})
-
-                );
-
-
-            throw new Error(
-
-                errorData.error ||
-
-                'Error reanudando adquisición'
-
-            );
-
-
-        }
-
-
-        adquisicionActiva =
-
-            true;
-
-
-        actualizarEstadoAdquisicion();
-
-
-        await actualizarDatos();
-
-
-    }
-
-
-    catch (
-
-        error
-
-    ) {
-
-
-        console.error(
-
-            'Error reanudando adquisición:',
-
-            error
-
-        );
-
-
-        alert(
-
-            error.message
-
-        );
-
-
-    }
-
+actualizarDatos();
 
 }
 
 
 // =================================
-// BORRAR PERFILES
+// BORRAR
 // =================================
 
 
 async function borrarPerfiles() {
 
 
-    if (
+if (
 
-        !confirm(
+!confirm(
 
-            '¿Borrar todos los perfiles?'
+'¿Borrar todos los perfiles?'
 
-        )
+)
 
-    ) {
+) {
 
 
-        return;
+return;
 
+}
 
-    }
 
+try {
 
-    try {
 
+await fetch(
 
-        const response =
+'/api/m4000/demo/clear',
 
-            await fetch(
+{
 
-                '/api/m4000/demo/clear',
+    method: 'POST'
 
-                {
+}
 
-                    method: 'POST'
+);
 
-                }
 
+ultimaCantidadPerfiles =
 
-            );
+0;
 
 
-        if (
+currentData =
 
-            !response.ok
+null;
 
-        ) {
 
+if (
 
-            throw new Error(
+troncoMesh
 
-                'Error borrando perfiles'
+) {
 
-            );
 
+scene.remove(
 
-        }
+troncoMesh
 
+);
 
-        adquisicionActiva =
 
-            false;
+troncoMesh.geometry.dispose();
 
 
-        ultimaCantidadPerfiles =
+troncoMesh.material.dispose();
 
-            0;
 
+troncoMesh =
 
-        currentData =
+null;
 
-            null;
+}
 
 
-        if (
+document
 
-            troncoMesh
+    .getElementById(
 
-        ) {
+        'profileCount'
 
+    )
 
-            scene.remove(
+    .textContent =
 
-                troncoMesh
+    '0';
 
-            );
 
+document
 
-            troncoMesh.geometry.dispose();
+    .getElementById(
 
+        'progressFill'
 
-            troncoMesh.material.dispose();
+    )
 
+    .style
 
-            troncoMesh =
+    .width =
 
-                null;
+    '0%';
 
 
-        }
+document
 
+    .getElementById(
 
-        actualizarInterfazVacia();
+        'progressText'
 
+    )
 
-        actualizarEstadoAdquisicion();
+    .textContent =
 
+    'Progreso: 0 / 72 perfiles';
 
-    }
 
+}
 
-    catch (
+catch (
 
-        error
+error
 
-    ) {
+) {
 
 
-        console.error(
+console.error(
 
-            'Error borrando perfiles:',
+error
 
-            error
+);
 
-        );
-
-
-    }
-
+}
 
 }
 
@@ -3057,63 +3496,61 @@ async function borrarPerfiles() {
 function exportarJSON() {
 
 
-    if (
+if (
 
-        !currentData
+!currentData
 
-    ) {
-
-
-        alert(
-
-            'No hay medición disponible'
-
-        );
+) {
 
 
-        return;
+alert(
+
+'No hay medición disponible'
+
+);
 
 
-    }
+return;
+
+}
 
 
-    const blob =
+const blob =
 
-        new Blob(
+new Blob(
 
-            [
+[
 
-                JSON.stringify(
+JSON.stringify(
 
-                    currentData,
+currentData,
 
-                    null,
+null,
 
-                    2
+2
 
-                )
+)
 
-            ],
+],
 
-            {
+{
 
-                type:
+type:
 
-                    'application/json'
+'application/json'
 
-            }
+}
 
-        );
+);
 
 
-    descargarArchivo(
+descargarArchivo(
 
-        blob,
+blob,
 
-        'medicion_m4000.json'
+'medicion_m4000.json'
 
-    );
-
+);
 
 }
 
@@ -3126,491 +3563,460 @@ function exportarJSON() {
 function exportarCSV() {
 
 
-    if (
+if (
 
-        !currentData
+!currentData ||
 
-        ||
+!Array.isArray(
 
-        !Array.isArray(
+currentData.profiles
 
-            currentData.profiles
+)
 
-        )
+) {
 
-    ) {
 
+alert(
 
-        alert(
+'No hay medición disponible'
 
-            'No hay medición disponible'
+);
 
-        );
 
+return;
 
-        return;
+}
 
 
-    }
+let csv =
 
+'perfil,angulo,timestamp';
 
-    let csv =
 
-        'perfil,angulo,timestamp';
+for (
 
+let i = 0;
 
-    for (
+i < NUM_SENSORES;
 
-        let i = 0;
+i++
 
-        i < NUM_SENSORES;
+) {
 
-        i++
 
-    ) {
+csv +=
 
+',sensor_' +
 
-        csv +=
+i;
 
-            ',sensor_' +
+}
 
-            i;
 
+csv +=
 
-    }
+'\n';
 
 
-    csv +=
+currentData.profiles.forEach(
 
-        '\n';
+(
 
+perfil,
 
-    currentData.profiles.forEach(
+index
 
-        (
+) => {
 
-            perfil,
 
-            index
+csv +=
 
-        ) => {
+index +
 
+',' +
 
-            csv +=
+perfil.angle +
 
-                index +
+',' +
 
-                ',' +
+perfil.timestamp;
 
-                perfil.angle +
 
-                ',' +
+perfil.sensors.forEach(
 
-                perfil.timestamp;
+valor => {
 
 
-            perfil.sensors.forEach(
+csv +=
 
-                valor => {
+',' +
 
+valor;
 
-                    csv +=
+});
 
-                        ',' +
 
-                        valor;
+csv +=
 
+'\n';
 
-                }
+});
 
 
-            );
+const blob =
 
+new Blob(
 
-            csv +=
+[
 
-                '\n';
+csv
 
+],
 
-        }
+{
 
+type:
 
-    );
+'text/csv;charset=utf-8;'
 
+}
 
-    const blob =
+);
 
-        new Blob(
 
-            [
+descargarArchivo(
 
-                csv
+blob,
 
-            ],
+'medicion_m4000.csv'
 
-            {
-
-                type:
-
-                    'text/csv;charset=utf-8;'
-
-            }
-
-        );
-
-
-    descargarArchivo(
-
-        blob,
-
-        'medicion_m4000.csv'
-
-    );
-
+);
 
 }
 
 
 // =================================
-// DESCARGAR ARCHIVO
+// DESCARGAR
 // =================================
 
 
 function descargarArchivo(
 
-    blob,
+blob,
 
-    nombre
+nombre
 
 ) {
 
 
-    const url =
+const url =
 
-        URL.createObjectURL(
+URL.createObjectURL(
 
-            blob
+blob
 
-        );
-
-
-    const a =
-
-        document.createElement(
-
-            'a'
-
-        );
+);
 
 
-    a.href =
+const a =
 
-        url;
+document.createElement(
 
+'a'
 
-    a.download =
-
-        nombre;
-
-
-    document.body.appendChild(
-
-        a
-
-    );
+);
 
 
-    a.click();
+a.href =
+
+url;
 
 
-    a.remove();
+a.download =
+
+nombre;
 
 
-    URL.revokeObjectURL(
+a.click();
 
-        url
 
-    );
+URL.revokeObjectURL(
 
+url
+
+);
 
 }
 
 
 // =================================
-// GUARDAR MEDICIÓN
+// GUARDAR
 // =================================
 
 
 function guardarMedicion() {
 
 
-    if (
+if (
 
-        !currentData
+!currentData
 
-    ) {
-
-
-        alert(
-
-            'No hay medición disponible'
-
-        );
+) {
 
 
-        return;
+alert(
+
+'No hay medición disponible'
+
+);
 
 
-    }
+return;
+
+}
 
 
-    savedMeasurement =
+savedMeasurement =
 
-        JSON.parse(
+JSON.parse(
 
-            JSON.stringify(
+JSON.stringify(
 
-                currentData
+currentData
 
-            )
+)
 
-        );
-
-
-    localStorage.setItem(
-
-        'm4000_saved_measurement',
-
-        JSON.stringify(
-
-            savedMeasurement
-
-        )
-
-    );
+);
 
 
-    alert(
+localStorage.setItem(
 
-        'Medición guardada'
+'m4000_saved_measurement',
 
-    );
+JSON.stringify(
 
+savedMeasurement
+
+)
+
+);
+
+
+alert(
+
+'Medición guardada'
+
+);
 
 }
 
 
 // =================================
-// COMPARAR MEDICIONES
+// COMPARAR
 // =================================
 
 
 function compararMediciones() {
 
 
-    const guardada =
+const guardada =
 
-        localStorage.getItem(
+localStorage.getItem(
 
-            'm4000_saved_measurement'
+'m4000_saved_measurement'
 
-        );
+);
 
 
-    if (
+if (
 
-        !guardada
+!guardada
 
-    ) {
+) {
 
 
-        alert(
+alert(
 
-            'No hay ninguna medición guardada'
+'No hay ninguna medición guardada'
 
-        );
+);
 
 
-        return;
+return;
 
+}
 
-    }
 
+savedMeasurement =
 
-    savedMeasurement =
+JSON.parse(
 
-        JSON.parse(
+guardada
 
-            guardada
+);
 
-        );
 
+if (
 
-    if (
+!currentData
 
-        !currentData
+) {
 
-    ) {
 
+return;
 
-        alert(
+}
 
-            'No hay medición actual'
 
-        );
+const actual =
 
+currentData.profiles;
 
-        return;
 
+const guardadaProfiles =
 
-    }
+savedMeasurement.profiles;
 
 
-    const actual =
+if (
 
-        currentData.profiles;
+actual.length === 0 ||
 
+guardadaProfiles.length === 0
 
-    const guardadaProfiles =
+) {
 
-        savedMeasurement.profiles;
 
+return;
 
-    if (
+}
 
-        actual.length === 0
 
-        ||
+const actualSensores =
 
-        guardadaProfiles.length === 0
+actual[
 
-    ) {
+actual.length - 1
 
+].sensors;
 
-        return;
 
+const guardadaSensores =
 
-    }
+guardadaProfiles[
 
+guardadaProfiles.length - 1
 
-    const actualSensores =
+].sensors;
 
-        actual[
 
-            actual.length -
+const actualMax =
 
-            1
+Math.max(
 
-        ].sensors;
+...actualSensores
 
+);
 
-    const guardadaSensores =
 
-        guardadaProfiles[
+const guardadaMax =
 
-            guardadaProfiles.length -
+Math.max(
 
-            1
+...guardadaSensores
 
-        ].sensors;
+);
 
 
-    const actualMax =
+const diferencia =
 
-        Math.max(
+actualMax -
 
-            ...actualSensores
+guardadaMax;
 
-        );
 
+document
 
-    const guardadaMax =
-
-        Math.max(
-
-            ...guardadaSensores
-
-        );
-
-
-    const diferencia =
-
-        actualMax -
-
-        guardadaMax;
-
-
-    document.getElementById(
+    .getElementById(
 
         'comparison'
 
-    ).style.display =
+    )
 
-        'block';
+    .style
+
+    .display =
+
+    'block';
 
 
-    document.getElementById(
+document
+
+    .getElementById(
 
         'actualDiameter'
 
-    ).textContent =
+    )
 
-        (
+    .textContent =
 
-            actualMax *
+    (
 
-            2
+        actualMax * 2
 
-        ).toFixed(
+    ).toFixed(
 
-            1
+        1
 
-        ) +
+    ) +
 
-        ' mm';
+    ' mm';
 
 
-    document.getElementById(
+document
+
+    .getElementById(
 
         'savedDiameter'
 
-    ).textContent =
+    )
 
-        (
+    .textContent =
 
-            guardadaMax *
+    (
 
-            2
+        guardadaMax * 2
 
-        ).toFixed(
+    ).toFixed(
 
-            1
+        1
 
-        ) +
+    ) +
 
-        ' mm';
+    ' mm';
 
 
-    document.getElementById(
+document
+
+    .getElementById(
 
         'differenceDiameter'
 
-    ).textContent =
+    )
 
-        (
+    .textContent =
 
-            diferencia *
+    (
 
-            2
+        diferencia * 2
 
-        ).toFixed(
+    ).toFixed(
 
-            1
+        1
 
-        ) +
+    ) +
 
-        ' mm';
-
+    ' mm';
 
 }
 
@@ -3620,108 +4026,140 @@ function compararMediciones() {
 // =================================
 
 
-document.getElementById(
+document
 
-    'btnNueva'
+    .getElementById(
 
-).addEventListener(
+        'btnNueva'
 
-    'click',
+    )
 
-    nuevaMedicion
+    .addEventListener(
 
-);
+        'click',
 
+        nuevaMedicion
 
-document.getElementById(
-
-    'btnParar'
-
-).addEventListener(
-
-    'click',
-
-    pararAdquisicion
-
-);
+    );
 
 
-document.getElementById(
+document
 
-    'btnReanudar'
+    .getElementById(
 
-).addEventListener(
+        'btnParar'
 
-    'click',
+    )
 
-    reanudarAdquisicion
+    .addEventListener(
 
-);
+        'click',
 
+        pararAdquisicion
 
-document.getElementById(
-
-    'btnBorrar'
-
-).addEventListener(
-
-    'click',
-
-    borrarPerfiles
-
-);
+    );
 
 
-document.getElementById(
+document
 
-    'btnCSV'
+    .getElementById(
 
-).addEventListener(
+        'btnReanudar'
 
-    'click',
+    )
 
-    exportarCSV
+    .addEventListener(
 
-);
+        'click',
 
+        reanudarAdquisicion
 
-document.getElementById(
-
-    'btnJSON'
-
-).addEventListener(
-
-    'click',
-
-    exportarJSON
-
-);
+    );
 
 
-document.getElementById(
+document
 
-    'btnGuardar'
+    .getElementById(
 
-).addEventListener(
+        'btnBorrar'
 
-    'click',
+    )
 
-    guardarMedicion
+    .addEventListener(
 
-);
+        'click',
+
+        borrarPerfiles
+
+    );
 
 
-document.getElementById(
+document
 
-    'btnComparar'
+    .getElementById(
 
-).addEventListener(
+        'btnCSV'
 
-    'click',
+    )
 
-    compararMediciones
+    .addEventListener(
 
-);
+        'click',
+
+        exportarCSV
+
+    );
+
+
+document
+
+    .getElementById(
+
+        'btnJSON'
+
+    )
+
+    .addEventListener(
+
+        'click',
+
+        exportarJSON
+
+    );
+
+
+document
+
+    .getElementById(
+
+        'btnGuardar'
+
+    )
+
+    .addEventListener(
+
+        'click',
+
+        guardarMedicion
+
+    );
+
+
+document
+
+    .getElementById(
+
+        'btnComparar'
+
+    )
+
+    .addEventListener(
+
+        'click',
+
+        compararMediciones
+
+    );
 
 
 // =================================
@@ -3732,24 +4170,23 @@ document.getElementById(
 function animate() {
 
 
-    requestAnimationFrame(
+requestAnimationFrame(
 
-        animate
+animate
 
-    );
-
-
-    controls.update();
+);
 
 
-    renderer.render(
+controls.update();
 
-        scene,
 
-        camera
+renderer.render(
 
-    );
+scene,
 
+camera
+
+);
 
 }
 
@@ -3764,32 +4201,69 @@ animate();
 
 window.addEventListener(
 
-    'resize',
+'resize',
 
-    () => {
-
-
-        camera.aspect =
-
-            window.innerWidth /
-
-            window.innerHeight;
+() => {
 
 
-        camera.updateProjectionMatrix();
+const container =
+
+document
+
+    .getElementById(
+
+        'threeContainer'
+
+    );
 
 
-        renderer.setSize(
+camera.aspect =
 
-            window.innerWidth,
+container.clientWidth /
 
-            window.innerHeight
-
-        );
+container.clientHeight;
 
 
-    }
+camera.updateProjectionMatrix();
 
+
+renderer.setSize(
+
+container.clientWidth,
+
+container.clientHeight
+
+);
+
+});
+
+
+const container =
+
+document
+
+    .getElementById(
+
+        'threeContainer'
+
+    );
+
+
+camera.aspect =
+
+container.clientWidth /
+
+container.clientHeight;
+
+
+camera.updateProjectionMatrix();
+
+
+renderer.setSize(
+
+container.clientWidth,
+
+container.clientHeight
 
 );
 
@@ -3804,12 +4278,11 @@ actualizarDatos();
 
 setInterval(
 
-    actualizarDatos,
+actualizarDatos,
 
-    1000
+1000
 
 );
-
 
 </script>
 
