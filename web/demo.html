@@ -4,1784 +4,3206 @@
 
 <head>
 
-```
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+   content="width=device-width, initial-scale=1.0">
 
 <title>Demo Perfil 3D M4000</title>
 
-
 <style>
 
+* {
+    box-sizing: border-box;
+}
 
-    * {
+body {
 
-        box-sizing: border-box;
+    margin: 0;
 
-    }
+    overflow: hidden;
 
+    background: #111;
 
-    body {
+    color: white;
 
-        margin: 0;
+    font-family: Arial, sans-serif;
 
-        overflow: hidden;
+}
 
-        background: #111;
 
-        color: white;
+/* ============================= */
+/* PANEL INFORMACIÓN */
+/* ============================= */
 
-        font-family: Arial, sans-serif;
+#info {
 
-    }
+    position: absolute;
 
+    top: 15px;
 
-    #info {
+    left: 15px;
 
-        position: absolute;
+    z-index: 10;
 
-        top: 15px;
+    background: rgba(0, 0, 0, 0.88);
 
-        left: 15px;
+    padding: 18px;
 
-        z-index: 10;
+    border-radius: 8px;
 
-        background: rgba(0, 0, 0, 0.85);
+    min-width: 320px;
 
-        padding: 18px;
+    line-height: 1.7;
 
-        border-radius: 8px;
+}
 
-        min-width: 300px;
 
-        line-height: 1.7;
+#title {
 
-    }
+    font-size: 20px;
 
+    font-weight: bold;
 
-    #title {
+    margin-bottom: 10px;
 
-        font-size: 20px;
+}
 
-        font-weight: bold;
 
-        margin-bottom: 10px;
+#status {
 
-    }
+    color: #ff0000;
 
+    margin-bottom: 10px;
 
-    #status {
+}
 
-        color: #ff0000;
 
-        margin-bottom: 10px;
+.value {
 
-    }
+    color: #00ffff;
 
+    font-weight: bold;
 
-    .value {
+}
 
-        color: #00ffff;
 
-        font-weight: bold;
+.ok {
 
-    }
+    color: #00ff00 !important;
 
+}
 
-    #profile {
 
-        position: absolute;
+.error {
 
-        right: 20px;
+    color: #ff0000 !important;
 
-        top: 20px;
+}
 
-        z-index: 10;
 
-        background: rgba(0, 0, 0, 0.85);
+/* ============================= */
+/* BOTONES */
+/* ============================= */
 
-        padding: 15px;
+button {
 
-        border-radius: 8px;
+    margin-top: 8px;
 
-    }
+    margin-right: 5px;
 
+    padding: 8px 12px;
 
-    #profileCanvas {
+    border: none;
 
-        border: 1px solid #555;
+    border-radius: 5px;
 
-        background: #222;
+    cursor: pointer;
 
-    }
+    font-weight: bold;
 
+}
 
-    #error {
 
-        color: red;
+button:hover {
 
-        margin-top: 10px;
+    opacity: 0.8;
 
-        max-width: 400px;
+}
 
-        word-wrap: break-word;
 
-    }
+#btnNueva {
 
+    background: #00aa00;
 
-    #help {
+    color: white;
 
-        position: absolute;
+}
 
-        bottom: 15px;
 
-        left: 15px;
+#btnParar {
 
-        z-index: 10;
+    background: #aa6600;
 
-        background: rgba(0, 0, 0, 0.75);
+    color: white;
 
-        padding: 10px 15px;
+}
 
-        border-radius: 6px;
 
-        color: #aaa;
+#btnBorrar {
 
-        font-size: 13px;
+    background: #aa0000;
 
-    }
+    color: white;
+
+}
+
+
+#btnCSV,
+
+#btnJSON,
+
+#btnGuardar,
+
+#btnComparar {
+
+    background: #333;
+
+    color: white;
+
+    border: 1px solid #777;
+
+}
+
+
+/* ============================= */
+/* PROGRESO */
+/* ============================= */
+
+#progressContainer {
+
+    margin-top: 12px;
+
+}
+
+
+#progressBar {
+
+    width: 100%;
+
+    height: 18px;
+
+    background: #333;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+}
+
+
+#progressFill {
+
+    height: 100%;
+
+    width: 0%;
+
+    background: #00aa00;
+
+    transition: width 0.3s;
+
+}
+
+
+#progressText {
+
+    font-size: 13px;
+
+    color: #aaa;
+
+}
+
+
+/* ============================= */
+/* PERFIL 2D */
+/* ============================= */
+
+#profile {
+
+    position: absolute;
+
+    right: 20px;
+
+    top: 20px;
+
+    z-index: 10;
+
+    background: rgba(0, 0, 0, 0.88);
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+}
+
+
+#profileCanvas {
+
+    border: 1px solid #555;
+
+    background: #222;
+
+}
+
+
+/* ============================= */
+/* AYUDA */
+/* ============================= */
+
+#help {
+
+    position: absolute;
+
+    bottom: 15px;
+
+    left: 15px;
+
+    z-index: 10;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    padding: 10px 15px;
+
+    border-radius: 6px;
+
+    color: #aaa;
+
+    font-size: 13px;
+
+}
+
+
+/* ============================= */
+/* ERROR */
+/* ============================= */
+
+#error {
+
+    color: red;
+
+    margin-top: 10px;
+
+    max-width: 400px;
+
+    word-wrap: break-word;
+
+}
+
+
+/* ============================= */
+/* COMPARACIÓN */
+/* ============================= */
+
+#comparison {
+
+    display: none;
+
+    margin-top: 10px;
+
+    padding-top: 10px;
+
+    border-top: 1px solid #555;
+
+}
 
 
 </style>
-```
 
 </head>
 
 <body>
 
-```
-<!-- ================================= -->
-<!-- INFORMACIÓN -->
 <!-- ================================= -->
 
+<!-- INFORMACIÓN -->
+
+<!-- ================================= -->
 
 <div id="info">
 
+<div id="title">
 
-    <div id="title">
-
-        Demo Perfil 3D M4000
-
-    </div>
-
-
-    <div id="status">
-
-        Node-RED: DESCONECTADO
-
-    </div>
-
-
-    <div>
-
-
-        Ángulo:
-
-        <span id="angle"
-              class="value">
-
-            ---
-
-        </span>
-
-        °
-
-
-    </div>
-
-
-    <div>
-
-
-        Perfiles:
-
-        <span id="profileCount"
-              class="value">
-
-            0
-
-        </span>
-
-        /
-
-        <span id="maxProfiles"
-              class="value">
-
-            72
-
-        </span>
-
-
-    </div>
-
-
-    <div>
-
-
-        Sensores por perfil:
-
-        <span id="sensorCount"
-              class="value">
-
-            ---
-
-        </span>
-
-
-    </div>
-
-
-    <div>
-
-
-        Sensor mínimo:
-
-        <span id="sensorMin"
-              class="value">
-
-            ---
-
-        </span>
-
-
-    </div>
-
-
-    <div>
-
-
-        Sensor máximo:
-
-        <span id="sensorMax"
-              class="value">
-
-            ---
-
-        </span>
-
-
-    </div>
-
-
-    <div id="error"></div>
-
+```
+Demo Perfil 3D M4000
+```
 
 </div>
 
+<div id="status">
+
+```
+Node-RED: DESCONECTADO
+```
+
+</div>
+
+<div>
+
+```
+Ángulo:
+
+<span id="angle"
+      class="value">
+
+    ---
+
+</span>
+
+°
+```
+
+</div>
+
+<div>
+
+```
+Perfiles:
+
+<span id="profileCount"
+      class="value">
+
+    0
+
+</span>
+
+/
+
+<span id="maxProfiles"
+      class="value">
+
+    72
+
+</span>
+```
+
+</div>
+
+<div>
+
+```
+Sensores por perfil:
+
+<span id="sensorCount"
+      class="value">
+
+    ---
+
+</span>
+```
+
+</div>
+
+<div>
+
+```
+Distancia mínima:
+
+<span id="sensorMin"
+      class="value">
+
+    ---
+
+</span>
+
+mm
+```
+
+</div>
+
+<div>
+
+```
+Distancia máxima:
+
+<span id="sensorMax"
+      class="value">
+
+    ---
+
+</span>
+
+mm
+```
+
+</div>
+
+<div>
+
+```
+Diámetro mínimo:
+
+<span id="diameterMin"
+      class="value">
+
+    ---
+
+</span>
+
+mm
+```
+
+</div>
+
+<div>
+
+```
+Diámetro máximo:
+
+<span id="diameterMax"
+      class="value">
+
+    ---
+
+</span>
+
+mm
+```
+
+</div>
+
+<!-- ============================= -->
+
+<!-- BARRA DE PROGRESO -->
+
+<!-- ============================= -->
+
+<div id="progressContainer">
+
+<div id="progressText">
+
+```
+Progreso: 0 / 72 perfiles
+```
+
+</div>
+
+<div id="progressBar">
+
+<div id="progressFill"></div>
+
+</div>
+
+</div>
+
+<!-- ============================= -->
+
+<!-- BOTONES -->
+
+<!-- ============================= -->
+
+<div>
+
+<button id="btnNueva">
+
+```
+Nueva medición
+```
+
+</button>
+
+<button id="btnParar">
+
+```
+Parar adquisición
+```
+
+</button>
+
+<button id="btnBorrar">
+
+```
+Borrar perfiles
+```
+
+</button>
+
+</div>
+
+<div>
+
+<button id="btnCSV">
+
+```
+Exportar CSV
+```
+
+</button>
+
+<button id="btnJSON">
+
+```
+Exportar JSON
+```
+
+</button>
+
+</div>
+
+<div>
+
+<button id="btnGuardar">
+
+```
+Guardar medición
+```
+
+</button>
+
+<button id="btnComparar">
+
+```
+Comparar mediciones
+```
+
+</button>
+
+</div>
+
+<div id="comparison">
+
+<b>Comparación</b>
+
+<div>
+
+```
+Medición actual:
+
+<span id="actualDiameter">
+
+    ---
+
+</span>
+```
+
+</div>
+
+<div>
+
+```
+Medición guardada:
+
+<span id="savedDiameter">
+
+    ---
+
+</span>
+```
+
+</div>
+
+<div>
+
+```
+Diferencia:
+
+<span id="differenceDiameter">
+
+    ---
+
+</span>
+```
+
+</div>
+
+</div>
+
+<div id="error"></div>
+
+</div>
 
 <!-- ================================= -->
+
 <!-- PERFIL 2D -->
-<!-- ================================= -->
 
+<!-- ================================= -->
 
 <div id="profile">
 
+<div>
 
-    <div>
-
-        Último perfil de sensores
-
-    </div>
-
-
-    <canvas
-
-        id="profileCanvas"
-
-        width="400"
-
-        height="250">
-
-    </canvas>
-
+```
+Último perfil de sensores
+```
 
 </div>
 
+<canvas
+
+```
+id="profileCanvas"
+
+width="400"
+
+height="250">
+```
+
+</canvas>
+
+</div>
 
 <!-- ================================= -->
+
 <!-- AYUDA -->
-<!-- ================================= -->
 
+<!-- ================================= -->
 
 <div id="help">
 
+Ratón izquierdo: Rotar<br>
 
-    Ratón izquierdo: Rotar<br>
+Rueda: Zoom<br>
 
-    Rueda: Zoom<br>
-
-    Ratón derecho: Desplazar
-
+Ratón derecho: Desplazar
 
 </div>
 
-
 <!-- ================================= -->
+
 <!-- THREE.JS -->
-<!-- ================================= -->
 
+<!-- ================================= -->
 
 <script type="module">
 
-    import * as THREE from
-    'https://esm.sh/three@0.178.0';
 
-    import {
-        OrbitControls
-    } from
-        'https://esm.sh/three@0.178.0/examples/jsm/controls/OrbitControls.js';
-        
+import * as THREE from
 
-    // =================================
-    // CONFIGURACIÓN
-    // =================================
+'https://esm.sh/three@0.178.0';
 
 
-    const PROFILE_URL =
+import {
 
-        '/api/m4000/demo/profile';
+OrbitControls
 
+}
 
-    const NUM_SENSORES =
+from
 
-        32;
+'https://esm.sh/three@0.178.0/examples/jsm/controls/OrbitControls.js';
 
 
-    // =================================
-    // VARIABLES
-    // =================================
+// =================================
+// CONFIGURACIÓN
+// =================================
 
 
-    let currentData = null;
+const PROFILE_URL =
 
+'/api/m4000/demo/profile';
 
-    let troncoMesh = null;
 
+const NUM_SENSORES =
 
-    // =================================
-    // ESCENA
-    // =================================
+32;
 
 
-    const scene =
+const MAX_PERFILES =
 
-        new THREE.Scene();
+72;
 
 
-    scene.background =
+// =================================
+// VARIABLES
+// =================================
 
-        new THREE.Color(
 
-            0x111111
+let currentData = null;
 
-        );
 
+let troncoMesh = null;
 
-    // =================================
-    // CÁMARA
-    // =================================
 
+let adquisicionActiva = true;
 
-    const camera =
 
-        new THREE.PerspectiveCamera(
+let ultimaCantidadPerfiles = 0;
 
-            60,
 
-            window.innerWidth /
+let savedMeasurement = null;
 
-            window.innerHeight,
 
-            0.1,
+// =================================
+// ESCENA
+// =================================
 
-            10000
 
-        );
+const scene =
 
+new THREE.Scene();
 
-    camera.position.set(
 
-        0,
+scene.background =
 
-        0,
+new THREE.Color(
 
-        2500
+0x111111
 
-    );
+);
 
 
-    // =================================
-    // RENDERER
-    // =================================
+// =================================
+// CÁMARA
+// =================================
 
 
-    const renderer =
+const camera =
 
-        new THREE.WebGLRenderer({
+new THREE.PerspectiveCamera(
 
-            antialias: true
+60,
 
-        });
+window.innerWidth /
 
+window.innerHeight,
 
-    renderer.setSize(
+0.1,
 
-        window.innerWidth,
+10000
 
-        window.innerHeight
+);
 
-    );
 
+camera.position.set(
 
-    renderer.setPixelRatio(
+3000,
 
-        window.devicePixelRatio
+2000,
 
-    );
+3000
 
+);
 
-    document.body.appendChild(
 
-        renderer.domElement
+// =================================
+// RENDERER
+// =================================
 
-    );
 
+const renderer =
 
-    // =================================
-    // CONTROLES
-    // =================================
+new THREE.WebGLRenderer({
 
+antialias: true
 
-    const controls =
+});
 
-        new OrbitControls(
 
-            camera,
+renderer.setSize(
 
-            renderer.domElement
+window.innerWidth,
 
-        );
+window.innerHeight
 
+);
 
-    controls.enableDamping =
 
-        true;
+renderer.setPixelRatio(
 
+window.devicePixelRatio
 
-    controls.dampingFactor =
 
-        0.05;
+);
 
 
-    controls.target.set(
+document.body.appendChild(
 
-        0,
+renderer.domElement
 
-        0,
+);
 
-        0
 
-    );
+// =================================
+// CONTROLES
+// =================================
 
 
-    // =================================
-    // LUCES
-    // =================================
+const controls =
 
+new OrbitControls(
 
-    const ambientLight =
+camera,
 
-        new THREE.AmbientLight(
+renderer.domElement
 
-            0xffffff,
+);
 
-            1.5
 
-        );
+controls.enableDamping = true;
 
 
-    scene.add(
+controls.dampingFactor = 0.08;
 
-        ambientLight
 
-    );
+controls.target.set(
 
+0,
 
-    const directionalLight =
+0,
 
-        new THREE.DirectionalLight(
+0
 
-            0xffffff,
+);
 
-            2
 
-        );
+// =================================
+// LUCES
+// =================================
 
 
-    directionalLight.position.set(
+const ambientLight =
 
-        1000,
+new THREE.AmbientLight(
 
-        1000,
+0xffffff,
 
-        1000
+1.5
 
-    );
+);
 
 
-    scene.add(
+scene.add(
 
-        directionalLight
+ambientLight
 
-    );
+);
 
 
-    // =================================
-    // EJES DE REFERENCIA
-    // =================================
+const directionalLight =
 
+new THREE.DirectionalLight(
 
-    const axesHelper =
+0xffffff,
 
-        new THREE.AxesHelper(
+2
 
-            1500
+);
 
-        );
 
+directionalLight.position.set(
 
-    scene.add(
+1000,
 
-        axesHelper
+1000,
 
-    );
+1000
 
+);
 
-    // =================================
-    // DIBUJAR PERFIL 2D
-    // =================================
 
+scene.add(
 
-    function dibujarPerfil(
+directionalLight
 
-        sensores
+);
 
-    ) {
 
+// =================================
+// EJES
+// =================================
 
-        const canvas =
 
-            document.getElementById(
+const axesHelper =
 
-                'profileCanvas'
+new THREE.AxesHelper(
 
-            );
+1500
 
+);
 
-        const ctx =
 
-            canvas.getContext(
+scene.add(
 
-                '2d'
+axesHelper
 
-            );
+);
 
 
-        ctx.clearRect(
+// =================================
+// CALCULAR ESTADÍSTICAS
+// =================================
 
-            0,
 
-            0,
+function calcularEstadisticas(
 
-            canvas.width,
+sensores
 
-            canvas.height
+) {
 
-        );
 
+const min =
 
-        if (
+Math.min(
 
-            !Array.isArray(
+...sensores
 
-                sensores
+);
 
-            )
 
-            ||
+const max =
 
-            sensores.length === 0
+Math.max(
 
-        ) {
+...sensores
 
+);
 
-            return;
 
+// En este modelo los sensores están
+// enfrentados por parejas.
+//
+// Diámetro aproximado:
+// distancia izquierda + derecha
 
-        }
 
+const diametroMin =
 
-        const min =
+min * 2;
 
-            Math.min(
 
-                ...sensores
+const diametroMax =
 
-            );
+max * 2;
 
 
-        const max =
+return {
 
-            Math.max(
+min,
 
-                ...sensores
+max,
 
-            );
+diametroMin,
 
+diametroMax
 
-        const rango =
+};
 
-            max -
 
-            min ||
+}
 
-            1;
 
+// =================================
+// COLOR SEGÚN DISTANCIA
+// =================================
 
-        // =========================
-        // LÍNEA DEL PERFIL
-        // =========================
 
+function obtenerColor(
 
-        ctx.beginPath();
+valor,
 
+min,
 
-        sensores.forEach(
+max
 
-            (
+) {
 
-                valor,
 
-                index
+const normalizado =
 
-            ) => {
+(
 
+valor - min
 
-                const x =
+)
 
-                    index *
+/
 
-                    (
+(
 
-                        canvas.width /
+max - min || 1
 
-                        (
+);
 
-                            sensores.length -
 
-                            1
+const color =
 
-                        )
+new THREE.Color();
 
-                    );
 
+/*
 
-                const y =
+Cerca:
 
-                    canvas.height -
+azul
 
-                    (
+Medio:
 
-                        (
+verde / amarillo
 
-                            valor -
+Lejos:
 
-                            min
+rojo
 
-                        )
+*/
 
-                        /
 
-                        rango
+color.setHSL(
 
-                    )
+(
 
-                    *
+1 -
 
-                    canvas.height;
+normalizado
 
+)
 
-                if (
+*
 
-                    index === 0
+0.65,
 
-                ) {
+1,
 
+0.5
 
-                    ctx.moveTo(
+);
 
-                        x,
 
-                        y
+return color;
 
-                    );
 
+}
 
-                }
 
-                else {
+// =================================
+// CREAR SUPERFICIE 3D
+// =================================
 
 
-                    ctx.lineTo(
+function crearTronco3D(
 
-                        x,
+perfiles
 
-                        y
+) {
 
-                    );
 
+if (
 
-                }
+!Array.isArray(
 
+perfiles
 
-            }
+)
 
-        );
+||
 
+perfiles.length < 2
 
-        ctx.strokeStyle =
+) {
 
-            '#00ffff';
 
+return;
 
-        ctx.lineWidth =
 
-            2;
+}
 
 
-        ctx.stroke();
+const vertices = [];
 
 
-        // =========================
-        // PUNTOS
-        // =========================
+const colores = [];
 
 
-        sensores.forEach(
+const indices = [];
 
-            (
 
-                valor,
+const numPerfiles =
 
-                index
+perfiles.length;
 
-            ) => {
 
+const numSensores =
 
-                const x =
+NUM_SENSORES;
 
-                    index *
 
-                    (
+// Buscar valores globales
 
-                        canvas.width /
 
-                        (
+let valorMin = Infinity;
 
-                            sensores.length -
 
-                            1
+let valorMax = -Infinity;
 
-                        )
 
-                    );
+for (
 
+const perfil of perfiles
 
-                const y =
+) {
 
-                    canvas.height -
 
-                    (
+if (
 
-                        (
+!Array.isArray(
 
-                            valor -
+perfil.sensors
 
-                            min
+)
 
-                        )
+) {
 
-                        /
 
-                        rango
+continue;
 
-                    )
 
-                    *
+}
 
-                    canvas.height;
 
+for (
 
-                ctx.beginPath();
+const valor of
 
+perfil.sensors
 
-                ctx.arc(
+) {
 
-                    x,
 
-                    y,
+valorMin =
 
-                    3,
+Math.min(
 
-                    0,
+valorMin,
 
-                    Math.PI * 2
+valor
 
-                );
+);
 
 
-                ctx.fillStyle =
+valorMax =
 
-                    '#ffffff';
+Math.max(
 
+valorMax,
 
-                ctx.fill();
+valor
 
+);
 
-            }
 
-        );
+}
 
 
-    }
+}
 
 
-    // =================================
-    // CREAR SUPERFICIE 3D
-    // =================================
+// Crear vértices
 
 
-    function crearTronco3D(
+for (
 
-        perfiles
+let p = 0;
 
-    ) {
+p < numPerfiles;
 
+p++
 
-        if (
+) {
 
-            troncoMesh
 
-        ) {
+const perfil =
 
+perfiles[p];
 
-            scene.remove(
 
-                troncoMesh
+const sensores =
 
-            );
+perfil.sensors;
 
 
-            troncoMesh.geometry.dispose();
+if (
 
+!Array.isArray(
 
-            troncoMesh.material.dispose();
+sensores
 
+)
 
-            troncoMesh =
+) {
 
-                null;
 
+continue;
 
-        }
 
+}
 
-        if (
 
-            !Array.isArray(
+for (
 
-                perfiles
+let s = 0;
 
-            )
+s < numSensores;
 
-            ||
+s++
 
-            perfiles.length < 2
+) {
 
-        ) {
 
+const valor =
 
-            return;
+sensores[s];
 
 
-        }
+const anguloSensor =
 
+(
 
-        const vertices = [];
+s /
 
+numSensores
 
-        const indices = [];
+)
 
+*
 
-        const numPerfiles =
+Math.PI *
 
-            perfiles.length;
+2;
 
 
-        const numSensores =
+const radio =
 
-            NUM_SENSORES;
+valor;
 
 
-        // =================================
-        // CREAR VÉRTICES
-        // =================================
+const x =
 
+radio *
 
-        for (
+Math.cos(
 
-            let p = 0;
+anguloSensor
 
-            p < numPerfiles;
+);
 
-            p++
 
-        ) {
+const y =
 
+radio *
 
-            const perfil =
+Math.sin(
 
-                perfiles[p];
+anguloSensor
 
+);
 
-            const sensores =
 
-                perfil.sensors;
+const z =
 
+(
 
-            const angle =
+p -
 
-                perfil.angle;
+(
 
+numPerfiles - 1
 
-            if (
+)
 
-                !Array.isArray(
+/
 
-                    sensores
+2
 
-                )
+)
 
-            ) {
+*
 
+20;
 
-                continue;
 
+vertices.push(
 
-            }
+x,
 
+y,
 
-            const anguloEje =
+z
 
-                angle *
+);
 
-                Math.PI /
 
-                180;
+// Color
 
 
-            for (
+const color =
 
-                let s = 0;
+obtenerColor(
 
-                s < numSensores;
+valor,
 
-                s++
+valorMin,
 
-            ) {
+valorMax
 
+);
 
-                const valor =
 
-                    sensores[s];
+colores.push(
 
+color.r,
 
-                const anguloSensor =
+color.g,
 
-                    (
+color.b
 
-                        s /
+);
 
-                        numSensores
 
-                    )
+}
 
-                    *
 
-                    Math.PI *
+}
 
-                    2;
 
+// Crear caras
 
-                // =================================
-                // CONVERSIÓN POLAR A CARTESIANA
-                // =================================
 
+for (
 
-                const radio =
+let p = 0;
 
-                    valor;
+p < numPerfiles - 1;
 
+p++
 
-                const x =
+) {
 
-                    radio *
 
-                    Math.cos(
+for (
 
-                        anguloSensor
+let s = 0;
 
-                    );
+s < numSensores;
 
+s++
 
-                const y =
+) {
 
-                    radio *
 
-                    Math.sin(
+const siguiente =
 
-                        anguloSensor
+(
 
-                    );
+s + 1
 
+)
 
-                // =================================
-                // POSICIÓN LONGITUDINAL
-                // =================================
+%
 
+numSensores;
 
-                const z =
 
-                    (
+const a =
 
-                        p -
+p *
 
-                        (
+numSensores +
 
-                            numPerfiles -
+s;
 
-                            1
 
-                        )
+const b =
 
-                        /
+p *
 
-                        2
+numSensores +
 
-                    )
+siguiente;
 
-                    *
 
-                    20;
+const c =
 
+(
 
-                vertices.push(
+p + 1
 
-                    x,
+)
 
-                    y,
+*
 
-                    z
+numSensores +
 
-                );
+siguiente;
 
 
-            }
+const d =
 
+(
 
-        }
+p + 1
 
+)
 
-        // =================================
-        // CREAR TRIÁNGULOS
-        // =================================
+*
 
+numSensores +
 
-        for (
+s;
 
-            let p = 0;
 
-            p < numPerfiles - 1;
+indices.push(
 
-            p++
+a,
 
-        ) {
+b,
 
+d
 
-            for (
+);
 
-                let s = 0;
 
-                s < numSensores;
+indices.push(
 
-                s++
+b,
 
-            ) {
+c,
 
+d
 
-                const siguienteSensor =
+);
 
-                    (
 
-                        s + 1
+}
 
-                    )
 
-                    %
+}
 
-                    numSensores;
 
+// Geometría
 
-                const a =
 
-                    p *
+const geometry =
 
-                    numSensores +
+new THREE.BufferGeometry();
 
-                    s;
 
+geometry.setAttribute(
 
-                const b =
+'position',
 
-                    p *
+new THREE.Float32BufferAttribute(
 
-                    numSensores +
+vertices,
 
-                    siguienteSensor;
+3
 
+)
 
-                const c =
+);
 
-                    (
 
-                        p +
+geometry.setAttribute(
 
-                        1
+'color',
 
-                    )
+new THREE.Float32BufferAttribute(
 
-                    *
+colores,
 
-                    numSensores +
+3
 
-                    siguienteSensor;
+)
 
+);
 
-                const d =
 
-                    (
+geometry.setIndex(
 
-                        p +
+indices
 
-                        1
+);
 
-                    )
 
-                    *
+geometry.computeVertexNormals();
 
-                    numSensores +
 
-                    s;
+// Material
 
 
-                indices.push(
+const material =
 
-                    a,
+new THREE.MeshStandardMaterial({
 
-                    b,
+vertexColors: true,
 
-                    d
+roughness: 0.8,
 
-                );
+metalness: 0.0,
 
+side: THREE.DoubleSide
 
-                indices.push(
+});
 
-                    b,
 
-                    c,
+const nuevoMesh =
 
-                    d
+new THREE.Mesh(
 
-                );
+geometry,
 
+material
 
-            }
+);
 
 
-        }
+scene.add(
 
+nuevoMesh
 
-        // =================================
-        // GEOMETRÍA
-        // =================================
+);
 
 
-        const geometry =
+// Eliminar el anterior
 
-            new THREE.BufferGeometry();
 
+if (
 
-        geometry.setAttribute(
+troncoMesh
 
-            'position',
+) {
 
-            new THREE.Float32BufferAttribute(
 
-                vertices,
+scene.remove(
 
-                3
+troncoMesh
 
-            )
+);
 
-        );
 
+troncoMesh.geometry.dispose();
 
-        geometry.setIndex(
 
-            indices
+troncoMesh.material.dispose();
 
-        );
 
+}
 
-        geometry.computeVertexNormals();
 
+troncoMesh =
 
-        // =================================
-        // MATERIAL
-        // =================================
+nuevoMesh;
 
 
-        const material =
+// IMPORTANTE:
+//
+// NO mover la cámara aquí.
+//
+// Esto evita que cada segundo
+// vuelva a la posición inicial.
 
-            new THREE.MeshStandardMaterial({
 
-                color: 0x8b4513,
+}
 
-                roughness: 0.8,
 
-                metalness: 0.0,
+// =================================
+// DIBUJAR PERFIL 2D
+// =================================
 
-                side: THREE.DoubleSide
 
-            });
+function dibujarPerfil(
 
+sensores
 
-        troncoMesh =
+) {
 
-            new THREE.Mesh(
 
-                geometry,
+const canvas =
 
-                material
+document.getElementById(
 
-            );
+'profileCanvas'
 
+);
 
-        scene.add(
 
-            troncoMesh
+const ctx =
 
-        );
+canvas.getContext(
 
+'2d'
 
-        // =================================
-        // CENTRAR CÁMARA
-        // =================================
+);
 
 
-        const box =
+ctx.clearRect(
 
-            new THREE.Box3().setFromObject(
+0,
 
-                troncoMesh
+0,
 
-            );
+canvas.width,
 
+canvas.height
 
-        const centro =
+);
 
-            box.getCenter(
 
-                new THREE.Vector3()
+if (
 
-            );
+!Array.isArray(
 
+sensores
 
-        const tamaño =
+)
 
-            box.getSize(
+||
 
-                new THREE.Vector3()
+sensores.length === 0
 
-            );
+) {
 
 
-        const maxDimension =
+return;
 
-            Math.max(
 
-                tamaño.x,
+}
 
-                tamaño.y,
 
-                tamaño.z
+const min =
 
-            );
+Math.min(
 
+...sensores
 
-        camera.position.set(
+);
 
-            maxDimension *
 
-            1.8,
+const max =
 
-            maxDimension *
+Math.max(
 
-            1.2,
+...sensores
 
-            maxDimension *
+);
 
-            1.8
 
-        );
+const rango =
 
+max - min || 1;
 
-        controls.target.copy(
 
-            centro
+ctx.beginPath();
 
-        );
 
+sensores.forEach(
 
-        controls.update();
+(
 
+valor,
 
-    }
+index
 
+) => {
 
-    // =================================
-    // ACTUALIZAR DATOS
-    // =================================
 
+const x =
 
-    async function actualizarDatos() {
+index *
 
+(
 
-        try {
+canvas.width /
 
+(
 
-            const response =
+sensores.length - 1
 
-                await fetch(
+)
 
-                    PROFILE_URL
+);
 
-                );
 
+const y =
 
-            if (
+canvas.height -
 
-                !response.ok
+(
 
-            ) {
+(
 
+valor - min
 
-                throw new Error(
+)
 
-                    'HTTP ' +
+/
 
-                    response.status
+rango
 
-                );
+)
 
+*
 
-            }
+canvas.height;
 
 
-            const data =
+if (
 
-                await response.json();
+index === 0
 
+) {
 
-            console.log(
 
-                'Datos recibidos desde Node-RED:',
+ctx.moveTo(
 
-                data
+x,
 
-            );
+y
 
+);
 
-            if (
 
-                !data
+}
 
-                ||
+else {
 
-                !Array.isArray(
 
-                    data.profiles
+ctx.lineTo(
 
-                )
+x,
 
-            ) {
+y
 
+);
 
-                throw new Error(
 
-                    'La respuesta no contiene profiles[]'
+}
 
-                );
 
+}
 
-            }
 
+);
 
-            const perfiles =
 
-                data.profiles;
+ctx.strokeStyle =
 
+'#00ffff';
 
-            if (
 
-                perfiles.length === 0
+ctx.lineWidth =
 
-            ) {
+2;
 
 
-                throw new Error(
+ctx.stroke();
 
-                    'No hay perfiles disponibles'
 
-                );
+sensores.forEach(
 
+(
 
-            }
+valor,
 
+index
 
-            const ultimoPerfil =
+) => {
 
-                perfiles[
 
-                    perfiles.length -
+const x =
 
-                    1
+index *
 
-                ];
+(
 
+canvas.width /
 
-            if (
+(
 
-                !Array.isArray(
+sensores.length - 1
 
-                    ultimoPerfil.sensors
+)
 
-                )
+);
 
-            ) {
 
+const y =
 
-                throw new Error(
+canvas.height -
 
-                    'El último perfil no contiene sensors[]'
+(
 
-                );
+(
 
+valor - min
 
-            }
+)
 
+/
 
-            currentData =
+rango
 
-                data;
+)
 
+*
 
-            // =========================
-            // ESTADO
-            // =========================
+canvas.height;
 
 
-            document.getElementById(
+ctx.beginPath();
 
-                'status'
 
-            ).textContent =
+ctx.arc(
 
-                'Node-RED: CONECTADO';
+x,
 
+y,
 
-            document.getElementById(
+3,
 
-                'status'
+0,
 
-            ).style.color =
+Math.PI * 2
 
-                '#00ff00';
+);
 
 
-            // =========================
-            // DATOS
-            // =========================
+ctx.fillStyle =
 
+'#ffffff';
 
-            document.getElementById(
 
-                'angle'
+ctx.fill();
 
-            ).textContent =
 
-                ultimoPerfil.angle;
+}
 
 
-            document.getElementById(
+);
 
-                'profileCount'
 
-            ).textContent =
+}
 
-                perfiles.length;
 
+// =================================
+// ACTUALIZAR DATOS
+// =================================
 
-            document.getElementById(
 
-                'maxProfiles'
+async function actualizarDatos() {
 
-            ).textContent =
 
-                72;
+if (
 
+!adquisicionActiva
 
-            document.getElementById(
+) {
 
-                'sensorCount'
 
-            ).textContent =
+return;
 
-                ultimoPerfil.sensors.length;
 
+}
 
-            document.getElementById(
 
-                'sensorMin'
+try {
 
-            ).textContent =
 
-                Math.min(
+const response =
 
-                    ...ultimoPerfil.sensors
+await fetch(
 
-                );
+PROFILE_URL +
 
+'?t=' +
 
-            document.getElementById(
+Date.now()
 
-                'sensorMax'
+);
 
-            ).textContent =
 
-                Math.max(
+if (
 
-                    ...ultimoPerfil.sensors
+!response.ok
 
-                );
+) {
 
 
-            // =========================
-            // PERFIL 2D
-            // =========================
+throw new Error(
 
+'HTTP ' +
 
-            dibujarPerfil(
+response.status
 
-                ultimoPerfil.sensors
+);
 
-            );
 
+}
 
-            // =========================
-            // MODELO 3D
-            // =========================
 
+const data =
 
-            crearTronco3D(
+await response.json();
 
-                perfiles
 
-            );
+if (
 
+!data
 
-            document.getElementById(
+||
 
-                'error'
+!Array.isArray(
 
-            ).textContent =
+data.profiles
 
-                '';
+)
 
+) {
 
-        }
 
+throw new Error(
 
-        catch (
+'La respuesta no contiene profiles[]'
 
-            error
+);
 
-        ) {
 
+}
 
-            console.error(
 
-                'Error leyendo Node-RED:',
+const perfiles =
 
-                error
+data.profiles;
 
-            );
 
+if (
 
-            document.getElementById(
+perfiles.length === 0
 
-                'status'
+) {
 
-            ).textContent =
 
-                'Node-RED: DESCONECTADO';
+throw new Error(
 
+'No hay perfiles disponibles'
 
-            document.getElementById(
+);
 
-                'status'
 
-            ).style.color =
+}
 
-                '#ff0000';
 
+const ultimoPerfil =
 
-            document.getElementById(
+perfiles[
 
-                'error'
+perfiles.length - 1
 
-            ).textContent =
+];
 
-                error.message;
 
+if (
 
-        }
+!Array.isArray(
 
+ultimoPerfil.sensors
 
-    }
+)
 
+) {
 
-    // =================================
-    // ANIMACIÓN
-    // =================================
 
+throw new Error(
 
-    function animate() {
+'El último perfil no contiene sensors[]'
 
+);
 
-        requestAnimationFrame(
 
-            animate
+}
 
-        );
 
+currentData =
 
-        controls.update();
+data;
 
 
-        renderer.render(
+// Conectado
 
-            scene,
 
-            camera
+const status =
 
-        );
+document.getElementById(
 
+'status'
 
-    }
+);
 
 
-    animate();
+status.textContent =
 
+'Node-RED: CONECTADO';
 
-    // =================================
-    // REDIMENSIONAR
-    // =================================
 
+status.className =
 
-    window.addEventListener(
+'ok';
 
-        'resize',
 
-        () => {
+// Datos
 
 
-            camera.aspect =
+document.getElementById(
 
-                window.innerWidth /
+'angle'
 
-                window.innerHeight;
+).textContent =
 
+ultimoPerfil.angle;
 
-            camera.updateProjectionMatrix();
 
+document.getElementById(
 
-            renderer.setSize(
+'profileCount'
 
-                window.innerWidth,
+).textContent =
 
-                window.innerHeight
+perfiles.length;
 
-            );
 
+document.getElementById(
 
-        }
+'sensorCount'
 
-    );
+).textContent =
 
+ultimoPerfil.sensors.length;
 
-    // =================================
-    // INICIO
-    // =================================
 
+// Estadísticas
 
-    actualizarDatos();
 
+const stats =
 
-    setInterval(
+calcularEstadisticas(
 
-        actualizarDatos,
+ultimoPerfil.sensors
 
-        1000
+);
 
-    );
+
+document.getElementById(
+
+'sensorMin'
+
+).textContent =
+
+stats.min;
+
+
+document.getElementById(
+
+'sensorMax'
+
+).textContent =
+
+stats.max;
+
+
+document.getElementById(
+
+'diameterMin'
+
+).textContent =
+
+stats.diametroMin;
+
+
+document.getElementById(
+
+'diameterMax'
+
+).textContent =
+
+stats.diametroMax;
+
+
+// Progreso
+
+
+const porcentaje =
+
+Math.min(
+
+(
+
+perfiles.length /
+
+MAX_PERFILES
+
+)
+
+*
+
+100,
+
+100
+
+);
+
+
+document.getElementById(
+
+'progressFill'
+
+).style.width =
+
+porcentaje +
+
+'%';
+
+
+document.getElementById(
+
+'progressText'
+
+).textContent =
+
+'Progreso: ' +
+
+perfiles.length +
+
+' / ' +
+
+MAX_PERFILES +
+
+' perfiles';
+
+
+// Perfil 2D
+
+
+dibujarPerfil(
+
+ultimoPerfil.sensors
+
+);
+
+
+// Solo reconstruir el modelo
+// si han llegado perfiles nuevos
+
+
+if (
+
+perfiles.length !==
+
+ultimaCantidadPerfiles
+
+) {
+
+
+crearTronco3D(
+
+perfiles
+
+);
+
+
+ultimaCantidadPerfiles =
+
+perfiles.length;
+
+
+}
+
+
+document.getElementById(
+
+'error'
+
+).textContent =
+
+'';
+
+
+}
+
+
+catch (
+
+error
+
+) {
+
+
+console.error(
+
+'Error leyendo Node-RED:',
+
+error
+
+);
+
+
+const status =
+
+document.getElementById(
+
+'status'
+
+);
+
+
+status.textContent =
+
+'Node-RED: DESCONECTADO';
+
+
+status.className =
+
+'error';
+
+
+document.getElementById(
+
+'error'
+
+).textContent =
+
+error.message;
+
+
+}
+
+
+}
+
+
+// =================================
+// NUEVA MEDICIÓN
+// =================================
+
+
+async function nuevaMedicion() {
+
+
+try {
+
+
+await fetch(
+
+'/api/m4000/demo/new',
+
+{
+
+method: 'POST'
+
+}
+
+);
+
+
+ultimaCantidadPerfiles =
+
+0;
+
+
+adquisicionActiva =
+
+true;
+
+
+await actualizarDatos();
+
+
+}
+
+
+catch (
+
+error
+
+) {
+
+
+console.error(
+
+error
+
+);
+
+
+}
+
+
+}
+
+
+// =================================
+// PARAR ADQUISICIÓN
+// =================================
+
+
+function pararAdquisicion() {
+
+
+adquisicionActiva =
+
+false;
+
+
+}
+
+
+// =================================
+// BORRAR PERFILES
+// =================================
+
+
+async function borrarPerfiles() {
+
+
+if (
+
+!confirm(
+
+'¿Borrar todos los perfiles?'
+
+)
+
+) {
+
+
+return;
+
+
+}
+
+
+try {
+
+
+await fetch(
+
+'/api/m4000/demo/clear',
+
+{
+
+method: 'POST'
+
+}
+
+);
+
+
+ultimaCantidadPerfiles =
+
+0;
+
+
+currentData =
+
+null;
+
+
+if (
+
+troncoMesh
+
+) {
+
+
+scene.remove(
+
+troncoMesh
+
+);
+
+
+troncoMesh.geometry.dispose();
+
+
+troncoMesh.material.dispose();
+
+
+troncoMesh =
+
+null;
+
+
+}
+
+
+document.getElementById(
+
+'profileCount'
+
+).textContent =
+
+'0';
+
+
+document.getElementById(
+
+'progressFill'
+
+).style.width =
+
+'0%';
+
+
+document.getElementById(
+
+'progressText'
+
+).textContent =
+
+'Progreso: 0 / 72 perfiles';
+
+
+}
+
+
+catch (
+
+error
+
+) {
+
+
+console.error(
+
+error
+
+);
+
+
+}
+
+
+}
+
+
+// =================================
+// EXPORTAR JSON
+// =================================
+
+
+function exportarJSON() {
+
+
+if (
+
+!currentData
+
+) {
+
+
+alert(
+
+'No hay medición disponible'
+
+);
+
+
+return;
+
+
+}
+
+
+const blob =
+
+new Blob(
+
+[
+
+JSON.stringify(
+
+currentData,
+
+null,
+
+2
+
+)
+
+],
+
+{
+
+type:
+
+'application/json'
+
+}
+
+);
+
+
+descargarArchivo(
+
+blob,
+
+'medicion_m4000.json'
+
+);
+
+
+}
+
+
+// =================================
+// EXPORTAR CSV
+// =================================
+
+
+function exportarCSV() {
+
+
+if (
+
+!currentData
+
+||
+
+!Array.isArray(
+
+currentData.profiles
+
+)
+
+) {
+
+
+alert(
+
+'No hay medición disponible'
+
+);
+
+
+return;
+
+
+}
+
+
+let csv =
+
+'perfil,angulo,timestamp';
+
+
+for (
+
+let i = 0;
+
+i < NUM_SENSORES;
+
+i++
+
+) {
+
+
+csv +=
+
+',sensor_' +
+
+i;
+
+
+}
+
+
+csv +=
+
+'\n';
+
+
+currentData.profiles.forEach(
+
+(
+
+perfil,
+
+index
+
+) => {
+
+
+csv +=
+
+index +
+
+',' +
+
+perfil.angle +
+
+',' +
+
+perfil.timestamp;
+
+
+perfil.sensors.forEach(
+
+valor => {
+
+
+csv +=
+
+',' +
+
+valor;
+
+
+}
+
+
+);
+
+
+csv +=
+
+'\n';
+
+
+}
+
+
+);
+
+
+const blob =
+
+new Blob(
+
+[
+
+csv
+
+],
+
+{
+
+type:
+
+'text/csv;charset=utf-8;'
+
+}
+
+);
+
+
+descargarArchivo(
+
+blob,
+
+'medicion_m4000.csv'
+
+);
+
+
+}
+
+
+// =================================
+// DESCARGAR ARCHIVO
+// =================================
+
+
+function descargarArchivo(
+
+blob,
+
+nombre
+
+) {
+
+
+const url =
+
+URL.createObjectURL(
+
+blob
+
+);
+
+
+const a =
+
+document.createElement(
+
+'a'
+
+);
+
+
+a.href =
+
+url;
+
+
+a.download =
+
+nombre;
+
+
+a.click();
+
+
+URL.revokeObjectURL(
+
+url
+
+);
+
+
+}
+
+
+// =================================
+// GUARDAR MEDICIÓN
+// =================================
+
+
+function guardarMedicion() {
+
+
+if (
+
+!currentData
+
+) {
+
+
+alert(
+
+'No hay medición disponible'
+
+);
+
+
+return;
+
+
+}
+
+
+savedMeasurement =
+
+JSON.parse(
+
+JSON.stringify(
+
+currentData
+
+)
+
+);
+
+
+localStorage.setItem(
+
+'m4000_saved_measurement',
+
+JSON.stringify(
+
+savedMeasurement
+
+)
+
+);
+
+
+alert(
+
+'Medición guardada'
+
+);
+
+
+}
+
+
+// =================================
+// COMPARAR MEDICIONES
+// =================================
+
+
+function compararMediciones() {
+
+
+const guardada =
+
+localStorage.getItem(
+
+'m4000_saved_measurement'
+
+);
+
+
+if (
+
+!guardada
+
+) {
+
+
+alert(
+
+'No hay ninguna medición guardada'
+
+);
+
+
+return;
+
+
+}
+
+
+savedMeasurement =
+
+JSON.parse(
+
+guardada
+
+);
+
+
+if (
+
+!currentData
+
+) {
+
+
+return;
+
+
+}
+
+
+const actual =
+
+currentData.profiles;
+
+
+const guardadaProfiles =
+
+savedMeasurement.profiles;
+
+
+if (
+
+actual.length === 0
+
+||
+
+guardadaProfiles.length === 0
+
+) {
+
+
+return;
+
+
+}
+
+
+const actualSensores =
+
+actual[
+
+actual.length - 1
+
+].sensors;
+
+
+const guardadaSensores =
+
+guardadaProfiles[
+
+guardadaProfiles.length - 1
+
+].sensors;
+
+
+const actualMax =
+
+Math.max(
+
+...actualSensores
+
+);
+
+
+const guardadaMax =
+
+Math.max(
+
+...guardadaSensores
+
+);
+
+
+const diferencia =
+
+actualMax -
+
+guardadaMax;
+
+
+document.getElementById(
+
+'comparison'
+
+).style.display =
+
+'block';
+
+
+document.getElementById(
+
+'actualDiameter'
+
+).textContent =
+
+(
+
+actualMax * 2
+
+).toFixed(
+
+1
+
+) +
+
+' mm';
+
+
+document.getElementById(
+
+'savedDiameter'
+
+).textContent =
+
+(
+
+guardadaMax * 2
+
+).toFixed(
+
+1
+
+) +
+
+' mm';
+
+
+document.getElementById(
+
+'differenceDiameter'
+
+).textContent =
+
+(
+
+diferencia * 2
+
+).toFixed(
+
+1
+
+) +
+
+' mm';
+
+
+}
+
+
+// =================================
+// EVENTOS
+// =================================
+
+
+document.getElementById(
+
+'btnNueva'
+
+).addEventListener(
+
+'click',
+
+nuevaMedicion
+
+);
+
+
+document.getElementById(
+
+'btnParar'
+
+).addEventListener(
+
+'click',
+
+pararAdquisicion
+
+);
+
+
+document.getElementById(
+
+'btnBorrar'
+
+).addEventListener(
+
+'click',
+
+borrarPerfiles
+
+);
+
+
+document.getElementById(
+
+'btnCSV'
+
+).addEventListener(
+
+'click',
+
+exportarCSV
+
+);
+
+
+document.getElementById(
+
+'btnJSON'
+
+).addEventListener(
+
+'click',
+
+exportarJSON
+
+);
+
+
+document.getElementById(
+
+'btnGuardar'
+
+).addEventListener(
+
+'click',
+
+guardarMedicion
+
+);
+
+
+document.getElementById(
+
+'btnComparar'
+
+).addEventListener(
+
+'click',
+
+compararMediciones
+
+);
+
+
+// =================================
+// ANIMACIÓN
+// =================================
+
+
+function animate() {
+
+
+requestAnimationFrame(
+
+animate
+
+);
+
+
+controls.update();
+
+
+renderer.render(
+
+scene,
+
+camera
+
+);
+
+
+}
+
+
+animate();
+
+
+// =================================
+// REDIMENSIONAR
+// =================================
+
+
+window.addEventListener(
+
+'resize',
+
+() => {
+
+
+camera.aspect =
+
+window.innerWidth /
+
+window.innerHeight;
+
+
+camera.updateProjectionMatrix();
+
+
+renderer.setSize(
+
+window.innerWidth,
+
+window.innerHeight
+
+);
+
+
+}
+
+);
+
+
+// =================================
+// INICIO
+// =================================
+
+
+actualizarDatos();
+
+
+setInterval(
+
+actualizarDatos,
+
+1000
+
+);
 
 
 </script>
-```
 
 </body>
 
