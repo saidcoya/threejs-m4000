@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
@@ -42,11 +41,8 @@ body {
     color: var(--text);
 
     font-family:
-
         "Segoe UI",
-
         Arial,
-
         sans-serif;
 
 }
@@ -218,19 +214,12 @@ body {
     display: grid;
 
     grid-template-columns:
-
         repeat(
-
             auto-fit,
-
             minmax(
-
                 280px,
-
                 1fr
-
             )
-
         );
 
     gap: 18px;
@@ -303,13 +292,9 @@ body {
     display: grid;
 
     grid-template-columns:
-
         repeat(
-
             4,
-
             1fr
-
         );
 
     gap: 8px;
@@ -375,13 +360,9 @@ body {
     display: grid;
 
     grid-template-columns:
-
         repeat(
-
             4,
-
             1fr
-
         );
 
     gap: 8px;
@@ -459,13 +440,9 @@ body {
     display: grid;
 
     grid-template-columns:
-
         repeat(
-
             2,
-
             1fr
-
         );
 
     gap: 12px;
@@ -521,12 +498,7 @@ body {
    RESPONSIVE
 ===================================== */
 
-@media (
-
-    max-width: 800px
-
-) {
-
+@media (max-width: 800px) {
 
     .topbar {
 
@@ -556,13 +528,9 @@ body {
     .do-grid {
 
         grid-template-columns:
-
             repeat(
-
                 2,
-
                 1fr
-
             );
 
     }
@@ -573,223 +541,215 @@ body {
 
 </head>
 
+
 <body>
+
 
 <header class="topbar">
 
-```
-<div class="logo">
 
-    M4000 <span>INDUSTRIAL</span>
+    <div class="logo">
 
-</div>
-
-
-<nav class="nav">
-
-
-    <button
-
-        class="active"
-
-        onclick="location.href='index.html'">
-
-        Dashboard
-
-    </button>
-
-
-    <button
-
-        onclick="location.href='demo-troncos.html'">
-
-        Demo Troncos
-
-    </button>
-
-
-    <button
-
-        onclick="location.href='demo-template.html'">
-
-        Más demos
-
-    </button>
-
-
-</nav>
-
-
-<div class="connection">
-
-
-    <div
-
-        id="connectionDot"
-
-        class="connection-dot">
+        M4000 <span>INDUSTRIAL</span>
 
     </div>
 
 
-    <span
-
-        id="connectionText">
-
-        DESCONECTADO
-
-    </span>
+    <nav class="nav">
 
 
-</div>
-```
+        <button
+
+            class="active"
+
+            onclick="location.href='index.html'">
+
+            Dashboard
+
+        </button>
+
+
+        <button
+
+            onclick="location.href='demo-troncos.html'">
+
+            Demo Troncos
+
+        </button>
+
+
+    </nav>
+
+
+    <div class="connection">
+
+
+        <div
+
+            id="connectionDot"
+
+            class="connection-dot">
+
+        </div>
+
+
+        <span
+
+            id="connectionText">
+
+            DESCONECTADO
+
+        </span>
+
+
+    </div>
+
 
 </header>
 
+
 <main class="container">
 
-```
-<div class="page-title">
 
+    <div class="page-title">
 
-    <h1>
 
-        Dashboard de control
+        <h1>
 
-    </h1>
+            Dashboard de control
 
+        </h1>
 
-    <p>
 
-        Monitorización de entradas, salidas y señales analógicas
+        <p>
 
-    </p>
+            Monitorización de entradas, salidas y señales analógicas
 
+        </p>
 
-</div>
 
+    </div>
 
-<div class="grid">
 
+    <div class="grid">
 
-    <!-- DI -->
 
+        <!-- DI -->
 
-    <section class="panel">
+        <section class="panel">
 
 
-        <div class="panel-header">
+            <div class="panel-header">
 
 
-            <h2>
+                <h2>
 
-                Entradas digitales
+                    Entradas digitales
 
-            </h2>
+                </h2>
 
 
-            <span class="badge">
+                <span class="badge">
 
-                DI 0-15
+                    DI 0-15
 
-            </span>
+                </span>
 
 
-        </div>
+            </div>
 
 
-        <div
+            <div
 
-            id="diGrid"
+                id="diGrid"
 
-            class="io-grid">
+                class="io-grid">
 
-        </div>
+            </div>
 
 
-    </section>
+        </section>
 
 
-    <!-- DO -->
+        <!-- DO -->
 
+        <section class="panel">
 
-    <section class="panel">
 
+            <div class="panel-header">
 
-        <div class="panel-header">
 
+                <h2>
 
-            <h2>
+                    Salidas digitales
 
-                Salidas digitales
+                </h2>
 
-            </h2>
 
+                <span class="badge">
 
-            <span class="badge">
+                    DO 0-15
 
-                DO 0-15
+                </span>
 
-            </span>
 
+            </div>
 
-        </div>
 
+            <div
 
-        <div
+                id="doGrid"
 
-            id="doGrid"
+                class="do-grid">
 
-            class="do-grid">
+            </div>
 
-        </div>
 
+        </section>
 
-    </section>
 
+        <!-- AI -->
 
-    <!-- AI -->
+        <section class="panel">
 
 
-    <section class="panel">
+            <div class="panel-header">
 
 
-        <div class="panel-header">
+                <h2>
 
+                    Entradas analógicas
 
-            <h2>
+                </h2>
 
-                Entradas analógicas
 
-            </h2>
+                <span class="badge">
 
+                    AI
 
-            <span class="badge">
+                </span>
 
-                AI
 
-            </span>
+            </div>
 
 
-        </div>
+            <div
 
+                id="aiGrid"
 
-        <div
+                class="ai-grid">
 
-            id="aiGrid"
+            </div>
 
-            class="ai-grid">
 
-        </div>
+        </section>
 
 
-    </section>
+    </div>
 
-
-</div>
-```
 
 </main>
+
 
 <script>
 
@@ -1062,20 +1022,20 @@ async function actualizarDatos() {
 
             elemento.textContent =
 
-                estado ?
+                estado
 
-                'ON' :
+                    ? 'ON'
 
-                'OFF';
+                    : 'OFF';
 
 
             elemento.className =
 
-                estado ?
+                estado
 
-                'io-state on' :
+                    ? 'io-state on'
 
-                'io-state off';
+                    : 'io-state off';
 
         }
 
@@ -1111,20 +1071,20 @@ async function actualizarDatos() {
 
             boton.textContent =
 
-                estado ?
+                estado
 
-                'ON' :
+                    ? 'ON'
 
-                'OFF';
+                    : 'OFF';
 
 
             boton.className =
 
-                estado ?
+                estado
 
-                'do-button on' :
+                    ? 'do-button on'
 
-                'do-button';
+                    : 'do-button';
 
         }
 
@@ -1292,6 +1252,7 @@ setInterval(
 );
 
 </script>
+
 
 </body>
 
