@@ -1,73 +1,114 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>Three.js M4000</title>
+<title>Three.js M4000</title>
 
-    <style>
+<style>
 
-        body {
+    body {
 
-            margin: 0;
+        margin: 0;
 
-            overflow: hidden;
+        overflow: hidden;
 
-            background: #111;
+        background: #111;
 
-        }
+        font-family: Arial, sans-serif;
 
+    }
 
-        #info {
+    #info {
 
-            position: absolute;
+        position: absolute;
 
-            top: 15px;
+        top: 15px;
 
-            left: 15px;
+        left: 15px;
 
-            color: white;
+        color: white;
 
-            font-family: Arial;
+        z-index: 10;
 
-            z-index: 10;
+        background: rgba(0, 0, 0, 0.75);
 
-            background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
 
-            padding: 15px;
+        border-radius: 8px;
 
-            border-radius: 5px;
+        min-width: 240px;
 
-            line-height: 1.6;
+    }
 
-        }
+    #info h2 {
 
-    </style>
+        margin-top: 0;
+
+    }
+
+    .estado {
+
+        margin-top: 8px;
+
+    }
+
+    button {
+
+        margin-top: 15px;
+
+        padding: 10px 20px;
+
+        font-size: 16px;
+
+        cursor: pointer;
+
+    }
+
+    .ok {
+
+        color: #00ff00;
+
+    }
+
+    .error {
+
+        color: #ff4444;
+
+    }
+
+</style>
+```
 
 </head>
 
-
 <body>
 
+```
+<div id="info">
 
-    <div id="info">
+    <h2>Three.js M4000</h2>
 
-        Three.js M4000<br>
+    <div class="estado">
 
-        WebSocket:
+        Node-RED:
 
-        <span id="connection">
+        <span id="conexion">
 
-            CONECTANDO...
+            DESCONECTADO
 
         </span>
 
-        <br>
+    </div>
+
+    <div class="estado">
 
         DO3:
 
@@ -77,7 +118,9 @@
 
         </span>
 
-        <br>
+    </div>
+
+    <div class="estado">
 
         AI0:
 
@@ -89,254 +132,273 @@
 
     </div>
 
+    <button id="btnDO3">
 
-    <script type="module">
+        ACTIVAR DO3
+
+    </button>
+
+</div>
 
 
-        // =================================
-        // IMPORTAR THREE.JS
-        // =================================
+<script type="module">
 
-        import * as THREE from
+
+    // =====================================
+    // THREE.JS
+    // =====================================
+
+
+    import * as THREE from
 
         'https://unpkg.com/three@0.178.0/build/three.module.js';
 
 
-
-        // =================================
-        // ESCENA
-        // =================================
-
-        const scene =
-
-            new THREE.Scene();
+    // =====================================
+    // ESCENA
+    // =====================================
 
 
+    const scene =
 
-        // =================================
-        // CÁMARA
-        // =================================
-
-        const camera =
-
-            new THREE.PerspectiveCamera(
-
-                75,
-
-                window.innerWidth /
-
-                window.innerHeight,
-
-                0.1,
-
-                1000
-
-            );
+        new THREE.Scene();
 
 
-        camera.position.z = 5;
+    // =====================================
+    // CÁMARA
+    // =====================================
 
 
+    const camera =
 
-        // =================================
-        // RENDERER
-        // =================================
+        new THREE.PerspectiveCamera(
 
-        const renderer =
+            75,
 
-            new THREE.WebGLRenderer({
+            window.innerWidth /
 
-                antialias: true
+            window.innerHeight,
 
-            });
+            0.1,
 
-
-        renderer.setSize(
-
-            window.innerWidth,
-
-            window.innerHeight
+            1000
 
         );
 
 
-        document.body.appendChild(
-
-            renderer.domElement
-
-        );
+    camera.position.z = 5;
 
 
-
-        // =================================
-        // CUBO 3D
-        // =================================
-
-        const geometry =
-
-            new THREE.BoxGeometry(
-
-                2,
-
-                2,
-
-                2
-
-            );
+    // =====================================
+    // RENDERER
+    // =====================================
 
 
-        const material =
+    const renderer =
 
-            new THREE.MeshStandardMaterial({
+        new THREE.WebGLRenderer({
 
-                color: 0x00ff00
+            antialias: true
 
-            });
-
-
-        const cube =
-
-            new THREE.Mesh(
-
-                geometry,
-
-                material
-
-            );
+        });
 
 
-        scene.add(cube);
+    renderer.setSize(
+
+        window.innerWidth,
+
+        window.innerHeight
+
+    );
 
 
+    document.body.appendChild(
 
-        // =================================
-        // LUZ
-        // =================================
+        renderer.domElement
 
-        const light =
-
-            new THREE.DirectionalLight(
-
-                0xffffff,
-
-                3
-
-            );
+    );
 
 
-        light.position.set(
+    // =====================================
+    // CUBO
+    // =====================================
 
-            5,
 
-            5,
+    const geometry =
 
-            5
+        new THREE.BoxGeometry(
+
+            2,
+
+            2,
+
+            2
 
         );
 
 
-        scene.add(light);
+    const material =
+
+        new THREE.MeshStandardMaterial({
+
+            color: 0x00ff00
+
+        });
 
 
+    const cube =
 
-        // =================================
-        // WEBSOCKET NODE-RED
-        // =================================
+        new THREE.Mesh(
 
-        const socket =
+            geometry,
 
-            new WebSocket(
+            material
 
-                'wss://192.168.1.211/u-os-app-node-red-host/red/ws/m4000'
-
-            );
+        );
 
 
-
-        // =================================
-        // WEBSOCKET CONECTADO
-        // =================================
-
-        socket.onopen = function () {
+    scene.add(cube);
 
 
-            console.log(
-
-                'WebSocket conectado a Node-RED'
-
-            );
+    // =====================================
+    // LUZ
+    // =====================================
 
 
-            document.getElementById(
+    const light =
 
-                'connection'
+        new THREE.DirectionalLight(
 
-            ).textContent =
+            0xffffff,
 
-                'CONECTADO';
+            3
 
-
-        };
-
+        );
 
 
-        // =================================
-        // DATOS RECIBIDOS
-        // =================================
+    light.position.set(
 
-        socket.onmessage = function (event) {
+        5,
+
+        5,
+
+        5
+
+    );
+
+
+    scene.add(light);
+
+
+    // =====================================
+    // CONFIGURACIÓN NODE-RED
+    // =====================================
+
+
+    const NODE_RED_BASE =
+
+        'https://192.168.1.211/u-os-app-node-red-host/red';
+
+
+    const STATUS_URL =
+
+        NODE_RED_BASE +
+
+        '/api/m4000/status';
+
+
+    const DO_URL =
+
+        NODE_RED_BASE +
+
+        '/api/m4000/do';
+
+
+    // =====================================
+    // VARIABLES
+    // =====================================
+
+
+    let estadoDO3 = false;
+
+
+    // =====================================
+    // ACTUALIZAR DATOS
+    // =====================================
+
+
+    async function actualizarDatos() {
+
+
+        try {
+
+
+            const response =
+
+                await fetch(
+
+                    STATUS_URL
+
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+
+                    'HTTP ' +
+
+                    response.status
+
+                );
+
+            }
+
+
+            const data =
+
+                await response.json();
 
 
             console.log(
 
                 'Datos recibidos desde Node-RED:',
 
-                event.data
+                data
 
             );
 
 
-            let data;
+            // ==============================
+            // CONEXIÓN
+            // ==============================
 
 
-            try {
+            const conexion =
 
+                document.getElementById(
 
-                data =
-
-                    JSON.parse(
-
-                        event.data
-
-                    );
-
-
-            }
-
-            catch (error) {
-
-
-                console.error(
-
-                    'Error al interpretar JSON:',
-
-                    error
+                    'conexion'
 
                 );
 
 
-                return;
+            conexion.textContent =
+
+                'CONECTADO';
 
 
-            }
+            conexion.className =
+
+                'ok';
 
 
+            // ==============================
+            // DO3
+            // ==============================
 
-            // =============================
-            // LEER DO3
-            // =============================
 
-            const do3 =
+            estadoDO3 =
 
                 Boolean(
 
@@ -345,34 +407,23 @@
                 );
 
 
-
-            // =============================
-            // LEER AI0
-            // =============================
-
-            const ai0 =
-
-                data.AI?.[0];
-
-
-
-            // =============================
-            // MOSTRAR DO3
-            // =============================
-
             document.getElementById(
 
                 'do3'
 
             ).textContent =
 
-                do3;
+                estadoDO3 ?
+
+                'ON' :
+
+                'OFF';
 
 
+            // ==============================
+            // AI0
+            // ==============================
 
-            // =============================
-            // MOSTRAR AI0
-            // =============================
 
             document.getElementById(
 
@@ -380,17 +431,19 @@
 
             ).textContent =
 
-                ai0;
+                data.AI?.[0] ??
+
+                '---';
 
 
+            // ==============================
+            // CONTROL DEL CUBO
+            // ==============================
 
-            // =============================
-            // CONTROLAR CUBO CON DO3
-            // =============================
 
             if (
 
-                do3 === true
+                estadoDO3 === true
 
             ) {
 
@@ -408,97 +461,165 @@
             }
 
 
-        };
+            // ==============================
+            // TEXTO DEL BOTÓN
+            // ==============================
 
 
+            document.getElementById(
 
-        // =================================
-        // ERROR WEBSOCKET
-        // =================================
+                'btnDO3'
 
-        socket.onerror = function (error) {
+            ).textContent =
+
+                estadoDO3 ?
+
+                'DESACTIVAR DO3' :
+
+                'ACTIVAR DO3';
+
+
+        }
+
+
+        catch (error) {
 
 
             console.error(
 
-                'Error WebSocket:',
+                'Error leyendo Node-RED:',
 
                 error
 
             );
 
 
-            document.getElementById(
+            const conexion =
 
-                'connection'
+                document.getElementById(
 
-            ).textContent =
+                    'conexion'
 
-                'ERROR';
-
-
-        };
+                );
 
 
-
-        // =================================
-        // WEBSOCKET CERRADO
-        // =================================
-
-        socket.onclose = function () {
-
-
-            console.log(
-
-                'WebSocket desconectado'
-
-            );
-
-
-            document.getElementById(
-
-                'connection'
-
-            ).textContent =
+            conexion.textContent =
 
                 'DESCONECTADO';
 
 
-        };
+            conexion.className =
+
+                'error';
 
 
-
-        // =================================
-        // ANIMACIÓN
-        // =================================
-
-        function animate() {
+        }
 
 
-            requestAnimationFrame(
+    }
 
-                animate
+
+    // =====================================
+    // ESCRIBIR DO3
+    // =====================================
+
+
+    async function escribirDO3(
+
+        value
+
+    ) {
+
+
+        try {
+
+
+            const response =
+
+                await fetch(
+
+                    DO_URL,
+
+                    {
+
+
+                        method: 'POST',
+
+
+                        headers: {
+
+
+                            'Content-Type':
+
+                                'application/json'
+
+
+                        },
+
+
+                        body: JSON.stringify({
+
+                            channel: 3,
+
+                            value: value
+
+                        })
+
+
+                    }
+
+                );
+
+
+            const data =
+
+                await response.json();
+
+
+            console.log(
+
+                'Respuesta escritura DO3:',
+
+                data
 
             );
 
 
-            // Rotación continua
+            if (
 
-            cube.rotation.x +=
+                !response.ok
 
-                0.01;
-
-
-            cube.rotation.y +=
-
-                0.01;
+            ) {
 
 
-            renderer.render(
+                throw new Error(
 
-                scene,
+                    'Error HTTP ' +
 
-                camera
+                    response.status
+
+                );
+
+
+            }
+
+
+            // Actualizar inmediatamente
+
+            await actualizarDatos();
+
+
+        }
+
+
+        catch (error) {
+
+
+            console.error(
+
+                'Error escribiendo DO3:',
+
+                error
 
             );
 
@@ -506,47 +627,139 @@
         }
 
 
-        animate();
+    }
 
 
-
-        // =================================
-        // REDIMENSIONAR VENTANA
-        // =================================
-
-        window.addEventListener(
-
-            'resize',
-
-            () => {
+    // =====================================
+    // BOTÓN DO3
+    // =====================================
 
 
-                camera.aspect =
+    document.getElementById(
 
-                    window.innerWidth /
+        'btnDO3'
 
-                    window.innerHeight;
+    ).addEventListener(
 
+        'click',
 
-                camera.updateProjectionMatrix();
-
-
-                renderer.setSize(
-
-                    window.innerWidth,
-
-                    window.innerHeight
-
-                );
+        function () {
 
 
-            }
+            const nuevoEstado =
+
+                !estadoDO3;
+
+
+            escribirDO3(
+
+                nuevoEstado
+
+            );
+
+
+        }
+
+    );
+
+
+    // =====================================
+    // LECTURA PERIÓDICA
+    // =====================================
+
+
+    actualizarDatos();
+
+
+    setInterval(
+
+        actualizarDatos,
+
+        1000
+
+    );
+
+
+    // =====================================
+    // ANIMACIÓN
+    // =====================================
+
+
+    function animate() {
+
+
+        requestAnimationFrame(
+
+            animate
 
         );
 
 
-    </script>
+        // Rotación lenta siempre
 
+        cube.rotation.x +=
+
+            0.005;
+
+
+        cube.rotation.y +=
+
+            0.005;
+
+
+        renderer.render(
+
+            scene,
+
+            camera
+
+        );
+
+
+    }
+
+
+    animate();
+
+
+    // =====================================
+    // REDIMENSIONAR
+    // =====================================
+
+
+    window.addEventListener(
+
+        'resize',
+
+        function () {
+
+
+            camera.aspect =
+
+                window.innerWidth /
+
+                window.innerHeight;
+
+
+            camera.updateProjectionMatrix();
+
+
+            renderer.setSize(
+
+                window.innerWidth,
+
+                window.innerHeight
+
+            );
+
+
+        }
+
+    );
+
+
+</script>
+```
 
 </body>
 
