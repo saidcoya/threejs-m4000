@@ -1,59 +1,56 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>M4000 Industrial Dashboard</title>
 
 <style>
 
-/* ========================================= */
-/* CONFIGURACIÓN GENERAL */
-/* ========================================= */
+/* ================================= */
+/* RESET */
+/* ================================= */
 
 * {
+
     box-sizing: border-box;
-}
-
-:root {
-
-    --bg: #111820;
-    --panel: #1b242d;
-    --panel-dark: #151c23;
-    --border: #34414d;
-
-    --text: #e8edf2;
-    --muted: #8d9aa6;
-
-    --green: #00d084;
-    --red: #ff4757;
-    --orange: #ff9f43;
-    --blue: #00a8ff;
-    --cyan: #00e5ff;
-    --yellow: #ffd32a;
 
 }
+
+
+/* ================================= */
+/* BODY */
+/* ================================= */
 
 body {
 
     margin: 0;
 
     background:
+
         radial-gradient(
+
             circle at top right,
-            #253442 0%,
-            var(--bg) 45%
+
+            #1b2735,
+
+            #0b0f14 60%
+
         );
 
-    color: var(--text);
+    color: #ffffff;
 
     font-family:
+
         Arial,
+
         Helvetica,
+
         sans-serif;
 
     min-height: 100vh;
@@ -61,9 +58,9 @@ body {
 }
 
 
-/* ========================================= */
-/* CABECERA */
-/* ========================================= */
+/* ================================= */
+/* HEADER */
+/* ================================= */
 
 .header {
 
@@ -75,39 +72,102 @@ body {
 
     justify-content: space-between;
 
-    padding: 0 28px;
+    padding: 0 25px;
 
-    background: #18212a;
+    background: rgba(
 
-    border-bottom: 1px solid var(--border);
+        10,
 
-    box-shadow:
-        0 4px 20px rgba(0,0,0,0.35);
+        15,
+
+        20,
+
+        0.95
+
+    );
+
+    border-bottom: 1px solid #303840;
 
 }
 
 
 .header-title {
 
-    font-size: 23px;
+    font-size: 22px;
 
     font-weight: bold;
-
-    letter-spacing: 1px;
 
 }
 
 
 .header-subtitle {
 
-    color: var(--muted);
+    color: #888;
 
     font-size: 12px;
 
-    margin-top: 3px;
+    margin-top: 4px;
 
 }
 
+
+/* ================================= */
+/* NAVEGACIÓN */
+/* ================================= */
+
+.navigation {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+.nav-button {
+
+    background: #1b232c;
+
+    color: #bbb;
+
+    border: 1px solid #3b4650;
+
+    border-radius: 6px;
+
+    padding: 10px 16px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+
+}
+
+
+.nav-button:hover {
+
+    background: #2d3944;
+
+    color: white;
+
+}
+
+
+.nav-button.active {
+
+    background: #006d77;
+
+    color: white;
+
+    border-color: #00a6b2;
+
+}
+
+
+/* ================================= */
+/* ESTADO CONEXIÓN */
+/* ================================= */
 
 .connection {
 
@@ -115,131 +175,169 @@ body {
 
     align-items: center;
 
-    gap: 10px;
+    gap: 8px;
 
-    font-weight: bold;
-
-    font-size: 14px;
+    font-size: 13px;
 
 }
 
 
-.connection-led {
+.connection-dot {
 
-    width: 12px;
+    width: 10px;
 
-    height: 12px;
+    height: 10px;
 
     border-radius: 50%;
 
-    background: var(--red);
-
-    box-shadow:
-        0 0 8px var(--red);
+    background: #ff3333;
 
 }
 
 
-.connection-led.connected {
+.connection-dot.connected {
 
-    background: var(--green);
+    background: #00ff66;
 
     box-shadow:
-        0 0 10px var(--green);
+
+        0 0 10px #00ff66;
 
 }
 
 
-/* ========================================= */
-/* CONTENEDOR PRINCIPAL */
-/* ========================================= */
+/* ================================= */
+/* CONTENEDOR */
+/* ================================= */
 
-.dashboard {
+.container {
 
-    padding: 22px;
+    padding: 20px;
+
+}
+
+
+/* ================================= */
+/* TÍTULO PÁGINA */
+/* ================================= */
+
+.page-title {
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* ================================= */
+/* GRID PRINCIPAL */
+/* ================================= */
+
+.dashboard-grid {
 
     display: grid;
 
     grid-template-columns:
-        minmax(400px, 1fr)
-        minmax(400px, 1fr);
 
-    gap: 20px;
+        repeat(
+
+            auto-fit,
+
+            minmax(
+
+                300px,
+
+                1fr
+
+            )
+
+        );
+
+    gap: 18px;
 
 }
 
 
-/* ========================================= */
-/* PANELES */
-/* ========================================= */
+/* ================================= */
+/* PANEL */
+/* ================================= */
 
 .panel {
 
     background:
 
         linear-gradient(
+
             145deg,
-            #202b35,
-            #171f27
+
+            #151b21,
+
+            #0f1318
+
         );
 
-    border: 1px solid var(--border);
+    border: 1px solid #303840;
 
     border-radius: 10px;
 
     padding: 18px;
 
     box-shadow:
-        0 8px 25px rgba(0,0,0,0.25);
+
+        0 8px 20px
+
+        rgba(
+
+            0,
+
+            0,
+
+            0,
+
+            0.35
+
+        );
 
 }
 
 
 .panel-title {
 
-    display: flex;
+    font-size: 16px;
 
-    justify-content: space-between;
+    font-weight: bold;
 
-    align-items: center;
+    margin-bottom: 15px;
 
-    margin-bottom: 18px;
+    color: #ddd;
+
+    border-bottom: 1px solid #303840;
 
     padding-bottom: 10px;
 
-    border-bottom: 1px solid var(--border);
-
 }
 
 
-.panel-title h2 {
-
-    margin: 0;
-
-    font-size: 17px;
-
-}
-
-
-.panel-title span {
-
-    color: var(--muted);
-
-    font-size: 12px;
-
-}
-
-
-/* ========================================= */
-/* ENTRADAS / SALIDAS DIGITALES */
-/* ========================================= */
+/* ================================= */
+/* DI / DO GRID */
+/* ================================= */
 
 .io-grid {
 
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+
+        repeat(
+
+            4,
+
+            1fr
+
+        );
 
     gap: 10px;
 
@@ -248,13 +346,13 @@ body {
 
 .io-item {
 
-    background: var(--panel-dark);
+    background: #202830;
 
-    border: 1px solid #2e3a45;
+    border: 1px solid #3c4852;
 
-    border-radius: 7px;
+    border-radius: 6px;
 
-    padding: 12px 8px;
+    padding: 10px;
 
     text-align: center;
 
@@ -265,216 +363,164 @@ body {
 
 .io-label {
 
-    display: block;
-
     font-size: 12px;
 
-    color: var(--muted);
+    color: #999;
 
-    margin-bottom: 8px;
-
-}
-
-
-.io-led {
-
-    width: 20px;
-
-    height: 20px;
-
-    border-radius: 50%;
-
-    margin: auto;
-
-    background: #3c4650;
-
-    border: 2px solid #56636f;
-
-}
-
-
-.io-led.on {
-
-    background: var(--green);
-
-    border-color: #8affc9;
-
-    box-shadow:
-        0 0 12px var(--green);
+    margin-bottom: 6px;
 
 }
 
 
 .io-state {
 
-    margin-top: 7px;
-
-    font-size: 11px;
+    font-size: 14px;
 
     font-weight: bold;
 
-    color: var(--muted);
+    color: #777;
 
 }
 
 
 .io-state.on {
 
-    color: var(--green);
+    color: #00ff66;
+
+    text-shadow:
+
+        0 0 8px
+
+        rgba(
+
+            0,
+
+            255,
+
+            100,
+
+            0.7
+
+        );
 
 }
 
 
-/* ========================================= */
+.io-state.off {
+
+    color: #777;
+
+}
+
+
+/* ================================= */
 /* BOTONES DO */
-/* ========================================= */
+/* ================================= */
 
 .do-button {
 
     width: 100%;
 
-    border: none;
+    margin-top: 8px;
+
+    padding: 7px;
 
     border-radius: 5px;
 
-    padding: 5px;
+    border: 1px solid #555;
 
-    margin-top: 7px;
-
-    cursor: pointer;
-
-    background: #303b46;
+    background: #252d35;
 
     color: white;
 
-    font-size: 10px;
+    cursor: pointer;
 
-    font-weight: bold;
-
-    transition: 0.2s;
+    font-size: 11px;
 
 }
 
 
 .do-button:hover {
 
-    background: #465462;
+    background: #394651;
 
 }
 
 
-.do-button.on {
-
-    background: #087f52;
-
-    color: white;
-
-}
-
-
-/* ========================================= */
+/* ================================= */
 /* ANALÓGICAS */
-/* ========================================= */
-
-.analog-panel {
-
-    grid-column: 1 / -1;
-
-}
-
+/* ================================= */
 
 .analog-grid {
 
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
 
-    gap: 18px;
+        repeat(
+
+            2,
+
+            1fr
+
+        );
+
+    gap: 15px;
 
 }
 
 
 .analog-card {
 
-    background: var(--panel-dark);
+    background: #202830;
 
-    border: 1px solid #34414d;
+    border: 1px solid #3c4852;
 
     border-radius: 8px;
 
-    padding: 18px;
-
-}
-
-
-.analog-header {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
+    padding: 15px;
 
 }
 
 
 .analog-name {
 
-    font-size: 15px;
-
-    font-weight: bold;
-
-}
-
-
-.analog-number {
-
-    color: var(--blue);
-
-    font-size: 12px;
-
-}
-
-
-.analog-value {
-
-    font-size: 30px;
-
-    font-weight: bold;
-
-    margin-top: 16px;
-
-    color: var(--cyan);
-
-}
-
-
-.analog-unit {
-
-    color: var(--muted);
+    color: #aaa;
 
     font-size: 13px;
 
 }
 
 
+.analog-value {
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    color: #00d9ff;
+
+    margin-top: 8px;
+
+}
+
+
 .analog-bar {
 
-    margin-top: 15px;
+    height: 8px;
 
-    height: 9px;
+    margin-top: 10px;
 
-    background: #303b45;
+    background: #111;
 
-    border-radius: 10px;
+    border-radius: 5px;
 
     overflow: hidden;
 
 }
 
 
-.analog-bar-fill {
+.analog-fill {
 
     height: 100%;
 
@@ -483,9 +529,13 @@ body {
     background:
 
         linear-gradient(
+
             90deg,
-            var(--blue),
-            var(--cyan)
+
+            #0077ff,
+
+            #00e5ff
+
         );
 
     transition: width 0.3s;
@@ -493,411 +543,491 @@ body {
 }
 
 
-/* ========================================= */
-/* INFORMACIÓN DEL SISTEMA */
-/* ========================================= */
+/* ================================= */
+/* DEMOS */
+/* ================================= */
 
-.system-panel {
-
-    grid-column: 1 / -1;
-
-}
-
-
-.system-grid {
+.demo-grid {
 
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+
+        repeat(
+
+            auto-fit,
+
+            minmax(
+
+                220px,
+
+                1fr
+
+            )
+
+        );
 
     gap: 15px;
 
 }
 
 
-.system-card {
+.demo-card {
 
-    background: var(--panel-dark);
+    background:
 
-    border-radius: 7px;
+        linear-gradient(
 
-    padding: 15px;
+            145deg,
 
-    border-left: 4px solid var(--blue);
+            #1c252d,
 
-}
+            #11171c
 
+        );
 
-.system-label {
+    border: 1px solid #3b4650;
 
-    font-size: 12px;
+    border-radius: 8px;
 
-    color: var(--muted);
+    padding: 18px;
 
-}
+    cursor: pointer;
 
-
-.system-value {
-
-    font-size: 21px;
-
-    font-weight: bold;
-
-    margin-top: 7px;
+    transition: 0.2s;
 
 }
 
 
-/* ========================================= */
-/* MENSAJES */
-/* ========================================= */
+.demo-card:hover {
 
-#error {
+    transform: translateY(
 
-    color: var(--red);
+        -3px
 
-    margin-top: 10px;
+    );
+
+    border-color: #00a6b2;
+
+}
+
+
+.demo-card h3 {
+
+    margin-top: 0;
+
+    color: #00d9ff;
+
+}
+
+
+.demo-card p {
+
+    color: #999;
 
     font-size: 13px;
 
+    line-height: 1.5;
+
 }
 
 
-/* ========================================= */
+.demo-button {
+
+    margin-top: 10px;
+
+    padding: 9px 14px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    background: #006d77;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+
+
+.demo-button:hover {
+
+    background: #0095a0;
+
+}
+
+
+/* ================================= */
 /* RESPONSIVE */
-/* ========================================= */
+/* ================================= */
 
-@media (max-width: 1000px) {
+@media (
 
-    .dashboard {
+    max-width: 700px
 
-        grid-template-columns: 1fr;
+) {
+
+
+    .header {
+
+        height: auto;
+
+        padding: 15px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
 
     }
 
-    .analog-panel,
-    .system-panel {
 
-        grid-column: auto;
+    .navigation {
+
+        width: 100%;
+
+        overflow-x: auto;
 
     }
 
-}
-
-
-@media (max-width: 650px) {
 
     .io-grid {
 
         grid-template-columns:
-            repeat(4, 1fr);
 
-    }
+            repeat(
 
-    .analog-grid {
+                2,
 
-        grid-template-columns: 1fr 1fr;
+                1fr
 
-    }
-
-    .system-grid {
-
-        grid-template-columns: 1fr 1fr;
-
-    }
-
-    .header {
-
-        padding: 0 15px;
+            );
 
     }
 
 }
-
 
 </style>
 
 </head>
 
+
 <body>
 
-<!-- ========================================= -->
 
-<!-- CABECERA -->
-
-<!-- ========================================= -->
+<!-- ================================= -->
+<!-- HEADER -->
+<!-- ================================= -->
 
 <header class="header">
 
-```
-<div>
 
-    <div class="header-title">
+    <div>
 
-        M4000 INDUSTRIAL DASHBOARD
+
+        <div class="header-title">
+
+            M4000 INDUSTRIAL DASHBOARD
+
+        </div>
+
+
+        <div class="header-subtitle">
+
+            Sistema de supervisión y control
+
+        </div>
+
 
     </div>
 
-    <div class="header-subtitle">
 
-        Monitorización y control de entradas/salidas
+    <nav class="navigation">
+
+
+        <button
+
+            class="nav-button active"
+
+            id="btnDashboard">
+
+
+            Dashboard
+
+
+        </button>
+
+
+        <button
+
+            class="nav-button"
+
+            id="btnDemos">
+
+
+            Demos
+
+
+        </button>
+
+
+    </nav>
+
+
+    <div class="connection">
+
+
+        <span
+
+            class="connection-dot"
+
+            id="connectionDot">
+
+
+        </span>
+
+
+        <span id="connectionText">
+
+
+            DESCONECTADO
+
+
+        </span>
+
 
     </div>
 
-</div>
-
-
-<div class="connection">
-
-    <div
-        id="connectionLed"
-        class="connection-led">
-    </div>
-
-    <span id="conexion">
-
-        DESCONECTADO
-
-    </span>
-
-</div>
-```
 
 </header>
 
-<!-- ========================================= -->
 
+<!-- ================================= -->
 <!-- DASHBOARD -->
+<!-- ================================= -->
 
-<!-- ========================================= -->
+<main
 
-<main class="dashboard">
+    class="container"
 
-<!-- ========================================= -->
+    id="dashboardPage">
 
-<!-- ENTRADAS DIGITALES -->
 
-<!-- ========================================= -->
+    <div class="page-title">
 
-<section class="panel">
-
-```
-<div class="panel-title">
-
-    <h2>
-
-        ENTRADAS DIGITALES
-
-    </h2>
-
-    <span>
-
-        DI0 - DI15
-
-    </span>
-
-</div>
-
-
-<div
-    id="diGrid"
-    class="io-grid">
-
-</div>
-```
-
-</section>
-
-<!-- ========================================= -->
-
-<!-- SALIDAS DIGITALES -->
-
-<!-- ========================================= -->
-
-<section class="panel">
-
-```
-<div class="panel-title">
-
-    <h2>
-
-        SALIDAS DIGITALES
-
-    </h2>
-
-    <span>
-
-        DO0 - DO15
-
-    </span>
-
-</div>
-
-
-<div
-    id="doGrid"
-    class="io-grid">
-
-</div>
-```
-
-</section>
-
-<!-- ========================================= -->
-
-<!-- ANALÓGICAS -->
-
-<!-- ========================================= -->
-
-<section class="panel analog-panel">
-
-```
-<div class="panel-title">
-
-    <h2>
-
-        ENTRADAS ANALÓGICAS
-
-    </h2>
-
-    <span>
-
-        AI0 - AI3
-
-    </span>
-
-</div>
-
-
-<div
-    id="analogGrid"
-    class="analog-grid">
-
-</div>
-```
-
-</section>
-
-<!-- ========================================= -->
-
-<!-- INFORMACIÓN DEL SISTEMA -->
-
-<!-- ========================================= -->
-
-<section class="panel system-panel">
-
-```
-<div class="panel-title">
-
-    <h2>
-
-        ESTADO DEL SISTEMA
-
-    </h2>
-
-    <span>
-
-        ACTUALIZACIÓN EN TIEMPO REAL
-
-    </span>
-
-</div>
-
-
-<div class="system-grid">
-
-    <div class="system-card">
-
-        <div class="system-label">
-
-            ENTRADAS ACTIVAS
-
-        </div>
-
-        <div
-            id="activeDI"
-            class="system-value">
-
-            0
-
-        </div>
+        Estado del sistema M4000
 
     </div>
 
 
-    <div class="system-card">
+    <div class="dashboard-grid">
 
-        <div class="system-label">
 
-            SALIDAS ACTIVAS
+        <!-- ========================= -->
+        <!-- ENTRADAS DIGITALES -->
+        <!-- ========================= -->
 
-        </div>
 
-        <div
-            id="activeDO"
-            class="system-value">
+        <section class="panel">
 
-            0
 
-        </div>
+            <div class="panel-title">
+
+                Entradas digitales
+
+            </div>
+
+
+            <div
+
+                class="io-grid"
+
+                id="diGrid">
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- SALIDAS DIGITALES -->
+        <!-- ========================= -->
+
+
+        <section class="panel">
+
+
+            <div class="panel-title">
+
+                Salidas digitales
+
+            </div>
+
+
+            <div
+
+                class="io-grid"
+
+                id="doGrid">
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ========================= -->
+        <!-- ANALÓGICAS -->
+        <!-- ========================= -->
+
+
+        <section class="panel">
+
+
+            <div class="panel-title">
+
+                Entradas analógicas
+
+            </div>
+
+
+            <div
+
+                class="analog-grid"
+
+                id="analogGrid">
+
+
+            </div>
+
+
+        </section>
+
 
     </div>
 
-
-    <div class="system-card">
-
-        <div class="system-label">
-
-            ÚLTIMA ACTUALIZACIÓN
-
-        </div>
-
-        <div
-            id="lastUpdate"
-            class="system-value">
-
-            --:--:--
-
-        </div>
-
-    </div>
-
-
-    <div class="system-card">
-
-        <div class="system-label">
-
-            ESTADO
-
-        </div>
-
-        <div
-            id="systemState"
-            class="system-value">
-
-            OFFLINE
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<div id="error"></div>
-```
-
-</section>
 
 </main>
+
+
+<!-- ================================= -->
+<!-- DEMOS -->
+<!-- ================================= -->
+
+<main
+
+    class="container"
+
+    id="demosPage"
+
+    style="display:none;">
+
+
+    <div class="page-title">
+
+        Demos M4000
+
+    </div>
+
+
+    <div class="demo-grid">
+
+
+        <!-- ========================= -->
+        <!-- DEMO TRONCOS -->
+        <!-- ========================= -->
+
+
+        <div
+
+            class="demo-card"
+
+            onclick="abrirDemoTroncos()">
+
+
+            <h3>
+
+                Perfil 3D de troncos
+
+            </h3>
+
+
+            <p>
+
+                Visualización 3D de perfiles
+
+                obtenidos mediante sensores
+
+                del sistema M4000.
+
+            </p>
+
+
+            <button
+
+                class="demo-button">
+
+
+                Abrir demo
+
+
+            </button>
+
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- FUTURA DEMO -->
+        <!-- ========================= -->
+
+
+        <div
+
+            class="demo-card">
+
+
+            <h3>
+
+                Próxima demo
+
+            </h3>
+
+
+            <p>
+
+                Espacio reservado para
+
+                futuras visualizaciones
+
+                industriales.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
 
 <script>
 
 
-/* ========================================= */
-/* CONFIGURACIÓN NODE-RED */
-/* ========================================= */
+/* ================================= */
+/* CONFIGURACIÓN */
+/* ================================= */
+
 
 const STATUS_URL =
 
@@ -909,25 +1039,33 @@ const DO_URL =
     '/api/m4000/do';
 
 
-const NUM_DI = 16;
+const NUM_DI =
 
-const NUM_DO = 16;
-
-const NUM_AI = 4;
+    16;
 
 
-/* ========================================= */
-/* ESTADOS LOCALES */
-/* ========================================= */
+const NUM_DO =
 
-let estadosDO =
-
-    Array(NUM_DO).fill(false);
+    16;
 
 
-/* ========================================= */
-/* CREAR ENTRADAS DIGITALES */
-/* ========================================= */
+const NUM_AI =
+
+    4;
+
+
+/* ================================= */
+/* VARIABLES */
+/* ================================= */
+
+
+let estadoDO = [];
+
+
+/* ================================= */
+/* CREAR DI */
+/* ================================= */
+
 
 function crearDI() {
 
@@ -939,9 +1077,6 @@ function crearDI() {
             'diGrid'
 
         );
-
-
-    grid.innerHTML = '';
 
 
     for (
@@ -971,25 +1106,17 @@ function crearDI() {
 
         item.innerHTML = `
 
-            <span class="io-label">
+            <div class="io-label">
 
                 DI${i}
-
-            </span>
-
-            <div
-
-                id="di-led-${i}"
-
-                class="io-led">
 
             </div>
 
             <div
 
-                id="di-state-${i}"
+                class="io-state off"
 
-                class="io-state">
+                id="di-${i}">
 
                 OFF
 
@@ -1009,9 +1136,10 @@ function crearDI() {
 }
 
 
-/* ========================================= */
-/* CREAR SALIDAS DIGITALES */
-/* ========================================= */
+/* ================================= */
+/* CREAR DO */
+/* ================================= */
+
 
 function crearDO() {
 
@@ -1023,9 +1151,6 @@ function crearDO() {
             'doGrid'
 
         );
-
-
-    grid.innerHTML = '';
 
 
     for (
@@ -1055,25 +1180,17 @@ function crearDO() {
 
         item.innerHTML = `
 
-            <span class="io-label">
+            <div class="io-label">
 
                 DO${i}
-
-            </span>
-
-            <div
-
-                id="do-led-${i}"
-
-                class="io-led">
 
             </div>
 
             <div
 
-                id="do-state-${i}"
+                class="io-state off"
 
-                class="io-state">
+                id="do-${i}">
 
                 OFF
 
@@ -1081,11 +1198,13 @@ function crearDO() {
 
             <button
 
-                id="do-button-${i}"
+                class="do-button"
 
-                class="do-button">
+                onclick="cambiarDO(${i})">
 
-                ACTIVAR
+
+                CAMBIAR
+
 
             </button>
 
@@ -1098,37 +1217,15 @@ function crearDO() {
 
         );
 
-
-        document.getElementById(
-
-            `do-button-${i}`
-
-        ).addEventListener(
-
-            'click',
-
-            () => {
-
-                escribirDO(
-
-                    i,
-
-                    !estadosDO[i]
-
-                );
-
-            }
-
-        );
-
     }
 
 }
 
 
-/* ========================================= */
-/* CREAR ANALÓGICAS */
-/* ========================================= */
+/* ================================= */
+/* CREAR AI */
+/* ================================= */
+
 
 function crearAI() {
 
@@ -1140,9 +1237,6 @@ function crearAI() {
             'analogGrid'
 
         );
-
-
-    grid.innerHTML = '';
 
 
     for (
@@ -1172,51 +1266,32 @@ function crearAI() {
 
         card.innerHTML = `
 
-            <div class="analog-header">
+            <div class="analog-name">
 
-                <span class="analog-name">
-
-                    ANALÓGICA ${i}
-
-                </span>
-
-                <span class="analog-number">
-
-                    AI${i}
-
-                </span>
+                AI${i}
 
             </div>
 
+            <div
 
-            <div>
+                class="analog-value"
 
-                <span
+                id="ai-${i}">
 
-                    id="ai-value-${i}"
 
-                    class="analog-value">
+                ---
 
-                    ---
-
-                </span>
-
-                <span class="analog-unit">
-
-                    unidades
-
-                </span>
 
             </div>
-
 
             <div class="analog-bar">
 
                 <div
 
-                    id="ai-bar-${i}"
+                    class="analog-fill"
 
-                    class="analog-bar-fill">
+                    id="ai-fill-${i}">
+
 
                 </div>
 
@@ -1236,369 +1311,10 @@ function crearAI() {
 }
 
 
-/* ========================================= */
-/* ACTUALIZAR DI */
-/* ========================================= */
+/* ================================= */
+/* ACTUALIZAR ESTADOS */
+/* ================================= */
 
-function actualizarDI(
-
-    datos
-
-) {
-
-
-    let activas = 0;
-
-
-    for (
-
-        let i = 0;
-
-        i < NUM_DI;
-
-        i++
-
-    ) {
-
-
-        const activo =
-
-            Boolean(
-
-                datos[i]
-
-            );
-
-
-        if (
-
-            activo
-
-        ) {
-
-            activas++;
-
-        }
-
-
-        const led =
-
-            document.getElementById(
-
-                `di-led-${i}`
-
-            );
-
-
-        const state =
-
-            document.getElementById(
-
-                `di-state-${i}`
-
-            );
-
-
-        if (
-
-            activo
-
-        ) {
-
-            led.classList.add(
-
-                'on'
-
-            );
-
-            state.classList.add(
-
-                'on'
-
-            );
-
-            state.textContent =
-
-                'ON';
-
-        }
-
-        else {
-
-            led.classList.remove(
-
-                'on'
-
-            );
-
-            state.classList.remove(
-
-                'on'
-
-            );
-
-            state.textContent =
-
-                'OFF';
-
-        }
-
-    }
-
-
-    document.getElementById(
-
-        'activeDI'
-
-    ).textContent =
-
-        activas;
-
-}
-
-
-/* ========================================= */
-/* ACTUALIZAR DO */
-/* ========================================= */
-
-function actualizarDO(
-
-    datos
-
-) {
-
-
-    let activas = 0;
-
-
-    for (
-
-        let i = 0;
-
-        i < NUM_DO;
-
-        i++
-
-    ) {
-
-
-        const activo =
-
-            Boolean(
-
-                datos[i]
-
-            );
-
-
-        estadosDO[i] =
-
-            activo;
-
-
-        if (
-
-            activo
-
-        ) {
-
-            activas++;
-
-        }
-
-
-        const led =
-
-            document.getElementById(
-
-                `do-led-${i}`
-
-            );
-
-
-        const state =
-
-            document.getElementById(
-
-                `do-state-${i}`
-
-            );
-
-
-        const button =
-
-            document.getElementById(
-
-                `do-button-${i}`
-
-            );
-
-
-        if (
-
-            activo
-
-        ) {
-
-            led.classList.add(
-
-                'on'
-
-            );
-
-            state.classList.add(
-
-                'on'
-
-            );
-
-            state.textContent =
-
-                'ON';
-
-
-            button.classList.add(
-
-                'on'
-
-            );
-
-            button.textContent =
-
-                'DESACTIVAR';
-
-        }
-
-        else {
-
-            led.classList.remove(
-
-                'on'
-
-            );
-
-            state.classList.remove(
-
-                'on'
-
-            );
-
-            state.textContent =
-
-                'OFF';
-
-
-            button.classList.remove(
-
-                'on'
-
-            );
-
-            button.textContent =
-
-                'ACTIVAR';
-
-        }
-
-    }
-
-
-    document.getElementById(
-
-        'activeDO'
-
-    ).textContent =
-
-        activas;
-
-}
-
-
-/* ========================================= */
-/* ACTUALIZAR ANALÓGICAS */
-/* ========================================= */
-
-function actualizarAI(
-
-    datos
-
-) {
-
-
-    for (
-
-        let i = 0;
-
-        i < NUM_AI;
-
-        i++
-
-    ) {
-
-
-        const valor =
-
-            Number(
-
-                datos[i] ?? 0
-
-            );
-
-
-        document.getElementById(
-
-            `ai-value-${i}`
-
-        ).textContent =
-
-            valor;
-
-
-        // Escala visual 0-27648
-
-        const porcentaje =
-
-            Math.max(
-
-                0,
-
-                Math.min(
-
-                    100,
-
-                    (
-
-                        valor /
-
-                        27648
-
-                    ) *
-
-                    100
-
-                )
-
-            );
-
-
-        document.getElementById(
-
-            `ai-bar-${i}`
-
-        ).style.width =
-
-            porcentaje +
-
-            '%';
-
-    }
-
-}
-
-
-/* ========================================= */
-/* LEER DATOS DE NODE-RED */
-/* ========================================= */
 
 async function actualizarDatos() {
 
@@ -1625,6 +1341,7 @@ async function actualizarDatos() {
 
         ) {
 
+
             throw new Error(
 
                 'HTTP ' +
@@ -1641,77 +1358,266 @@ async function actualizarDatos() {
             await response.json();
 
 
-        actualizarDI(
+        /* ========================= */
 
-            data.DI || []
+        /* CONEXIÓN */
 
-        );
-
-
-        actualizarDO(
-
-            data.DO || []
-
-        );
+        /* ========================= */
 
 
-        actualizarAI(
+        document
 
-            data.AI || []
+            .getElementById(
 
-        );
+                'connectionDot'
 
+            )
 
-        const led =
+            .classList
 
-            document.getElementById(
+            .add(
 
-                'connectionLed'
+                'connected'
 
             );
 
 
-        led.classList.add(
+        document
 
-            'connected'
+            .getElementById(
 
-        );
+                'connectionText'
 
+            )
 
-        document.getElementById(
-
-            'conexion'
-
-        ).textContent =
+            .textContent =
 
             'CONECTADO';
 
 
-        document.getElementById(
+        /* ========================= */
 
-            'systemState'
+        /* DI */
 
-        ).textContent =
-
-            'ONLINE';
+        /* ========================= */
 
 
-        document.getElementById(
+        for (
 
-            'lastUpdate'
+            let i = 0;
 
-        ).textContent =
+            i < NUM_DI;
 
-            new Date().toLocaleTimeString();
+            i++
+
+        ) {
 
 
-        document.getElementById(
+            const estado =
 
-            'error'
+                Boolean(
 
-        ).textContent =
+                    data.DI?.[i]
 
-            '';
+                );
+
+
+            const element =
+
+                document.getElementById(
+
+                    'di-' +
+
+                    i
+
+                );
+
+
+            element.textContent =
+
+                estado ?
+
+                'ON' :
+
+                'OFF';
+
+
+            element.className =
+
+                'io-state ' +
+
+                (
+
+                    estado ?
+
+                    'on' :
+
+                    'off'
+
+                );
+
+        }
+
+
+        /* ========================= */
+
+        /* DO */
+
+        /* ========================= */
+
+
+        for (
+
+            let i = 0;
+
+            i < NUM_DO;
+
+            i++
+
+        ) {
+
+
+            const estado =
+
+                Boolean(
+
+                    data.DO?.[i]
+
+                );
+
+
+            estadoDO[i] =
+
+                estado;
+
+
+            const element =
+
+                document.getElementById(
+
+                    'do-' +
+
+                    i
+
+                );
+
+
+            element.textContent =
+
+                estado ?
+
+                'ON' :
+
+                'OFF';
+
+
+            element.className =
+
+                'io-state ' +
+
+                (
+
+                    estado ?
+
+                    'on' :
+
+                    'off'
+
+                );
+
+        }
+
+
+        /* ========================= */
+
+        /* AI */
+
+        /* ========================= */
+
+
+        for (
+
+            let i = 0;
+
+            i < NUM_AI;
+
+            i++
+
+        ) {
+
+
+            const valor =
+
+                Number(
+
+                    data.AI?.[i] ??
+
+                    0
+
+                );
+
+
+            document
+
+                .getElementById(
+
+                    'ai-' +
+
+                    i
+
+                )
+
+                .textContent =
+
+                valor;
+
+
+            const porcentaje =
+
+                Math.min(
+
+                    Math.max(
+
+                        (
+
+                            valor /
+
+                            27648
+
+                        )
+
+                        *
+
+                        100,
+
+                        0
+
+                    ),
+
+                    100
+
+                );
+
+
+            document
+
+                .getElementById(
+
+                    'ai-fill-' +
+
+                    i
+
+                )
+
+                .style
+
+                .width =
+
+                porcentaje +
+
+                '%';
+
+        }
 
 
     }
@@ -1733,59 +1639,59 @@ async function actualizarDatos() {
         );
 
 
-        document.getElementById(
+        document
 
-            'connectionLed'
+            .getElementById(
 
-        ).classList.remove(
+                'connectionDot'
 
-            'connected'
+            )
 
-        );
+            .classList
+
+            .remove(
+
+                'connected'
+
+            );
 
 
-        document.getElementById(
+        document
 
-            'conexion'
+            .getElementById(
 
-        ).textContent =
+                'connectionText'
+
+            )
+
+            .textContent =
 
             'DESCONECTADO';
-
-
-        document.getElementById(
-
-            'systemState'
-
-        ).textContent =
-
-            'OFFLINE';
-
-
-        document.getElementById(
-
-            'error'
-
-        ).textContent =
-
-            error.message;
 
     }
 
 }
 
 
-/* ========================================= */
-/* ESCRIBIR SALIDA DIGITAL */
-/* ========================================= */
+/* ================================= */
+/* CAMBIAR DO */
+/* ================================= */
 
-async function escribirDO(
 
-    channel,
+async function cambiarDO(
 
-    value
+    canal
 
 ) {
+
+
+    const nuevoEstado =
+
+        !estadoDO[
+
+            canal
+
+        ];
 
 
     try {
@@ -1799,15 +1705,22 @@ async function escribirDO(
 
                 {
 
-                    method: 'POST',
+
+                    method:
+
+                        'POST',
+
 
                     headers: {
+
 
                         'Content-Type':
 
                             'application/json'
 
+
                     },
+
 
                     body:
 
@@ -1815,11 +1728,11 @@ async function escribirDO(
 
                             channel:
 
-                                channel,
+                                canal,
 
                             value:
 
-                                value
+                                nuevoEstado
 
                         })
 
@@ -1834,9 +1747,10 @@ async function escribirDO(
 
         ) {
 
+
             throw new Error(
 
-                'HTTP ' +
+                'Error HTTP ' +
 
                 response.status
 
@@ -1845,43 +1759,8 @@ async function escribirDO(
         }
 
 
-        const data =
+        await actualizarDatos();
 
-            await response.json();
-
-
-        console.log(
-
-            'DO actualizada:',
-
-            data
-
-        );
-
-
-        // Actualización rápida
-
-        estadosDO[channel] =
-
-            value;
-
-
-        actualizarDO(
-
-            estadosDO
-
-        );
-
-
-        // Confirmar leyendo el estado real
-
-        setTimeout(
-
-            actualizarDatos,
-
-            100
-
-        );
 
     }
 
@@ -1901,27 +1780,208 @@ async function escribirDO(
 
         );
 
-
-        document.getElementById(
-
-            'error'
-
-        ).textContent =
-
-            error.message;
-
     }
 
 }
 
 
-/* ========================================= */
-/* INICIALIZACIÓN */
-/* ========================================= */
+/* ================================= */
+/* NAVEGACIÓN */
+/* ================================= */
+
+
+document
+
+    .getElementById(
+
+        'btnDashboard'
+
+    )
+
+    .addEventListener(
+
+        'click',
+
+        () => {
+
+
+            document
+
+                .getElementById(
+
+                    'dashboardPage'
+
+                )
+
+                .style
+
+                .display =
+
+                'block';
+
+
+            document
+
+                .getElementById(
+
+                    'demosPage'
+
+                )
+
+                .style
+
+                .display =
+
+                'none';
+
+
+            document
+
+                .getElementById(
+
+                    'btnDashboard'
+
+                )
+
+                .classList
+
+                .add(
+
+                    'active'
+
+                );
+
+
+            document
+
+                .getElementById(
+
+                    'btnDemos'
+
+                )
+
+                .classList
+
+                .remove(
+
+                    'active'
+
+                );
+
+        }
+
+    );
+
+
+document
+
+    .getElementById(
+
+        'btnDemos'
+
+    )
+
+    .addEventListener(
+
+        'click',
+
+        () => {
+
+
+            document
+
+                .getElementById(
+
+                    'dashboardPage'
+
+                )
+
+                .style
+
+                .display =
+
+                'none';
+
+
+            document
+
+                .getElementById(
+
+                    'demosPage'
+
+                )
+
+                .style
+
+                .display =
+
+                'block';
+
+
+            document
+
+                .getElementById(
+
+                    'btnDashboard'
+
+                )
+
+                .classList
+
+                .remove(
+
+                    'active'
+
+                );
+
+
+            document
+
+                .getElementById(
+
+                    'btnDemos'
+
+                )
+
+                .classList
+
+                .add(
+
+                    'active'
+
+                );
+
+        }
+
+    );
+
+
+/* ================================= */
+/* ABRIR DEMO TRONCOS */
+/* ================================= */
+
+
+function abrirDemoTroncos() {
+
+
+    window.location.href =
+
+        '/demo-troncos.html';
+
+
+}
+
+
+/* ================================= */
+/* INICIO */
+/* ================================= */
+
 
 crearDI();
 
+
 crearDO();
+
 
 crearAI();
 
@@ -1936,7 +1996,6 @@ setInterval(
     1000
 
 );
-
 
 </script>
 
