@@ -249,11 +249,9 @@ body {
 
 .container {
 
-    padding: 26px;
+    padding: 28px 34px;
 
-    max-width: 1600px;
-
-    margin: auto;
+    max-width: 100%;
 
 }
 
@@ -358,8 +356,6 @@ body {
 
 .kpi-icon.di { background: rgba(0, 224, 150, 0.12); border-color: rgba(0, 224, 150, 0.25); }
 .kpi-icon.do { background: rgba(255, 182, 36, 0.12); border-color: rgba(255, 182, 36, 0.25); }
-.kpi-icon.conn { background: rgba(255, 92, 108, 0.12); border-color: rgba(255, 92, 108, 0.25); }
-.kpi-icon.conn.ok { background: rgba(0, 224, 150, 0.12); border-color: rgba(0, 224, 150, 0.25); }
 
 
 .kpi-content {
@@ -415,6 +411,19 @@ body {
         );
 
     gap: 22px;
+
+    justify-items: stretch;
+
+}
+
+
+@media (min-width: 1200px) {
+
+    .grid {
+
+        grid-template-columns: repeat(3, 1fr);
+
+    }
 
 }
 
@@ -1238,21 +1247,6 @@ body {
                 <div class="kpi-label">DO activas</div>
 
                 <div id="kpiDo" class="kpi-value">0</div>
-
-            </div>
-
-        </div>
-
-
-        <div class="kpi">
-
-            <div id="kpiConnIcon" class="kpi-icon conn">●</div>
-
-            <div class="kpi-content">
-
-                <div class="kpi-label">Conexión</div>
-
-                <div id="kpiConn" class="kpi-value">OFF</div>
 
             </div>
 
@@ -2098,31 +2092,6 @@ async function actualizarDatos() {
             'CONECTADO';
 
 
-        const kpiConnIcon =
-
-            document.getElementById(
-
-                'kpiConnIcon'
-
-            );
-
-
-        kpiConnIcon.classList.add(
-
-            'ok'
-
-        );
-
-
-        document.getElementById(
-
-            'kpiConn'
-
-        ).textContent =
-
-            'ON';
-
-
         let diActivas =
 
             0;
@@ -2381,31 +2350,6 @@ async function actualizarDatos() {
         ).textContent =
 
             'DESCONECTADO';
-
-
-        const kpiConnIcon =
-
-            document.getElementById(
-
-                'kpiConnIcon'
-
-            );
-
-
-        kpiConnIcon.classList.remove(
-
-            'ok'
-
-        );
-
-
-        document.getElementById(
-
-            'kpiConn'
-
-        ).textContent =
-
-            'OFF';
 
     }
 
