@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Demo Perfil 3D - M4000</title>
+
+    <style>
+
+        body {
+
+            margin: 0;
+
+            overflow: hidden;
+
+            background: #111;
+
+            font-family: Arial;
+
+        }
+
+
+        #info {
+
+            position: absolute;
+
+            top: 15px;
+
+            left: 15px;
+
+            z-index: 10;
+
+            color: white;
+
+            background: rgba(0, 0, 0, 0.75);
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            min-width: 250px;
+
+        }
+
+
+        #info h2 {
+
+            margin-top: 0;
+
+        }
+
+
+        .ok {
+
+            color: #00ff00;
+
+        }
+
+
+        .error {
+
+            color: #ff4444;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div id="info">
+
+        <h2>Demo Perfil 3D</h2>
+
+
+        <div>
+
+            Node-RED:
+
+            <span id="status">
+
+                CONECTANDO...
+
+            </span>
+
+        </div>
+
+
+        <br>
+
+
+        <div>
+
+            Ángulo:
+
+            <span id="angle">
+
+                ---
+
+            </span>
+
+            °
+
+        </div>
+
+
+        <div>
+
+            Sensores:
+
+            <span id="numSensors">
+
+                ---
+
+            </span>
+
+        </div>
+
+
+        <div>
+
+            Sensor mínimo:
+
+            <span id="min">
+
+                ---
+
+            </span>
+
+        </div>
+
+
+        <div>
+
+            Sensor máximo:
+
+            <span id="max">
+
+                ---
+
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <script type="module">
+
+
+        // =========================================
+
+        // THREE.JS
+
+        // =========================================
+
+
+        import * as THREE from
+
+        'https://unpkg.com/three@0.178.0/build/three.module.js';
+
+
+
+        // =========================================
+
+        // ESCENA
+
+        // =========================================
+
+
+        const scene =
+
+            new THREE.Scene();
+
+
+
+        scene.background =
+
+            new THREE.Color(0x111111);
+
+
+
+        // =========================================
+
+        // CÁMARA
+
+        // =========================================
+
+
+        const camera =
+
+            new THREE.PerspectiveCamera(
+
+                60,
+
+                window.innerWidth /
+
+                window.innerHeight,
+
+                0.1,
+
+                100000
+
+            );
+
+
+
+        camera.position.set(
+
+            0,
+
+            0,
+
+            3000
+
+        );
+
+
+
+        camera.lookAt(
+
+            0,
+
+            0,
+
+            0
+
+        );
+
+
+
+        // =========================================
+
+        // RENDERER
+
+        // =========================================
+
+
+        const renderer =
+
+            new THREE.WebGLRenderer({
+
+                antialias: true
+
+            });
+
+
+
+        renderer.setSize(
+
+            window.innerWidth,
+
+            window.innerHeight
+
+        );
+
+
+
+        document.body.appendChild(
+
+            renderer.domElement
+
+        );
+
+
+
+        // =========================================
+
+        // LUCES
+
+        // =========================================
+
+
+        const ambientLight =
+
+            new THREE.AmbientLight(
+
+                0xffffff,
+
+                2
+
+            );
+
+
+
+        scene.add(
+
+            ambientLight
+
+        );
+
+
+
+        const directionalLight =
+
+            new THREE.DirectionalLight(
+
+                0xffffff,
+
+                3
+
+            );
+
+
+
+        directionalLight.position.set(
+
+            1000,
+
+            1000,
+
+            1000
+
+        );
+
+
+
+        scene.add(
+
+            directionalLight
+
+        );
+
+
+
+        // =========================================
+
+        // PERFIL 3D
+
+        // =========================================
+
+
+        let perfil = null;
+
+
+
+        // =========================================
+
+        // CREAR PERFIL
+
+        // =========================================
+
+
+        function crearPerfil(
+
+            sensores
+
+        ) {
+
+
+            // Si existe un perfil anterior
+
+            if (
+
+                perfil !== null
+
+            ) {
+
+
+                scene.remove(
+
+                    perfil
+
+                );
+
+
+                perfil.geometry.dispose();
+
+
+                perfil.material.dispose();
+
+
+            }
+
+
+
+            // =====================================
+
+            // GEOMETRÍA
+
+            // =====================================
+
+
+            const geometry =
+
+                new THREE.BufferGeometry();
+
+
+
+            const posiciones = [];
+
+
+
+            const numeroSensores =
+
+                sensores.length;
+
+
+
+            // =====================================
+
+            // CONVERTIR SENSORES A PUNTOS 3D
+
+            // =====================================
+
+
+            for (
+
+                let i = 0;
+
+                i < numeroSensores;
+
+                i++
+
+            ) {
+
+
+                // Posición X
+
+                const x =
+
+                    (
+
+                        i -
+
+                        (
+
+                            numeroSensores -
+
+                            1
+
+                        ) / 2
+
+                    ) * 50;
+
+
+
+                // Valor del sensor
+
+                const distancia =
+
+                    sensores[i];
+
+
+
+                // Convertimos la distancia
+
+                // para que sea visible
+
+                const y =
+
+                    distancia -
+
+                    1000;
+
+
+
+                // Z = 0
+
+                const z =
+
+                    0;
+
+
+
+                posiciones.push(
+
+                    x,
+
+                    y,
+
+                    z
+
+                );
+
+
+            }
+
+
+
+            geometry.setAttribute(
+
+                'position',
+
+                new THREE.Float32BufferAttribute(
+
+                    posiciones,
+
+                    3
+
+                )
+
+            );
+
+
+
+            // =====================================
+
+            // MATERIAL
+
+            // =====================================
+
+
+            const material =
+
+                new THREE.PointsMaterial({
+
+                    color: 0x00ff00,
+
+                    size: 12
+
+                });
+
+
+
+            // =====================================
+
+            // CREAR PUNTOS
+
+            // =====================================
+
+
+            perfil =
+
+                new THREE.Points(
+
+                    geometry,
+
+                    material
+
+                );
+
+
+
+            scene.add(
+
+                perfil
+
+            );
+
+
+        }
+
+
+
+        // =========================================
+
+        // API NODE-RED
+
+        // =========================================
+
+
+        const API_URL =
+
+            '/u-os-app-node-red-host/red/api/m4000/demo/profile';
+
+
+
+        // =========================================
+
+        // LEER DATOS
+
+        // =========================================
+
+
+        async function actualizarDatos() {
+
+
+            try {
+
+
+                const response =
+
+                    await fetch(
+
+                        API_URL
+
+                    );
+
+
+
+                if (
+
+                    !response.ok
+
+                ) {
+
+                    throw new Error(
+
+                        'HTTP ' +
+
+                        response.status
+
+                    );
+
+                }
+
+
+
+                const data =
+
+                    await response.json();
+
+
+
+                // =============================
+
+                // ESTADO
+
+                // =============================
+
+
+                document
+
+                    .getElementById(
+
+                        'status'
+
+                    )
+
+                    .textContent =
+
+                    'CONECTADO';
+
+
+
+                document
+
+                    .getElementById(
+
+                        'status'
+
+                    )
+
+                    .className =
+
+                    'ok';
+
+
+
+                // =============================
+
+                // INFORMACIÓN
+
+                // =============================
+
+
+                document
+
+                    .getElementById(
+
+                        'angle'
+
+                    )
+
+                    .textContent =
+
+                    data.angle;
+
+
+
+                document
+
+                    .getElementById(
+
+                        'numSensors'
+
+                    )
+
+                    .textContent =
+
+                    data.sensors.length;
+
+
+
+                const min =
+
+                    Math.min(
+
+                        ...data.sensors
+
+                    );
+
+
+
+                const max =
+
+                    Math.max(
+
+                        ...data.sensors
+
+                    );
+
+
+
+                document
+
+                    .getElementById(
+
+                        'min'
+
+                    )
+
+                    .textContent =
+
+                    min;
+
+
+
+                document
+
+                    .getElementById(
+
+                        'max'
+
+                    )
+
+                    .textContent =
+
+                    max;
+
+
+
+                // =============================
+
+                // CREAR PERFIL
+
+                // =============================
+
+
+                crearPerfil(
+
+                    data.sensors
+
+                );
+
+
+            }
+
+
+            catch (
+
+                error
+
+            ) {
+
+
+                console.error(
+
+                    'Error leyendo Node-RED:',
+
+                    error
+
+                );
+
+
+
+                document
+
+                    .getElementById(
+
+                        'status'
+
+                    )
+
+                    .textContent =
+
+                    'DESCONECTADO';
+
+
+
+                document
+
+                    .getElementById(
+
+                        'status'
+
+                    )
+
+                    .className =
+
+                    'error';
+
+
+            }
+
+
+        }
+
+
+
+        // =========================================
+
+        // ACTUALIZAR CADA 100 ms
+
+        // =========================================
+
+
+        setInterval(
+
+            actualizarDatos,
+
+            100
+
+        );
+
+
+
+        actualizarDatos();
+
+
+
+        // =========================================
+
+        // ANIMACIÓN
+
+        // =========================================
+
+
+        function animate() {
+
+
+            requestAnimationFrame(
+
+                animate
+
+            );
+
+
+
+            if (
+
+                perfil !== null
+
+            ) {
+
+
+                perfil.rotation.z +=
+
+                    0.005;
+
+
+            }
+
+
+
+            renderer.render(
+
+                scene,
+
+                camera
+
+            );
+
+
+        }
+
+
+
+        animate();
+
+
+
+        // =========================================
+
+        // REDIMENSIONAR
+
+        // =========================================
+
+
+        window.addEventListener(
+
+            'resize',
+
+            () => {
+
+
+                camera.aspect =
+
+                    window.innerWidth /
+
+                    window.innerHeight;
+
+
+
+                camera.updateProjectionMatrix();
+
+
+
+                renderer.setSize(
+
+                    window.innerWidth,
+
+                    window.innerHeight
+
+                );
+
+
+            }
+
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>
