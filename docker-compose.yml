@@ -1,0 +1,7 @@
+services:
+  threejs-m4000:
+    build: .
+    container_name: threejs-m4000
+    restart: unless-stopped
+    ports:
+      - "3001:80"
