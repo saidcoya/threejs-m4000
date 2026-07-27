@@ -1,20 +1,31 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>M4000 Industrial Dashboard</title>
 
 <style>
 
-/* ================================= */
-/* RESET */
-/* ================================= */
+:root {
+
+    --bg: #0b0f14;
+    --panel: #121820;
+    --panel-light: #18212b;
+    --border: #263442;
+    --text: #e6edf3;
+    --muted: #8b9aaa;
+    --green: #00d084;
+    --red: #ff4d5a;
+    --yellow: #ffb020;
+    --blue: #25a7ff;
+    --cyan: #00d9ff;
+
+}
 
 * {
 
@@ -22,49 +33,36 @@
 
 }
 
-
-/* ================================= */
-/* BODY */
-/* ================================= */
-
 body {
 
     margin: 0;
 
-    background:
+    background: var(--bg);
 
-        radial-gradient(
-
-            circle at top right,
-
-            #1b2735,
-
-            #0b0f14 60%
-
-        );
-
-    color: #ffffff;
+    color: var(--text);
 
     font-family:
 
+        "Segoe UI",
+
         Arial,
 
-        Helvetica,
-
         sans-serif;
-
-    min-height: 100vh;
 
 }
 
 
-/* ================================= */
-/* HEADER */
-/* ================================= */
+/* =====================================
+   BARRA SUPERIOR
+===================================== */
 
-.header {
+.topbar {
 
-    height: 70px;
+    height: 64px;
+
+    background: #0e141b;
+
+    border-bottom: 1px solid var(--border);
 
     display: flex;
 
@@ -72,102 +70,69 @@ body {
 
     justify-content: space-between;
 
-    padding: 0 25px;
-
-    background: rgba(
-
-        10,
-
-        15,
-
-        20,
-
-        0.95
-
-    );
-
-    border-bottom: 1px solid #303840;
+    padding: 0 24px;
 
 }
 
 
-.header-title {
+.logo {
 
-    font-size: 22px;
+    font-size: 20px;
 
-    font-weight: bold;
+    font-weight: 700;
 
-}
-
-
-.header-subtitle {
-
-    color: #888;
-
-    font-size: 12px;
-
-    margin-top: 4px;
+    letter-spacing: 1px;
 
 }
 
 
-/* ================================= */
-/* NAVEGACIÓN */
-/* ================================= */
+.logo span {
 
-.navigation {
+    color: var(--cyan);
+
+}
+
+
+.nav {
 
     display: flex;
 
-    gap: 10px;
+    gap: 8px;
 
 }
 
 
-.nav-button {
+.nav button {
 
-    background: #1b232c;
+    background: transparent;
 
-    color: #bbb;
+    color: var(--muted);
 
-    border: 1px solid #3b4650;
-
-    border-radius: 6px;
+    border: 1px solid transparent;
 
     padding: 10px 16px;
 
+    border-radius: 6px;
+
     cursor: pointer;
 
-    font-weight: bold;
-
-    transition: 0.2s;
+    font-weight: 600;
 
 }
 
 
-.nav-button:hover {
+.nav button:hover,
 
-    background: #2d3944;
+.nav button.active {
 
     color: white;
 
-}
+    background: var(--panel-light);
 
-
-.nav-button.active {
-
-    background: #006d77;
-
-    color: white;
-
-    border-color: #00a6b2;
+    border-color: var(--border);
 
 }
 
-
-/* ================================= */
-/* ESTADO CONEXIÓN */
-/* ================================= */
 
 .connection {
 
@@ -177,6 +142,8 @@ body {
 
     gap: 8px;
 
+    color: var(--muted);
+
     font-size: 13px;
 
 }
@@ -184,59 +151,69 @@ body {
 
 .connection-dot {
 
-    width: 10px;
+    width: 9px;
 
-    height: 10px;
+    height: 9px;
 
     border-radius: 50%;
 
-    background: #ff3333;
+    background: var(--red);
 
 }
 
 
-.connection-dot.connected {
+.connection-dot.ok {
 
-    background: #00ff66;
-
-    box-shadow:
-
-        0 0 10px #00ff66;
+    background: var(--green);
 
 }
 
 
-/* ================================= */
-/* CONTENEDOR */
-/* ================================= */
+/* =====================================
+   CONTENEDOR
+===================================== */
 
 .container {
 
-    padding: 20px;
+    padding: 24px;
+
+    max-width: 1800px;
+
+    margin: auto;
 
 }
 
 
-/* ================================= */
-/* TÍTULO PÁGINA */
-/* ================================= */
-
 .page-title {
-
-    font-size: 20px;
-
-    font-weight: bold;
 
     margin-bottom: 20px;
 
 }
 
 
-/* ================================= */
-/* GRID PRINCIPAL */
-/* ================================= */
+.page-title h1 {
 
-.dashboard-grid {
+    margin: 0;
+
+    font-size: 26px;
+
+}
+
+
+.page-title p {
+
+    margin: 6px 0 0;
+
+    color: var(--muted);
+
+}
+
+
+/* =====================================
+   GRID
+===================================== */
+
+.grid {
 
     display: grid;
 
@@ -248,7 +225,7 @@ body {
 
             minmax(
 
-                300px,
+                280px,
 
                 1fr
 
@@ -261,69 +238,65 @@ body {
 }
 
 
-/* ================================= */
-/* PANEL */
-/* ================================= */
+/* =====================================
+   PANEL
+===================================== */
 
 .panel {
 
-    background:
+    background: var(--panel);
 
-        linear-gradient(
-
-            145deg,
-
-            #151b21,
-
-            #0f1318
-
-        );
-
-    border: 1px solid #303840;
+    border: 1px solid var(--border);
 
     border-radius: 10px;
 
     padding: 18px;
 
-    box-shadow:
-
-        0 8px 20px
-
-        rgba(
-
-            0,
-
-            0,
-
-            0,
-
-            0.35
-
-        );
-
 }
 
 
-.panel-title {
+.panel h2 {
+
+    margin: 0 0 16px;
 
     font-size: 16px;
 
-    font-weight: bold;
-
-    margin-bottom: 15px;
-
-    color: #ddd;
-
-    border-bottom: 1px solid #303840;
-
-    padding-bottom: 10px;
+    color: var(--text);
 
 }
 
 
-/* ================================= */
-/* DI / DO GRID */
-/* ================================= */
+.panel-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 16px;
+
+}
+
+
+.badge {
+
+    font-size: 11px;
+
+    padding: 4px 8px;
+
+    border-radius: 4px;
+
+    background: #202b36;
+
+    color: var(--muted);
+
+}
+
+
+/* =====================================
+   ENTRADAS / SALIDAS
+===================================== */
 
 .io-grid {
 
@@ -339,16 +312,16 @@ body {
 
         );
 
-    gap: 10px;
+    gap: 8px;
 
 }
 
 
 .io-item {
 
-    background: #202830;
+    background: #0d1319;
 
-    border: 1px solid #3c4852;
+    border: 1px solid var(--border);
 
     border-radius: 6px;
 
@@ -356,16 +329,14 @@ body {
 
     text-align: center;
 
-    transition: 0.2s;
-
 }
 
 
 .io-label {
 
-    font-size: 12px;
+    font-size: 11px;
 
-    color: #999;
+    color: var(--muted);
 
     margin-bottom: 6px;
 
@@ -374,84 +345,116 @@ body {
 
 .io-state {
 
-    font-size: 14px;
+    font-size: 13px;
 
-    font-weight: bold;
-
-    color: #777;
+    font-weight: 700;
 
 }
 
 
 .io-state.on {
 
-    color: #00ff66;
-
-    text-shadow:
-
-        0 0 8px
-
-        rgba(
-
-            0,
-
-            255,
-
-            100,
-
-            0.7
-
-        );
+    color: var(--green);
 
 }
 
 
 .io-state.off {
 
-    color: #777;
+    color: var(--red);
 
 }
 
 
-/* ================================= */
-/* BOTONES DO */
-/* ================================= */
+/* =====================================
+   SALIDAS CONTROLABLES
+===================================== */
+
+.do-grid {
+
+    display: grid;
+
+    grid-template-columns:
+
+        repeat(
+
+            4,
+
+            1fr
+
+        );
+
+    gap: 8px;
+
+}
+
+
+.do-item {
+
+    background: #0d1319;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    padding: 10px;
+
+}
+
+
+.do-name {
+
+    font-size: 12px;
+
+    color: var(--muted);
+
+    margin-bottom: 8px;
+
+}
+
 
 .do-button {
 
     width: 100%;
 
-    margin-top: 8px;
-
-    padding: 7px;
+    border: none;
 
     border-radius: 5px;
 
-    border: 1px solid #555;
-
-    background: #252d35;
-
-    color: white;
+    padding: 8px;
 
     cursor: pointer;
 
-    font-size: 11px;
+    font-weight: bold;
+
+    background: #27313b;
+
+    color: var(--muted);
+
+}
+
+
+.do-button.on {
+
+    background: var(--green);
+
+    color: #07110d;
 
 }
 
 
 .do-button:hover {
 
-    background: #394651;
+    opacity: 0.85;
 
 }
 
 
-/* ================================= */
-/* ANALÓGICAS */
-/* ================================= */
+/* =====================================
+   ANALÓGICAS
+===================================== */
 
-.analog-grid {
+.ai-grid {
 
     display: grid;
 
@@ -465,237 +468,92 @@ body {
 
         );
 
-    gap: 15px;
+    gap: 12px;
 
 }
 
 
-.analog-card {
+.ai-card {
 
-    background: #202830;
+    background: #0d1319;
 
-    border: 1px solid #3c4852;
+    border: 1px solid var(--border);
 
     border-radius: 8px;
 
-    padding: 15px;
+    padding: 16px;
 
 }
 
 
-.analog-name {
+.ai-label {
 
-    color: #aaa;
+    color: var(--muted);
 
-    font-size: 13px;
+    font-size: 12px;
 
 }
 
 
-.analog-value {
+.ai-value {
 
     font-size: 28px;
 
-    font-weight: bold;
-
-    color: #00d9ff;
+    font-weight: 700;
 
     margin-top: 8px;
 
-}
-
-
-.analog-bar {
-
-    height: 8px;
-
-    margin-top: 10px;
-
-    background: #111;
-
-    border-radius: 5px;
-
-    overflow: hidden;
+    color: var(--cyan);
 
 }
 
 
-.analog-fill {
+.ai-unit {
 
-    height: 100%;
+    color: var(--muted);
 
-    width: 0%;
-
-    background:
-
-        linear-gradient(
-
-            90deg,
-
-            #0077ff,
-
-            #00e5ff
-
-        );
-
-    transition: width 0.3s;
+    font-size: 12px;
 
 }
 
 
-/* ================================= */
-/* DEMOS */
-/* ================================= */
-
-.demo-grid {
-
-    display: grid;
-
-    grid-template-columns:
-
-        repeat(
-
-            auto-fit,
-
-            minmax(
-
-                220px,
-
-                1fr
-
-            )
-
-        );
-
-    gap: 15px;
-
-}
-
-
-.demo-card {
-
-    background:
-
-        linear-gradient(
-
-            145deg,
-
-            #1c252d,
-
-            #11171c
-
-        );
-
-    border: 1px solid #3b4650;
-
-    border-radius: 8px;
-
-    padding: 18px;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-
-}
-
-
-.demo-card:hover {
-
-    transform: translateY(
-
-        -3px
-
-    );
-
-    border-color: #00a6b2;
-
-}
-
-
-.demo-card h3 {
-
-    margin-top: 0;
-
-    color: #00d9ff;
-
-}
-
-
-.demo-card p {
-
-    color: #999;
-
-    font-size: 13px;
-
-    line-height: 1.5;
-
-}
-
-
-.demo-button {
-
-    margin-top: 10px;
-
-    padding: 9px 14px;
-
-    border: none;
-
-    border-radius: 5px;
-
-    background: #006d77;
-
-    color: white;
-
-    cursor: pointer;
-
-    font-weight: bold;
-
-}
-
-
-.demo-button:hover {
-
-    background: #0095a0;
-
-}
-
-
-/* ================================= */
-/* RESPONSIVE */
-/* ================================= */
+/* =====================================
+   RESPONSIVE
+===================================== */
 
 @media (
 
-    max-width: 700px
+    max-width: 800px
 
 ) {
 
 
-    .header {
+    .topbar {
 
-        height: auto;
-
-        padding: 15px;
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 15px;
+        padding: 0 12px;
 
     }
 
 
-    .navigation {
+    .nav button {
 
-        width: 100%;
+        padding: 8px;
 
-        overflow-x: auto;
+        font-size: 11px;
 
     }
 
 
-    .io-grid {
+    .container {
+
+        padding: 14px;
+
+    }
+
+
+    .io-grid,
+
+    .do-grid {
 
         grid-template-columns:
 
@@ -715,318 +573,225 @@ body {
 
 </head>
 
-
 <body>
 
+<header class="topbar">
 
-<!-- ================================= -->
-<!-- HEADER -->
-<!-- ================================= -->
+```
+<div class="logo">
 
-<header class="header">
+    M4000 <span>INDUSTRIAL</span>
 
-
-    <div>
-
-
-        <div class="header-title">
-
-            M4000 INDUSTRIAL DASHBOARD
-
-        </div>
+</div>
 
 
-        <div class="header-subtitle">
-
-            Sistema de supervisión y control
-
-        </div>
+<nav class="nav">
 
 
-    </div>
+    <button
+
+        class="active"
+
+        onclick="location.href='index.html'">
+
+        Dashboard
+
+    </button>
 
 
-    <nav class="navigation">
+    <button
+
+        onclick="location.href='demo-troncos.html'">
+
+        Demo Troncos
+
+    </button>
 
 
-        <button
+    <button
 
-            class="nav-button active"
+        onclick="location.href='demo-template.html'">
 
-            id="btnDashboard">
+        Más demos
 
-
-            Dashboard
-
-
-        </button>
+    </button>
 
 
-        <button
-
-            class="nav-button"
-
-            id="btnDemos">
+</nav>
 
 
-            Demos
+<div class="connection">
 
 
-        </button>
+    <div
 
+        id="connectionDot"
 
-    </nav>
-
-
-    <div class="connection">
-
-
-        <span
-
-            class="connection-dot"
-
-            id="connectionDot">
-
-
-        </span>
-
-
-        <span id="connectionText">
-
-
-            DESCONECTADO
-
-
-        </span>
-
+        class="connection-dot">
 
     </div>
 
+
+    <span
+
+        id="connectionText">
+
+        DESCONECTADO
+
+    </span>
+
+
+</div>
+```
 
 </header>
 
+<main class="container">
 
-<!-- ================================= -->
-<!-- DASHBOARD -->
-<!-- ================================= -->
-
-<main
-
-    class="container"
-
-    id="dashboardPage">
+```
+<div class="page-title">
 
 
-    <div class="page-title">
+    <h1>
 
-        Estado del sistema M4000
+        Dashboard de control
 
-    </div>
-
-
-    <div class="dashboard-grid">
+    </h1>
 
 
-        <!-- ========================= -->
-        <!-- ENTRADAS DIGITALES -->
-        <!-- ========================= -->
+    <p>
+
+        Monitorización de entradas, salidas y señales analógicas
+
+    </p>
 
 
-        <section class="panel">
+</div>
 
 
-            <div class="panel-title">
+<div class="grid">
+
+
+    <!-- DI -->
+
+
+    <section class="panel">
+
+
+        <div class="panel-header">
+
+
+            <h2>
 
                 Entradas digitales
 
-            </div>
+            </h2>
 
 
-            <div
+            <span class="badge">
 
-                class="io-grid"
+                DI 0-15
 
-                id="diGrid">
-
-
-            </div>
+            </span>
 
 
-        </section>
+        </div>
 
 
-        <!-- ========================= -->
-        <!-- SALIDAS DIGITALES -->
-        <!-- ========================= -->
+        <div
+
+            id="diGrid"
+
+            class="io-grid">
+
+        </div>
 
 
-        <section class="panel">
+    </section>
 
 
-            <div class="panel-title">
+    <!-- DO -->
+
+
+    <section class="panel">
+
+
+        <div class="panel-header">
+
+
+            <h2>
 
                 Salidas digitales
 
-            </div>
+            </h2>
 
 
-            <div
+            <span class="badge">
 
-                class="io-grid"
+                DO 0-15
 
-                id="doGrid">
-
-
-            </div>
+            </span>
 
 
-        </section>
+        </div>
 
 
-        <!-- ========================= -->
-        <!-- ANALÓGICAS -->
-        <!-- ========================= -->
+        <div
+
+            id="doGrid"
+
+            class="do-grid">
+
+        </div>
 
 
-        <section class="panel">
+    </section>
 
 
-            <div class="panel-title">
+    <!-- AI -->
+
+
+    <section class="panel">
+
+
+        <div class="panel-header">
+
+
+            <h2>
 
                 Entradas analógicas
 
-            </div>
+            </h2>
 
 
-            <div
+            <span class="badge">
 
-                class="analog-grid"
+                AI
 
-                id="analogGrid">
-
-
-            </div>
-
-
-        </section>
-
-
-    </div>
-
-
-</main>
-
-
-<!-- ================================= -->
-<!-- DEMOS -->
-<!-- ================================= -->
-
-<main
-
-    class="container"
-
-    id="demosPage"
-
-    style="display:none;">
-
-
-    <div class="page-title">
-
-        Demos M4000
-
-    </div>
-
-
-    <div class="demo-grid">
-
-
-        <!-- ========================= -->
-        <!-- DEMO TRONCOS -->
-        <!-- ========================= -->
-
-
-        <div
-
-            class="demo-card"
-
-            onclick="abrirDemoTroncos()">
-
-
-            <h3>
-
-                Perfil 3D de troncos
-
-            </h3>
-
-
-            <p>
-
-                Visualización 3D de perfiles
-
-                obtenidos mediante sensores
-
-                del sistema M4000.
-
-            </p>
-
-
-            <button
-
-                class="demo-button">
-
-
-                Abrir demo
-
-
-            </button>
+            </span>
 
 
         </div>
 
 
-        <!-- ========================= -->
-        <!-- FUTURA DEMO -->
-        <!-- ========================= -->
-
-
         <div
 
-            class="demo-card">
+            id="aiGrid"
 
-
-            <h3>
-
-                Próxima demo
-
-            </h3>
-
-
-            <p>
-
-                Espacio reservado para
-
-                futuras visualizaciones
-
-                industriales.
-
-            </p>
-
+            class="ai-grid">
 
         </div>
 
 
-    </div>
+    </section>
 
+
+</div>
+```
 
 </main>
-
 
 <script>
-
-
-/* ================================= */
-/* CONFIGURACIÓN */
-/* ================================= */
 
 
 const STATUS_URL =
@@ -1039,72 +804,51 @@ const DO_URL =
     '/api/m4000/do';
 
 
-const NUM_DI =
+const diGrid =
 
-    16;
+    document.getElementById(
 
+        'diGrid'
 
-const NUM_DO =
-
-    16;
-
-
-const NUM_AI =
-
-    4;
+    );
 
 
-/* ================================= */
-/* VARIABLES */
-/* ================================= */
+const doGrid =
+
+    document.getElementById(
+
+        'doGrid'
+
+    );
 
 
-let estadoDO = [];
+const aiGrid =
+
+    document.getElementById(
+
+        'aiGrid'
+
+    );
 
 
-/* ================================= */
-/* CREAR DI */
-/* ================================= */
+/* =====================================
+   CREAR DI
+===================================== */
+
+for (
+
+    let i = 0;
+
+    i < 16;
+
+    i++
+
+) {
 
 
-function crearDI() {
+    diGrid.innerHTML += `
 
-
-    const grid =
-
-        document.getElementById(
-
-            'diGrid'
-
-        );
-
-
-    for (
-
-        let i = 0;
-
-        i < NUM_DI;
-
-        i++
-
-    ) {
-
-
-        const item =
-
-            document.createElement(
-
-                'div'
-
-            );
-
-
-        item.className =
-
-            'io-item';
-
-
-        item.innerHTML = `
+        <div class="io-item">
 
             <div class="io-label">
 
@@ -1114,159 +858,85 @@ function crearDI() {
 
             <div
 
-                class="io-state off"
+                id="di-${i}"
 
-                id="di-${i}">
+                class="io-state off">
 
                 OFF
 
             </div>
 
-        `;
+        </div>
 
-
-        grid.appendChild(
-
-            item
-
-        );
-
-    }
+    `;
 
 }
 
 
-/* ================================= */
-/* CREAR DO */
-/* ================================= */
+/* =====================================
+   CREAR DO
+===================================== */
+
+for (
+
+    let i = 0;
+
+    i < 16;
+
+    i++
+
+) {
 
 
-function crearDO() {
+    doGrid.innerHTML += `
 
+        <div class="do-item">
 
-    const grid =
-
-        document.getElementById(
-
-            'doGrid'
-
-        );
-
-
-    for (
-
-        let i = 0;
-
-        i < NUM_DO;
-
-        i++
-
-    ) {
-
-
-        const item =
-
-            document.createElement(
-
-                'div'
-
-            );
-
-
-        item.className =
-
-            'io-item';
-
-
-        item.innerHTML = `
-
-            <div class="io-label">
+            <div class="do-name">
 
                 DO${i}
 
             </div>
 
-            <div
-
-                class="io-state off"
-
-                id="do-${i}">
-
-                OFF
-
-            </div>
-
             <button
+
+                id="do-${i}"
 
                 class="do-button"
 
-                onclick="cambiarDO(${i})">
+                onclick="toggleDO(${i})">
 
-
-                CAMBIAR
-
+                OFF
 
             </button>
 
-        `;
+        </div>
 
-
-        grid.appendChild(
-
-            item
-
-        );
-
-    }
+    `;
 
 }
 
 
-/* ================================= */
-/* CREAR AI */
-/* ================================= */
+/* =====================================
+   CREAR AI
+===================================== */
+
+for (
+
+    let i = 0;
+
+    i < 4;
+
+    i++
+
+) {
 
 
-function crearAI() {
+    aiGrid.innerHTML += `
 
+        <div class="ai-card">
 
-    const grid =
-
-        document.getElementById(
-
-            'analogGrid'
-
-        );
-
-
-    for (
-
-        let i = 0;
-
-        i < NUM_AI;
-
-        i++
-
-    ) {
-
-
-        const card =
-
-            document.createElement(
-
-                'div'
-
-            );
-
-
-        card.className =
-
-            'analog-card';
-
-
-        card.innerHTML = `
-
-            <div class="analog-name">
+            <div class="ai-label">
 
                 AI${i}
 
@@ -1274,47 +944,30 @@ function crearAI() {
 
             <div
 
-                class="analog-value"
+                id="ai-${i}"
 
-                id="ai-${i}">
-
+                class="ai-value">
 
                 ---
 
+            </div>
+
+            <div class="ai-unit">
+
+                Valor actual
 
             </div>
 
-            <div class="analog-bar">
+        </div>
 
-                <div
-
-                    class="analog-fill"
-
-                    id="ai-fill-${i}">
-
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        grid.appendChild(
-
-            card
-
-        );
-
-    }
+    `;
 
 }
 
 
-/* ================================= */
-/* ACTUALIZAR ESTADOS */
-/* ================================= */
-
+/* =====================================
+   ACTUALIZAR
+===================================== */
 
 async function actualizarDatos() {
 
@@ -1358,55 +1011,31 @@ async function actualizarDatos() {
             await response.json();
 
 
-        /* ========================= */
+        document.getElementById(
 
-        /* CONEXIÓN */
+            'connectionDot'
 
-        /* ========================= */
+        ).classList.add(
 
+            'ok'
 
-        document
-
-            .getElementById(
-
-                'connectionDot'
-
-            )
-
-            .classList
-
-            .add(
-
-                'connected'
-
-            );
+        );
 
 
-        document
+        document.getElementById(
 
-            .getElementById(
+            'connectionText'
 
-                'connectionText'
-
-            )
-
-            .textContent =
+        ).textContent =
 
             'CONECTADO';
-
-
-        /* ========================= */
-
-        /* DI */
-
-        /* ========================= */
 
 
         for (
 
             let i = 0;
 
-            i < NUM_DI;
+            i < 16;
 
             i++
 
@@ -1422,18 +1051,16 @@ async function actualizarDatos() {
                 );
 
 
-            const element =
+            const elemento =
 
                 document.getElementById(
 
-                    'di-' +
-
-                    i
+                    `di-${i}`
 
                 );
 
 
-            element.textContent =
+            elemento.textContent =
 
                 estado ?
 
@@ -1442,35 +1069,22 @@ async function actualizarDatos() {
                 'OFF';
 
 
-            element.className =
+            elemento.className =
 
-                'io-state ' +
+                estado ?
 
-                (
+                'io-state on' :
 
-                    estado ?
-
-                    'on' :
-
-                    'off'
-
-                );
+                'io-state off';
 
         }
-
-
-        /* ========================= */
-
-        /* DO */
-
-        /* ========================= */
 
 
         for (
 
             let i = 0;
 
-            i < NUM_DO;
+            i < 16;
 
             i++
 
@@ -1486,23 +1100,16 @@ async function actualizarDatos() {
                 );
 
 
-            estadoDO[i] =
-
-                estado;
-
-
-            const element =
+            const boton =
 
                 document.getElementById(
 
-                    'do-' +
-
-                    i
+                    `do-${i}`
 
                 );
 
 
-            element.textContent =
+            boton.textContent =
 
                 estado ?
 
@@ -1511,111 +1118,37 @@ async function actualizarDatos() {
                 'OFF';
 
 
-            element.className =
+            boton.className =
 
-                'io-state ' +
+                estado ?
 
-                (
+                'do-button on' :
 
-                    estado ?
-
-                    'on' :
-
-                    'off'
-
-                );
+                'do-button';
 
         }
-
-
-        /* ========================= */
-
-        /* AI */
-
-        /* ========================= */
 
 
         for (
 
             let i = 0;
 
-            i < NUM_AI;
+            i < 4;
 
             i++
 
         ) {
 
 
-            const valor =
+            document.getElementById(
 
-                Number(
+                `ai-${i}`
 
-                    data.AI?.[i] ??
+            ).textContent =
 
-                    0
+                data.AI?.[i] ??
 
-                );
-
-
-            document
-
-                .getElementById(
-
-                    'ai-' +
-
-                    i
-
-                )
-
-                .textContent =
-
-                valor;
-
-
-            const porcentaje =
-
-                Math.min(
-
-                    Math.max(
-
-                        (
-
-                            valor /
-
-                            27648
-
-                        )
-
-                        *
-
-                        100,
-
-                        0
-
-                    ),
-
-                    100
-
-                );
-
-
-            document
-
-                .getElementById(
-
-                    'ai-fill-' +
-
-                    i
-
-                )
-
-                .style
-
-                .width =
-
-                porcentaje +
-
-                '%';
+                '---';
 
         }
 
@@ -1630,41 +1163,22 @@ async function actualizarDatos() {
     ) {
 
 
-        console.error(
+        document.getElementById(
 
-            'Error leyendo Node-RED:',
+            'connectionDot'
 
-            error
+        ).classList.remove(
+
+            'ok'
 
         );
 
 
-        document
+        document.getElementById(
 
-            .getElementById(
+            'connectionText'
 
-                'connectionDot'
-
-            )
-
-            .classList
-
-            .remove(
-
-                'connected'
-
-            );
-
-
-        document
-
-            .getElementById(
-
-                'connectionText'
-
-            )
-
-            .textContent =
+        ).textContent =
 
             'DESCONECTADO';
 
@@ -1673,90 +1187,69 @@ async function actualizarDatos() {
 }
 
 
-/* ================================= */
-/* CAMBIAR DO */
-/* ================================= */
+/* =====================================
+   ESCRIBIR DO
+===================================== */
 
+async function toggleDO(
 
-async function cambiarDO(
-
-    canal
+    channel
 
 ) {
 
 
+    const boton =
+
+        document.getElementById(
+
+            `do-${channel}`
+
+        );
+
+
     const nuevoEstado =
 
-        !estadoDO[
+        !boton.classList.contains(
 
-            canal
+            'on'
 
-        ];
+        );
 
 
     try {
 
 
-        const response =
+        await fetch(
 
-            await fetch(
+            DO_URL,
 
-                DO_URL,
+            {
 
-                {
+                method: 'POST',
 
+                headers: {
 
-                    method:
+                    'Content-Type':
 
-                        'POST',
+                        'application/json'
 
+                },
 
-                    headers: {
+                body: JSON.stringify({
 
+                    channel:
 
-                        'Content-Type':
+                        channel,
 
-                            'application/json'
+                    value:
 
+                        nuevoEstado
 
-                    },
+                })
 
+            }
 
-                    body:
-
-                        JSON.stringify({
-
-                            channel:
-
-                                canal,
-
-                            value:
-
-                                nuevoEstado
-
-                        })
-
-                }
-
-            );
-
-
-        if (
-
-            !response.ok
-
-        ) {
-
-
-            throw new Error(
-
-                'Error HTTP ' +
-
-                response.status
-
-            );
-
-        }
+        );
 
 
         await actualizarDatos();
@@ -1774,8 +1267,6 @@ async function cambiarDO(
 
         console.error(
 
-            'Error escribiendo DO:',
-
             error
 
         );
@@ -1785,206 +1276,9 @@ async function cambiarDO(
 }
 
 
-/* ================================= */
-/* NAVEGACIÓN */
-/* ================================= */
-
-
-document
-
-    .getElementById(
-
-        'btnDashboard'
-
-    )
-
-    .addEventListener(
-
-        'click',
-
-        () => {
-
-
-            document
-
-                .getElementById(
-
-                    'dashboardPage'
-
-                )
-
-                .style
-
-                .display =
-
-                'block';
-
-
-            document
-
-                .getElementById(
-
-                    'demosPage'
-
-                )
-
-                .style
-
-                .display =
-
-                'none';
-
-
-            document
-
-                .getElementById(
-
-                    'btnDashboard'
-
-                )
-
-                .classList
-
-                .add(
-
-                    'active'
-
-                );
-
-
-            document
-
-                .getElementById(
-
-                    'btnDemos'
-
-                )
-
-                .classList
-
-                .remove(
-
-                    'active'
-
-                );
-
-        }
-
-    );
-
-
-document
-
-    .getElementById(
-
-        'btnDemos'
-
-    )
-
-    .addEventListener(
-
-        'click',
-
-        () => {
-
-
-            document
-
-                .getElementById(
-
-                    'dashboardPage'
-
-                )
-
-                .style
-
-                .display =
-
-                'none';
-
-
-            document
-
-                .getElementById(
-
-                    'demosPage'
-
-                )
-
-                .style
-
-                .display =
-
-                'block';
-
-
-            document
-
-                .getElementById(
-
-                    'btnDashboard'
-
-                )
-
-                .classList
-
-                .remove(
-
-                    'active'
-
-                );
-
-
-            document
-
-                .getElementById(
-
-                    'btnDemos'
-
-                )
-
-                .classList
-
-                .add(
-
-                    'active'
-
-                );
-
-        }
-
-    );
-
-
-/* ================================= */
-/* ABRIR DEMO TRONCOS */
-/* ================================= */
-
-
-function abrirDemoTroncos() {
-
-
-    window.location.href =
-
-        '/demo-troncos.html';
-
-
-}
-
-
-/* ================================= */
-/* INICIO */
-/* ================================= */
-
-
-crearDI();
-
-
-crearDO();
-
-
-crearAI();
-
+/* =====================================
+   INICIO
+===================================== */
 
 actualizarDatos();
 

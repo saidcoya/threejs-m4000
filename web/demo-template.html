@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nueva Demo - M4000</title>
+
+<style>
+
+:root {
+
+    --bg: #0b0f14;
+    --panel: #121820;
+    --panel-light: #18212b;
+    --border: #263442;
+    --text: #e6edf3;
+    --muted: #8b9aaa;
+    --green: #00d084;
+    --cyan: #00d9ff;
+
+}
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+body {
+
+    margin: 0;
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    font-family:
+
+        "Segoe UI",
+
+        Arial,
+
+        sans-serif;
+
+}
+
+
+/* =====================================
+   BARRA SUPERIOR
+===================================== */
+
+.topbar {
+
+    height: 64px;
+
+    background: #0e141b;
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 24px;
+
+}
+
+
+.logo {
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+}
+
+
+.logo span {
+
+    color: var(--cyan);
+
+}
+
+
+.nav {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+
+.nav button {
+
+    background: transparent;
+
+    color: var(--muted);
+
+    border: 1px solid transparent;
+
+    padding: 10px 16px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+}
+
+
+.nav button:hover,
+
+.nav button.active {
+
+    color: white;
+
+    background: var(--panel-light);
+
+    border-color: var(--border);
+
+}
+
+
+/* =====================================
+   CONTENIDO
+===================================== */
+
+.container {
+
+    padding: 24px;
+
+    max-width: 1800px;
+
+    margin: auto;
+
+}
+
+
+h1 {
+
+    margin-top: 0;
+
+}
+
+
+.subtitle {
+
+    color: var(--muted);
+
+}
+
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+
+        repeat(
+
+            auto-fit,
+
+            minmax(
+
+                300px,
+
+                1fr
+
+            )
+
+        );
+
+    gap: 18px;
+
+    margin-top: 24px;
+
+}
+
+
+.panel {
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+    min-height: 180px;
+
+}
+
+
+.panel h2 {
+
+    margin-top: 0;
+
+}
+
+
+.placeholder {
+
+    height: 260px;
+
+    border: 1px dashed var(--border);
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--muted);
+
+}
+
+
+button.action {
+
+    background: #202b36;
+
+    color: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    padding: 10px 16px;
+
+    cursor: pointer;
+
+}
+
+
+button.action:hover {
+
+    background: var(--panel-light);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+```
+<div class="logo">
+
+    M4000 <span>INDUSTRIAL</span>
+
+</div>
+
+
+<nav class="nav">
+
+
+    <button
+
+        onclick="location.href='index.html'">
+
+        Dashboard
+
+    </button>
+
+
+    <button
+
+        onclick="location.href='demo-troncos.html'">
+
+        Demo Troncos
+
+    </button>
+
+
+    <button
+
+        class="active"
+
+        onclick="location.href='demo-template.html'">
+
+        Más demos
+
+    </button>
+
+
+</nav>
+```
+
+</header>
+
+<main class="container">
+
+```
+<h1>
+
+    Nueva Demo Industrial
+
+</h1>
+
+
+<p class="subtitle">
+
+    Plantilla base para nuevas funcionalidades del sistema M4000
+
+</p>
+
+
+<div class="grid">
+
+
+    <section class="panel">
+
+
+        <h2>
+
+            Panel principal
+
+        </h2>
+
+
+        <div class="placeholder">
+
+
+            Área principal de la demo
+
+        </div>
+
+
+    </section>
+
+
+    <section class="panel">
+
+
+        <h2>
+
+            Datos
+
+        </h2>
+
+
+        <div class="placeholder">
+
+
+            Aquí puedes añadir gráficos,
+
+            tablas o visualizaciones
+
+        </div>
+
+
+    </section>
+
+
+    <section class="panel">
+
+
+        <h2>
+
+            Controles
+
+        </h2>
+
+
+        <button
+
+            class="action">
+
+            Acción 1
+
+        </button>
+
+
+        <button
+
+            class="action">
+
+            Acción 2
+
+        </button>
+
+
+    </section>
+
+
+</div>
+```
+
+</main>
+
+</body>
+
+</html>
