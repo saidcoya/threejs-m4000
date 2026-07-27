@@ -24,6 +24,7 @@
     --green: #00e096;
     --red: #ff5c6c;
     --yellow: #ffb624;
+    --orange: #ff8c42;
     --blue: #2fb3ff;
     --cyan: #00e0ff;
 
@@ -248,9 +249,9 @@ body {
 
 .container {
 
-    padding: 28px;
+    padding: 26px;
 
-    max-width: 1800px;
+    max-width: 1600px;
 
     margin: auto;
 
@@ -259,7 +260,7 @@ body {
 
 .page-title {
 
-    margin-bottom: 26px;
+    margin-bottom: 22px;
 
 }
 
@@ -289,6 +290,114 @@ body {
 
 
 /* =====================================
+   KPIS
+===================================== */
+
+.kpi-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 24px;
+
+}
+
+
+.kpi {
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    padding: 16px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    backdrop-filter: blur(10px);
+
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+}
+
+
+.kpi-icon {
+
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+    background: rgba(47, 179, 255, 0.12);
+
+    border: 1px solid rgba(47, 179, 255, 0.25);
+
+}
+
+
+.kpi-icon.di { background: rgba(0, 224, 150, 0.12); border-color: rgba(0, 224, 150, 0.25); }
+.kpi-icon.do { background: rgba(255, 182, 36, 0.12); border-color: rgba(255, 182, 36, 0.25); }
+.kpi-icon.conn { background: rgba(255, 92, 108, 0.12); border-color: rgba(255, 92, 108, 0.25); }
+.kpi-icon.conn.ok { background: rgba(0, 224, 150, 0.12); border-color: rgba(0, 224, 150, 0.25); }
+
+
+.kpi-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.kpi-label {
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.kpi-value {
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+    margin-top: 2px;
+
+}
+
+
+/* =====================================
    GRID
 ===================================== */
 
@@ -300,7 +409,7 @@ body {
         repeat(
             auto-fit,
             minmax(
-                300px,
+                340px,
                 1fr
             )
         );
@@ -331,17 +440,6 @@ body {
     box-shadow:
         0 14px 40px rgba(0, 0, 0, 0.32),
         inset 0 1px 0 rgba(255, 255, 255, 0.04);
-
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-}
-
-
-.panel:hover {
-
-    box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.38),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
 }
 
@@ -394,7 +492,7 @@ body {
 
 
 /* =====================================
-   ENTRADAS / SALIDAS
+   ENTRADAS DIGITALES
 ===================================== */
 
 .io-grid {
@@ -420,9 +518,17 @@ body {
 
     border-radius: 10px;
 
-    padding: 12px 8px;
+    padding: 14px 8px;
 
     text-align: center;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
 
     transition: all 0.15s ease;
 
@@ -440,59 +546,65 @@ body {
 
 .io-label {
 
-    font-size: 11px;
+    font-size: 12px;
 
     color: var(--muted);
-
-    margin-bottom: 8px;
 
     font-weight: 700;
 
 }
 
 
-.io-state {
+.io-led {
 
-    font-size: 13px;
+    width: 18px;
 
-    font-weight: 800;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-}
-
-
-.io-state::before {
-
-    content: '';
-
-    width: 7px;
-
-    height: 7px;
+    height: 18px;
 
     border-radius: 50%;
 
-    background: currentColor;
+    background: rgba(255, 255, 255, 0.08);
 
-    box-shadow: 0 0 8px currentColor;
+    border: 2px solid rgba(255, 255, 255, 0.1);
 
-}
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 
-
-.io-state.on {
-
-    color: var(--green);
+    transition: all 0.2s ease;
 
 }
 
 
-.io-state.off {
+.io-led.on {
 
-    color: var(--red);
+    background: var(--green);
+
+    border-color: rgba(0, 224, 150, 0.6);
+
+    box-shadow:
+        0 0 14px rgba(0, 224, 150, 0.6),
+        inset 0 2px 6px rgba(255, 255, 255, 0.3);
+
+}
+
+
+.io-led.off {
+
+    background: rgba(255, 92, 108, 0.25);
+
+    border-color: rgba(255, 92, 108, 0.4);
+
+    box-shadow: 0 0 8px rgba(255, 92, 108, 0.15);
+
+}
+
+
+.io-state {
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    color: var(--muted);
 
 }
 
@@ -511,7 +623,7 @@ body {
             1fr
         );
 
-    gap: 10px;
+    gap: 12px;
 
 }
 
@@ -553,58 +665,110 @@ body {
 }
 
 
-.do-button {
+.do-switch {
+
+    position: relative;
 
     width: 100%;
 
-    border: none;
+    height: 32px;
 
-    border-radius: 8px;
-
-    padding: 9px;
-
-    cursor: pointer;
-
-    font-weight: 800;
-
-    font-size: 12px;
-
-    background: rgba(255, 255, 255, 0.06);
-
-    color: var(--muted);
+    border-radius: 16px;
 
     border: 1px solid var(--border);
 
-    transition: all 0.15s ease;
+    background: rgba(255, 255, 255, 0.05);
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 6px;
 
 }
 
 
-.do-button:hover {
+.do-switch::before {
 
-    background: rgba(255, 255, 255, 0.1);
+    content: 'OFF';
 
-    color: #fff;
+    position: absolute;
+
+    right: 10px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    color: var(--muted);
+
+    transition: all 0.2s ease;
 
 }
 
 
-.do-button.on {
+.do-knob {
 
-    background:
-        linear-gradient(180deg, rgba(0, 224, 150, 0.22), rgba(0, 224, 150, 0.1));
+    width: 22px;
 
-    color: var(--green);
+    height: 22px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+    transition: all 0.2s ease;
+
+    transform: translateX(0);
+
+}
+
+
+.do-switch.on {
+
+    background: rgba(0, 224, 150, 0.18);
 
     border-color: rgba(0, 224, 150, 0.45);
 
-    box-shadow: 0 0 14px rgba(0, 224, 150, 0.15);
+    box-shadow: 0 0 16px rgba(0, 224, 150, 0.12);
+
+}
+
+
+.do-switch.on::before {
+
+    content: 'ON';
+
+    left: 10px;
+
+    right: auto;
+
+    color: var(--green);
+
+}
+
+
+.do-switch.on .do-knob {
+
+    transform: translateX(
+        calc(100% + 14px)
+    );
+
+    background: var(--green);
+
+    box-shadow: 0 0 12px rgba(0, 224, 150, 0.5);
 
 }
 
 
 /* =====================================
-   ANALÓGICAS
+   ANALÓGICAS - GAUGES
 ===================================== */
 
 .ai-grid {
@@ -617,7 +781,7 @@ body {
             1fr
         );
 
-    gap: 14px;
+    gap: 18px;
 
 }
 
@@ -631,6 +795,12 @@ body {
     border-radius: 12px;
 
     padding: 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
 
     position: relative;
 
@@ -669,13 +839,82 @@ body {
 }
 
 
+.ai-header {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 10px;
+
+}
+
+
 .ai-label {
 
     color: var(--muted);
 
     font-size: 12px;
 
-    font-weight: 700;
+    font-weight: 800;
+
+}
+
+
+.ai-badge {
+
+    font-size: 10px;
+
+    padding: 3px 7px;
+
+    border-radius: 4px;
+
+    background: rgba(47, 179, 255, 0.1);
+
+    color: var(--blue);
+
+    font-weight: 800;
+
+}
+
+
+.ai-gauge {
+
+    width: 160px;
+
+    height: 90px;
+
+    margin: 8px 0;
+
+}
+
+
+.ai-gauge-track {
+
+    fill: none;
+
+    stroke: rgba(255, 255, 255, 0.08);
+
+    stroke-width: 12;
+
+    stroke-linecap: round;
+
+}
+
+
+.ai-gauge-fill {
+
+    fill: none;
+
+    stroke-width: 12;
+
+    stroke-linecap: round;
+
+    transition: stroke-dashoffset 0.4s ease, stroke 0.4s ease;
 
 }
 
@@ -686,22 +925,103 @@ body {
 
     font-weight: 800;
 
-    margin-top: 10px;
+    margin-top: 4px;
 
-    color: var(--cyan);
-
-    letter-spacing: -0.5px;
+    letter-spacing: -1px;
 
 }
 
 
-.ai-unit {
+.ai-range {
 
     color: var(--muted);
 
     font-size: 11px;
 
+    font-weight: 700;
+
     margin-top: 4px;
+
+}
+
+
+/* =====================================
+   GRÁFICO
+===================================== */
+
+.chart-panel {
+
+    grid-column: 1 / -1;
+
+}
+
+
+.chart-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 14px;
+
+}
+
+
+.chart-legend {
+
+    display: flex;
+
+    gap: 16px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+.chart-legend span {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: var(--muted);
+
+}
+
+
+.chart-legend span::before {
+
+    content: '';
+
+    width: 10px;
+
+    height: 3px;
+
+    border-radius: 2px;
+
+}
+
+
+#aiChart {
+
+    width: 100%;
+
+    height: 280px;
+
+    display: block;
+
+    background:
+        linear-gradient(180deg, #0b1319, #070c11);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
 
 }
 
@@ -747,6 +1067,13 @@ body {
     }
 
 
+    .kpi-grid {
+
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+
     .io-grid,
 
     .do-grid {
@@ -764,11 +1091,16 @@ body {
 
 @media (max-width: 520px) {
 
-    .io-grid,
+    .kpi-grid {
 
-    .do-grid {
+        grid-template-columns: 1fr;
 
-        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .ai-grid {
+
+        grid-template-columns: 1fr;
 
     }
 
@@ -877,6 +1209,72 @@ body {
     </div>
 
 
+    <div class="kpi-grid">
+
+
+        <div class="kpi">
+
+            <div class="kpi-icon di">IN</div>
+
+            <div class="kpi-content">
+
+                <div class="kpi-label">DI activas</div>
+
+                <div id="kpiDi" class="kpi-value">0</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+            <div class="kpi-icon do">OUT</div>
+
+            <div class="kpi-content">
+
+                <div class="kpi-label">DO activas</div>
+
+                <div id="kpiDo" class="kpi-value">0</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+            <div id="kpiConnIcon" class="kpi-icon conn">●</div>
+
+            <div class="kpi-content">
+
+                <div class="kpi-label">Conexión</div>
+
+                <div id="kpiConn" class="kpi-value">OFF</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi">
+
+            <div class="kpi-icon">AI</div>
+
+            <div class="kpi-content">
+
+                <div class="kpi-label">AI media</div>
+
+                <div id="kpiAi" class="kpi-value">---</div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
     <div class="grid">
 
 
@@ -971,7 +1369,7 @@ body {
 
                 <span class="badge">
 
-                    AI
+                    AI 0-1000
 
                 </span>
 
@@ -986,6 +1384,51 @@ body {
                 class="ai-grid">
 
             </div>
+
+
+        </section>
+
+
+        <!-- CHART -->
+
+        <section class="panel chart-panel">
+
+
+            <div class="chart-header">
+
+
+                <h2>
+
+                    Tendencia analógicas
+
+                </h2>
+
+
+                <div class="chart-legend">
+
+                    <span style="--color: #00e0ff"><span style="background: #00e0ff; width: 10px; height: 3px; display: inline-block; border-radius: 2px; margin-right: 6px;"></span>AI0</span>
+
+                    <span style="--color: #00e096"><span style="background: #00e096; width: 10px; height: 3px; display: inline-block; border-radius: 2px; margin-right: 6px;"></span>AI1</span>
+
+                    <span style="--color: #ffb624"><span style="background: #ffb624; width: 10px; height: 3px; display: inline-block; border-radius: 2px; margin-right: 6px;"></span>AI2</span>
+
+                    <span style="--color: #ff5c6c"><span style="background: #ff5c6c; width: 10px; height: 3px; display: inline-block; border-radius: 2px; margin-right: 6px;"></span>AI3</span>
+
+                </div>
+
+
+            </div>
+
+
+            <canvas
+
+                id="aiChart"
+
+                width="1200"
+
+                height="280">
+
+            </canvas>
 
 
         </section>
@@ -1008,6 +1451,26 @@ const STATUS_URL =
 const DO_URL =
 
     '/api/m4000/do';
+
+
+const AI_COLORS = [
+
+    '#00e0ff',
+    '#00e096',
+    '#ffb624',
+    '#ff5c6c'
+
+];
+
+
+const AI_HISTORY_SECONDS =
+
+    60;
+
+
+const aiHistory =
+
+    [];
 
 
 const diGrid =
@@ -1056,21 +1519,11 @@ for (
 
         <div class="io-item">
 
-            <div class="io-label">
+            <div class="io-label">DI${i}</div>
 
-                DI${i}
+            <div id="di-${i}" class="io-led off"></div>
 
-            </div>
-
-            <div
-
-                id="di-${i}"
-
-                class="io-state off">
-
-                OFF
-
-            </div>
+            <div id="di-text-${i}" class="io-state">OFF</div>
 
         </div>
 
@@ -1098,23 +1551,13 @@ for (
 
         <div class="do-item">
 
-            <div class="do-name">
+            <div class="do-name">DO${i}</div>
 
-                DO${i}
+            <div id="do-${i}" class="do-switch" onclick="toggleDO(${i})">
+
+                <div class="do-knob"></div>
 
             </div>
-
-            <button
-
-                id="do-${i}"
-
-                class="do-button"
-
-                onclick="toggleDO(${i})">
-
-                OFF
-
-            </button>
 
         </div>
 
@@ -1142,31 +1585,462 @@ for (
 
         <div class="ai-card">
 
-            <div class="ai-label">
+            <div class="ai-header">
 
-                AI${i}
+                <div class="ai-label">AI${i}</div>
 
-            </div>
-
-            <div
-
-                id="ai-${i}"
-
-                class="ai-value">
-
-                ---
+                <div class="ai-badge">0-1000</div>
 
             </div>
 
-            <div class="ai-unit">
+            <svg class="ai-gauge" viewBox="0 0 160 90">
 
-                Valor actual
+                <path class="ai-gauge-track" d="M 20 80 A 60 60 0 0 1 140 80"></path>
 
-            </div>
+                <path
+
+                    id="ai-gauge-${i}"
+
+                    class="ai-gauge-fill"
+
+                    d="M 20 80 A 60 60 0 0 1 140 80"
+
+                    stroke-dasharray="188.5"
+
+                    stroke-dashoffset="188.5">
+
+                </path>
+
+            </svg>
+
+            <div id="ai-${i}" class="ai-value" style="color: ${AI_COLORS[i]}">---</div>
+
+            <div class="ai-range">0 - 1000</div>
 
         </div>
 
     `;
+
+}
+
+
+/* =====================================
+   GAUGE
+===================================== */
+
+function colorPorValor(
+
+    valor
+
+) {
+
+
+    if (valor < 700) {
+
+        return '#00e096';
+
+    }
+
+
+    if (valor < 900) {
+
+        return '#ffb624';
+
+    }
+
+
+    return '#ff5c6c';
+
+}
+
+
+function actualizarGauge(
+
+    index,
+
+    valor
+
+) {
+
+
+    const gauge =
+
+        document.getElementById(
+
+            `ai-gauge-${index}`
+
+        );
+
+
+    const porcentaje =
+
+        Math.max(
+
+            0,
+
+            Math.min(
+
+                1000,
+
+                valor
+
+            )
+
+        ) / 1000;
+
+
+    const offset =
+
+        188.5 *
+
+        (1 - porcentaje);
+
+
+    gauge.style.strokeDashoffset =
+
+        offset;
+
+
+    gauge.style.stroke =
+
+        colorPorValor(
+
+            valor
+
+        );
+
+}
+
+
+/* =====================================
+   GRÁFICO
+===================================== */
+
+function dibujarChart() {
+
+
+    const canvas =
+
+        document.getElementById(
+
+            'aiChart'
+
+        );
+
+
+    const ctx =
+
+        canvas.getContext(
+
+            '2d'
+
+        );
+
+
+    const width =
+
+        canvas.width;
+
+
+    const height =
+
+        canvas.height;
+
+
+    const padding =
+
+        { top: 25, right: 20, bottom: 35, left: 50 };
+
+
+    ctx.clearRect(
+
+        0,
+
+        0,
+
+        width,
+
+        height
+
+    );
+
+
+    ctx.fillStyle =
+
+        '#080d12';
+
+
+    ctx.fillRect(
+
+        0,
+
+        0,
+
+        width,
+
+        height
+
+    );
+
+
+    if (
+
+        aiHistory.length < 2
+
+    ) {
+
+        return;
+
+    }
+
+
+    const chartWidth =
+
+        width - padding.left - padding.right;
+
+
+    const chartHeight =
+
+        height - padding.top - padding.bottom;
+
+
+    /* Cuadrícula */
+
+    ctx.strokeStyle =
+
+        '#1e303c';
+
+
+    ctx.lineWidth =
+
+        1;
+
+
+    for (
+
+        let i = 0;
+
+        i <= 4;
+
+        i++
+
+    ) {
+
+        const y =
+
+            padding.top +
+
+            chartHeight *
+
+            (i / 4);
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+
+            padding.left,
+
+            y
+
+        );
+
+        ctx.lineTo(
+
+            width - padding.right,
+
+            y
+
+        );
+
+        ctx.stroke();
+
+
+        const valor =
+
+            1000 -
+
+            1000 *
+
+            (i / 4);
+
+
+        ctx.fillStyle =
+
+            '#8fa3b8';
+
+
+        ctx.font =
+
+            '11px Inter, Segoe UI, Arial';
+
+
+        ctx.textAlign =
+
+            'right';
+
+
+        ctx.fillText(
+
+            valor,
+
+            padding.left - 10,
+
+            y + 4
+
+        );
+
+    }
+
+
+    /* Líneas */
+
+    for (
+
+        let ai = 0;
+
+        ai < 4;
+
+        ai++
+
+    ) {
+
+        ctx.beginPath();
+
+        ctx.strokeStyle =
+
+            AI_COLORS[ai];
+
+
+        ctx.lineWidth =
+
+            2;
+
+
+        ctx.shadowColor =
+
+            AI_COLORS[ai];
+
+
+        ctx.shadowBlur =
+
+            6;
+
+
+        aiHistory.forEach(
+
+            (
+
+                punto,
+
+                index
+
+            ) => {
+
+
+                const x =
+
+                    padding.left +
+
+                    index /
+
+                    (aiHistory.length - 1) *
+
+                    chartWidth;
+
+
+                const y =
+
+                    padding.top +
+
+                    chartHeight *
+
+                    (
+
+                        1 -
+
+                        punto.values[ai] / 1000
+
+                    );
+
+
+                if (
+
+                    index === 0
+
+                ) {
+
+                    ctx.moveTo(
+
+                        x,
+
+                        y
+
+                    );
+
+                } else {
+
+                    ctx.lineTo(
+
+                        x,
+
+                        y
+
+                    );
+
+                }
+
+            }
+
+        );
+
+
+        ctx.stroke();
+
+        ctx.shadowBlur =
+
+            0;
+
+    }
+
+
+    /* Eje X */
+
+    ctx.fillStyle =
+
+        '#8fa3b8';
+
+
+    ctx.textAlign =
+
+        'center';
+
+
+    ctx.font =
+
+        '10px Inter, Segoe UI, Arial';
+
+
+    ctx.fillText(
+
+        '-60s',
+
+        padding.left,
+
+        height - 10
+
+    );
+
+
+    ctx.fillText(
+
+        'ahora',
+
+        width - padding.right,
+
+        height - 10
+
+    );
 
 }
 
@@ -1237,6 +2111,36 @@ async function actualizarDatos() {
             'CONECTADO';
 
 
+        const kpiConnIcon =
+
+            document.getElementById(
+
+                'kpiConnIcon'
+
+            );
+
+
+        kpiConnIcon.classList.add(
+
+            'ok'
+
+        );
+
+
+        document.getElementById(
+
+            'kpiConn'
+
+        ).textContent =
+
+            'ON';
+
+
+        let diActivas =
+
+            0;
+
+
         for (
 
             let i = 0;
@@ -1257,7 +2161,7 @@ async function actualizarDatos() {
                 );
 
 
-            const elemento =
+            const led =
 
                 document.getElementById(
 
@@ -1266,7 +2170,25 @@ async function actualizarDatos() {
                 );
 
 
-            elemento.textContent =
+            const texto =
+
+                document.getElementById(
+
+                    `di-text-${i}`
+
+                );
+
+
+            led.className =
+
+                estado
+
+                    ? 'io-led on'
+
+                    : 'io-led off';
+
+
+            texto.textContent =
 
                 estado
 
@@ -1275,15 +2197,27 @@ async function actualizarDatos() {
                     : 'OFF';
 
 
-            elemento.className =
+            if (estado) {
 
-                estado
+                diActivas++;
 
-                    ? 'io-state on'
-
-                    : 'io-state off';
+            }
 
         }
+
+
+        document.getElementById(
+
+            'kpiDi'
+
+        ).textContent =
+
+            diActivas;
+
+
+        let doActivas =
+
+            0;
 
 
         for (
@@ -1306,7 +2240,7 @@ async function actualizarDatos() {
                 );
 
 
-            const boton =
+            const sw =
 
                 document.getElementById(
 
@@ -1315,24 +2249,46 @@ async function actualizarDatos() {
                 );
 
 
-            boton.textContent =
+            sw.className =
 
                 estado
 
-                    ? 'ON'
+                    ? 'do-switch on'
 
-                    : 'OFF';
+                    : 'do-switch';
 
 
-            boton.className =
+            if (estado) {
 
-                estado
+                doActivas++;
 
-                    ? 'do-button on'
-
-                    : 'do-button';
+            }
 
         }
+
+
+        document.getElementById(
+
+            'kpiDo'
+
+        ).textContent =
+
+            doActivas;
+
+
+        let aiSuma =
+
+            0;
+
+
+        let aiCount =
+
+            0;
+
+
+        const valores =
+
+            [];
 
 
         for (
@@ -1346,17 +2302,102 @@ async function actualizarDatos() {
         ) {
 
 
+            const valor =
+
+                data.AI?.[i] ??
+
+                0;
+
+
+            valores.push(
+
+                valor
+
+            );
+
+
             document.getElementById(
 
                 `ai-${i}`
 
             ).textContent =
 
-                data.AI?.[i] ??
+                valor;
 
-                '---';
+
+            actualizarGauge(
+
+                i,
+
+                valor
+
+            );
+
+
+            aiSuma +=
+
+                valor;
+
+            aiCount++;
 
         }
+
+
+        document.getElementById(
+
+            'kpiAi'
+
+        ).textContent =
+
+            aiCount > 0
+
+                ? Math.round(
+
+                    aiSuma / aiCount
+
+                )
+
+                : '---';
+
+
+        aiHistory.push(
+
+            {
+
+                time: Date.now(),
+
+                values: valores
+
+            }
+
+        );
+
+
+        const limite =
+
+            Date.now() -
+
+            AI_HISTORY_SECONDS *
+
+            1000;
+
+
+        while (
+
+            aiHistory.length > 0
+
+            &&
+
+            aiHistory[0].time < limite
+
+        ) {
+
+            aiHistory.shift();
+
+        }
+
+
+        dibujarChart();
 
 
     }
@@ -1388,6 +2429,31 @@ async function actualizarDatos() {
 
             'DESCONECTADO';
 
+
+        const kpiConnIcon =
+
+            document.getElementById(
+
+                'kpiConnIcon'
+
+            );
+
+
+        kpiConnIcon.classList.remove(
+
+            'ok'
+
+        );
+
+
+        document.getElementById(
+
+            'kpiConn'
+
+        ).textContent =
+
+            'OFF';
+
     }
 
 }
@@ -1404,7 +2470,7 @@ async function toggleDO(
 ) {
 
 
-    const boton =
+    const sw =
 
         document.getElementById(
 
@@ -1415,7 +2481,7 @@ async function toggleDO(
 
     const nuevoEstado =
 
-        !boton.classList.contains(
+        !sw.classList.contains(
 
             'on'
 
@@ -1494,6 +2560,38 @@ setInterval(
     actualizarDatos,
 
     1000
+
+);
+
+
+window.addEventListener(
+
+    'resize',
+
+    () => {
+
+        const canvas =
+
+            document.getElementById(
+
+                'aiChart'
+
+            );
+
+
+        canvas.width =
+
+            canvas.offsetWidth;
+
+
+        canvas.height =
+
+            canvas.offsetHeight;
+
+
+        dibujarChart();
+
+    }
 
 );
 
