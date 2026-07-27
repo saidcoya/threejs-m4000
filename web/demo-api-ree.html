@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Demo REE - M4000</title>
+
+<style>
+
+:root {
+
+    --bg: #070a0f;
+    --bg-2: #0c1118;
+    --panel: rgba(16, 23, 31, 0.82);
+    --panel-solid: #10171f;
+    --panel-light: rgba(26, 36, 48, 0.7);
+    --border: rgba(54, 74, 95, 0.55);
+    --border-light: rgba(88, 116, 146, 0.35);
+    --text: #f0f5fa;
+    --muted: #8fa3b8;
+    --green: #00e096;
+    --red: #ff5c6c;
+    --yellow: #ffb624;
+    --orange: #ff8c42;
+    --blue: #2fb3ff;
+    --cyan: #00e0ff;
+
+}
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+body {
+
+    margin: 0;
+
+    background:
+        radial-gradient(ellipse at 10% 0%, #0f1824 0%, transparent 45%),
+        radial-gradient(ellipse at 90% 100%, #0d151f 0%, transparent 45%),
+        var(--bg);
+
+    color: var(--text);
+
+    font-family:
+        "Inter",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    min-height: 100vh;
+
+}
+
+
+/* =====================================
+   BARRA SUPERIOR
+===================================== */
+
+.topbar {
+
+    height: 68px;
+
+    background:
+        linear-gradient(180deg, rgba(13, 19, 27, 0.95), rgba(10, 15, 21, 0.92));
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+
+}
+
+
+.logo {
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.logo::before {
+
+    content: '';
+
+    width: 9px;
+
+    height: 28px;
+
+    background: linear-gradient(180deg, var(--cyan), var(--blue));
+
+    border-radius: 3px;
+
+    box-shadow: 0 0 14px rgba(0, 224, 255, 0.45);
+
+}
+
+
+.logo span {
+
+    color: var(--cyan);
+
+    font-weight: 700;
+
+}
+
+
+.nav {
+
+    display: flex;
+
+    gap: 10px;
+
+    background: rgba(0, 0, 0, 0.18);
+
+    padding: 5px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.04);
+
+}
+
+
+.nav button {
+
+    background: transparent;
+
+    color: var(--muted);
+
+    border: 1px solid transparent;
+
+    padding: 10px 18px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+
+    font-size: 13px;
+
+    transition: all 0.18s ease;
+
+}
+
+
+.nav button:hover {
+
+    color: #fff;
+
+    background: rgba(255, 255, 255, 0.05);
+
+}
+
+
+.nav button.active {
+
+    color: #fff;
+
+    background:
+        linear-gradient(180deg, rgba(38, 56, 74, 0.9), rgba(24, 36, 48, 0.9));
+
+    border-color: rgba(0, 224, 255, 0.45);
+
+    box-shadow: 0 0 16px rgba(0, 224, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+}
+
+
+.connection {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    background: rgba(0, 0, 0, 0.2);
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    border: 1px solid var(--border);
+
+}
+
+
+.connection-dot {
+
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: var(--red);
+
+    box-shadow: 0 0 10px rgba(255, 92, 108, 0.6);
+
+}
+
+
+.connection-dot.ok {
+
+    background: var(--green);
+
+    box-shadow: 0 0 10px rgba(0, 224, 150, 0.6);
+
+}
+
+
+/* =====================================
+   CONTENEDOR
+===================================== */
+
+.container {
+
+    padding: 28px;
+
+    max-width: 1400px;
+
+    margin: auto;
+
+}
+
+
+.page-title {
+
+    margin-bottom: 26px;
+
+}
+
+
+.page-title h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.3px;
+
+}
+
+
+.page-title p {
+
+    margin: 8px 0 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+}
+
+
+/* =====================================
+   GRID
+===================================== */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(
+                300px,
+                1fr
+            )
+        );
+
+    gap: 22px;
+
+}
+
+
+/* =====================================
+   PANEL
+===================================== */
+
+.panel {
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+}
+
+
+.panel h2 {
+
+    margin: 0 0 16px;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    color: var(--text);
+
+    letter-spacing: 0.2px;
+
+}
+
+
+.panel-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 16px;
+
+}
+
+
+.badge {
+
+    font-size: 11px;
+
+    padding: 5px 10px;
+
+    border-radius: 6px;
+
+    background: rgba(47, 179, 255, 0.1);
+
+    color: var(--blue);
+
+    font-weight: 800;
+
+    border: 1px solid rgba(47, 179, 255, 0.2);
+
+}
+
+
+/* =====================================
+   ESTADO
+===================================== */
+
+.status {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px 12px;
+
+    background: var(--panel-light);
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+}
+
+
+.status-dot {
+
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: var(--red);
+
+    box-shadow: 0 0 10px rgba(255, 92, 108, 0.7);
+
+    animation: pulse 2s infinite;
+
+}
+
+
+.status-dot.ok {
+
+    background: var(--green);
+
+    box-shadow: 0 0 10px rgba(0, 224, 150, 0.7);
+
+}
+
+
+@keyframes pulse {
+
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(0.92);
+    }
+
+}
+
+
+.status-text.ok {
+
+    color: var(--green);
+
+}
+
+
+.status-text.error {
+
+    color: var(--red);
+
+}
+
+
+/* =====================================
+   PRECIO ACTUAL
+===================================== */
+
+.price-current {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 24px;
+
+    text-align: center;
+
+}
+
+
+.price-label {
+
+    font-size: 12px;
+
+    color: var(--muted);
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.8px;
+
+}
+
+
+.price-value {
+
+    font-size: 56px;
+
+    font-weight: 800;
+
+    margin: 12px 0 6px;
+
+    color: var(--cyan);
+
+    letter-spacing: -2px;
+
+}
+
+
+.price-unit {
+
+    font-size: 14px;
+
+    color: var(--muted);
+
+    font-weight: 700;
+
+}
+
+
+.price-tramo {
+
+    margin-top: 12px;
+
+    font-size: 13px;
+
+    color: var(--text);
+
+    font-weight: 700;
+
+    padding: 6px 14px;
+
+    border-radius: 20px;
+
+    background: var(--panel-light);
+
+    border: 1px solid var(--border);
+
+}
+
+
+/* =====================================
+   RESUMEN
+===================================== */
+
+.summary-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+}
+
+
+.summary-card {
+
+    background: var(--panel-light);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    padding: 14px;
+
+}
+
+
+.summary-card-label {
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+}
+
+
+.summary-card-value {
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+    margin-top: 6px;
+
+}
+
+
+.summary-card-tramo {
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    margin-top: 5px;
+
+    font-weight: 700;
+
+}
+
+
+.value-green { color: var(--green); }
+.value-yellow { color: var(--yellow); }
+.value-orange { color: var(--orange); }
+.value-red { color: var(--red); }
+
+
+/* =====================================
+   GRÁFICO
+===================================== */
+
+.chart-panel {
+
+    grid-column: 1 / -1;
+
+}
+
+
+.chart-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 14px;
+
+}
+
+
+.chart-legend {
+
+    display: flex;
+
+    gap: 14px;
+
+    font-size: 11px;
+
+    color: var(--muted);
+
+    font-weight: 700;
+
+}
+
+
+.chart-legend span {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+}
+
+
+.chart-legend span::before {
+
+    content: '';
+
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 2px;
+
+}
+
+
+.legend-low::before { background: var(--green); }
+.legend-medium::before { background: var(--yellow); }
+.legend-high::before { background: var(--orange); }
+.legend-peak::before { background: var(--red); }
+
+
+#reeChart {
+
+    width: 100%;
+
+    height: 320px;
+
+    display: block;
+
+    background:
+        linear-gradient(180deg, #0b1319, #070c11);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 900px) {
+
+    .topbar {
+
+        padding: 0 16px;
+
+        height: auto;
+
+        min-height: 64px;
+
+        flex-wrap: wrap;
+
+        gap: 10px;
+
+    }
+
+
+    .nav {
+
+        order: 3;
+
+        width: 100%;
+
+        justify-content: center;
+
+        margin-bottom: 4px;
+
+    }
+
+
+    .container {
+
+        padding: 18px;
+
+    }
+
+
+    .price-value {
+
+        font-size: 44px;
+
+    }
+
+
+    .summary-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .chart-legend {
+
+        flex-wrap: wrap;
+
+        gap: 10px;
+
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .chart-legend {
+
+        font-size: 10px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+
+    <div class="logo">
+
+        M4000 <span>INDUSTRIAL</span>
+
+    </div>
+
+
+    <nav class="nav">
+
+
+        <button
+
+            onclick="location.href='index.html'">
+
+            Dashboard
+
+        </button>
+
+
+        <button
+
+            onclick="location.href='demo-troncos.html'">
+
+            Demo Troncos
+
+        </button>
+
+
+        <button
+
+            class="active"
+
+            onclick="location.href='demo-api-ree.html'">
+
+            Demo REE
+
+        </button>
+
+
+    </nav>
+
+
+    <div class="connection">
+
+
+        <div
+
+            id="connectionDot"
+
+            class="connection-dot">
+
+        </div>
+
+
+        <span
+
+            id="connectionText">
+
+            DESCONECTADO
+
+        </span>
+
+
+    </div>
+
+
+</header>
+
+
+<main class="container">
+
+
+    <div class="page-title">
+
+
+        <h1>
+
+            Precio PVPC - Península
+
+        </h1>
+
+
+        <p>
+
+            Datos de Red Eléctrica Española en tiempo real
+
+        </p>
+
+
+    </div>
+
+
+    <div class="grid">
+
+
+        <!-- ESTADO -->
+
+        <section class="panel">
+
+
+            <div class="panel-header">
+
+
+                <h2>
+
+                    Estado API
+
+                </h2>
+
+
+                <span class="badge">
+
+                    REE
+
+                </span>
+
+
+            </div>
+
+
+            <div class="status">
+
+
+                <div
+
+                    id="statusDot"
+
+                    class="status-dot">
+
+                </div>
+
+
+                <div
+
+                    id="status"
+
+                    class="status-text error">
+
+                    Node-RED: DESCONECTADO
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- PRECIO ACTUAL -->
+
+        <section class="panel">
+
+
+            <div class="panel-header">
+
+
+                <h2>
+
+                    Precio actual
+
+                </h2>
+
+
+                <span class="badge">
+
+                    €/kWh
+
+                </span>
+
+
+            </div>
+
+
+            <div class="price-current">
+
+
+                <div class="price-label">
+
+                    Tramo en curso
+
+                </div>
+
+
+                <div
+
+                    id="currentPrice"
+
+                    class="price-value">
+
+                    ---
+
+                </div>
+
+
+                <div class="price-unit">
+
+                    euros por kWh
+
+                </div>
+
+
+                <div
+
+                    id="currentTramo"
+
+                    class="price-tramo">
+
+                    --:---:--
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- RESUMEN -->
+
+        <section class="panel">
+
+
+            <div class="panel-header">
+
+
+                <h2>
+
+                    Resumen 24 h
+
+                </h2>
+
+
+                <span class="badge">
+
+                    ESTADÍSTICAS
+
+                </span>
+
+
+            </div>
+
+
+            <div class="summary-grid">
+
+
+                <div class="summary-card">
+
+                    <div class="summary-card-label">
+
+                        Mínimo
+
+                    </div>
+
+                    <div
+
+                        id="minPrice"
+
+                        class="summary-card-value value-green">
+
+                        ---
+
+                    </div>
+
+                    <div
+
+                        id="minTramo"
+
+                        class="summary-card-tramo">
+
+                        --:---:--
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-card-label">
+
+                        Máximo
+
+                    </div>
+
+                    <div
+
+                        id="maxPrice"
+
+                        class="summary-card-value value-red">
+
+                        ---
+
+                    </div>
+
+                    <div
+
+                        id="maxTramo"
+
+                        class="summary-card-tramo">
+
+                        --:---:--
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-card-label">
+
+                        Medio
+
+                    </div>
+
+                    <div
+
+                        id="avgPrice"
+
+                        class="summary-card-value value-yellow">
+
+                        ---
+
+                    </div>
+
+                    <div class="summary-card-tramo">
+
+                        Media diaria
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-card-label">
+
+                        Última actualización
+
+                    </div>
+
+                    <div
+
+                        id="lastUpdate"
+
+                        class="summary-card-value value-blue">
+
+                        ---
+
+                    </div>
+
+                    <div class="summary-card-tramo">
+
+                        Hora local
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- GRÁFICO 24H -->
+
+        <section class="panel chart-panel">
+
+
+            <div class="chart-header">
+
+
+                <h2>
+
+                    Evolución horaria
+
+                </h2>
+
+
+                <div class="chart-legend">
+
+                    <span class="legend-low">Bajo</span>
+
+                    <span class="legend-medium">Medio</span>
+
+                    <span class="legend-high">Alto</span>
+
+                    <span class="legend-peak">Pico</span>
+
+                </div>
+
+
+            </div>
+
+
+            <canvas
+
+                id="reeChart"
+
+                width="1200"
+
+                height="320">
+
+            </canvas>
+
+
+        </section>
+
+
+    </div>
+
+
+</main>
+
+
+<script>
+
+
+const REE_URL =
+
+    '/api/m4000/ree';
+
+
+const statusDot =
+
+    document.getElementById(
+
+        'connectionDot'
+
+    );
+
+
+const statusText =
+
+    document.getElementById(
+
+        'connectionText'
+
+    );
+
+
+const apiStatusDot =
+
+    document.getElementById(
+
+        'statusDot'
+
+    );
+
+
+const apiStatus =
+
+    document.getElementById(
+
+        'status'
+
+    );
+
+
+function colorPorPrecio(
+
+    precio
+
+) {
+
+
+    if (precio < 0.06) {
+
+        return '#00e096';
+
+    }
+
+
+    if (precio < 0.12) {
+
+        return '#ffb624';
+
+    }
+
+
+    if (precio < 0.18) {
+
+        return '#ff8c42';
+
+    }
+
+
+    return '#ff5c6c';
+
+}
+
+
+function clasePorPrecio(
+
+    precio
+
+) {
+
+
+    if (precio < 0.06) {
+
+        return 'value-green';
+
+    }
+
+
+    if (precio < 0.12) {
+
+        return 'value-yellow';
+
+    }
+
+
+    if (precio < 0.18) {
+
+        return 'value-orange';
+
+    }
+
+
+    return 'value-red';
+
+}
+
+
+function dibujarGrafico(
+
+    horas
+
+) {
+
+
+    const canvas =
+
+        document.getElementById(
+
+            'reeChart'
+
+        );
+
+
+    const ctx =
+
+        canvas.getContext(
+
+            '2d'
+
+        );
+
+
+    const width =
+
+        canvas.width;
+
+
+    const height =
+
+        canvas.height;
+
+
+    const padding =
+
+        { top: 30, right: 20, bottom: 40, left: 55 };
+
+
+    ctx.clearRect(
+
+        0,
+
+        0,
+
+        width,
+
+        height
+
+    );
+
+
+    ctx.fillStyle =
+
+        '#080d12';
+
+
+    ctx.fillRect(
+
+        0,
+
+        0,
+
+        width,
+
+        height
+
+    );
+
+
+    if (
+
+        !horas
+
+        ||
+
+        horas.length === 0
+
+    ) {
+
+        return;
+
+    }
+
+
+    const precios =
+
+        horas.map(
+
+            item => item.precio_eur_kwh
+
+        );
+
+
+    const min =
+
+        Math.min(
+
+            ...precios
+
+        );
+
+
+    const max =
+
+        Math.max(
+
+            ...precios
+
+        );
+
+
+    const rango =
+
+        max - min || 1;
+
+
+    const chartWidth =
+
+        width - padding.left - padding.right;
+
+
+    const chartHeight =
+
+        height - padding.top - padding.bottom;
+
+
+    const barWidth =
+
+        chartWidth / horas.length * 0.65;
+
+
+    const gap =
+
+        chartWidth / horas.length * 0.35;
+
+
+    /* Cuadrícula */
+
+    ctx.strokeStyle =
+
+        '#1e303c';
+
+
+    ctx.lineWidth =
+
+        1;
+
+
+    for (
+
+        let i = 0;
+
+        i <= 4;
+
+        i++
+
+    ) {
+
+        const y =
+
+            padding.top +
+
+            chartHeight *
+
+            (i / 4);
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+
+            padding.left,
+
+            y
+
+        );
+
+        ctx.lineTo(
+
+            width - padding.right,
+
+            y
+
+        );
+
+        ctx.stroke();
+
+
+        const valor =
+
+            max -
+
+            rango *
+
+            (i / 4);
+
+
+        ctx.fillStyle =
+
+            '#8fa3b8';
+
+
+        ctx.font =
+
+            '11px Inter, Segoe UI, Arial';
+
+
+        ctx.textAlign =
+
+            'right';
+
+
+        ctx.fillText(
+
+            valor.toFixed(
+
+                3
+
+            ),
+
+            padding.left - 10,
+
+            y + 4
+
+        );
+
+    }
+
+
+    /* Barras */
+
+    horas.forEach(
+
+        (
+
+            item,
+
+            index
+
+        ) => {
+
+
+            const precio =
+
+                item.precio_eur_kwh;
+
+
+            const barHeight =
+
+                (
+
+                    (precio - min) /
+
+                    rango
+
+                ) *
+
+                chartHeight *
+
+                0.85 +
+
+                4;
+
+
+            const x =
+
+                padding.left +
+
+                index *
+
+                (barWidth + gap) +
+
+                gap / 2;
+
+
+            const y =
+
+                padding.top +
+
+                chartHeight -
+
+                barHeight;
+
+
+            const color =
+
+                colorPorPrecio(
+
+                    precio
+
+                );
+
+
+            ctx.fillStyle =
+
+                color;
+
+
+            ctx.shadowColor =
+
+                color;
+
+
+            ctx.shadowBlur =
+
+                10;
+
+
+            ctx.fillRect(
+
+                x,
+
+                y,
+
+                barWidth,
+
+                barHeight
+
+            );
+
+
+            ctx.shadowBlur =
+
+                0;
+
+
+            /* Tramo */
+
+            ctx.fillStyle =
+
+                '#8fa3b8';
+
+
+            ctx.font =
+
+                '10px Inter, Segoe UI, Arial';
+
+
+            ctx.textAlign =
+
+                'center';
+
+
+            ctx.save();
+
+            ctx.translate(
+
+                x + barWidth / 2,
+
+                height - 12
+
+            );
+
+            ctx.rotate(
+
+                -Math.PI / 4
+
+            );
+
+            ctx.fillText(
+
+                item.tramo,
+
+                0,
+
+                0
+
+            );
+
+            ctx.restore();
+
+        }
+
+    );
+
+}
+
+
+function actualizarResumen(
+
+    data
+
+) {
+
+
+    const currentPrice =
+
+        document.getElementById(
+
+            'currentPrice'
+
+        );
+
+
+    const currentTramo =
+
+        document.getElementById(
+
+            'currentTramo'
+
+        );
+
+
+    const minPrice =
+
+        document.getElementById(
+
+            'minPrice'
+
+        );
+
+
+    const minTramo =
+
+        document.getElementById(
+
+            'minTramo'
+
+        );
+
+
+    const maxPrice =
+
+        document.getElementById(
+
+            'maxPrice'
+
+        );
+
+
+    const maxTramo =
+
+        document.getElementById(
+
+            'maxTramo'
+
+        );
+
+
+    const avgPrice =
+
+        document.getElementById(
+
+            'avgPrice'
+
+        );
+
+
+    const lastUpdate =
+
+        document.getElementById(
+
+            'lastUpdate'
+
+        );
+
+
+    if (data.actual) {
+
+        currentPrice.textContent =
+
+            data.actual.precio_eur_kwh.toFixed(
+
+                5
+
+            );
+
+
+        currentPrice.className =
+
+            'price-value ' +
+
+            clasePorPrecio(
+
+                data.actual.precio_eur_kwh
+
+            );
+
+
+        currentTramo.textContent =
+
+            data.actual.tramo;
+
+    }
+
+
+    if (data.minimo) {
+
+        minPrice.textContent =
+
+            data.minimo.precio_eur_kwh.toFixed(
+
+                5
+
+            );
+
+
+        minPrice.className =
+
+            'summary-card-value ' +
+
+            clasePorPrecio(
+
+                data.minimo.precio_eur_kwh
+
+            );
+
+
+        minTramo.textContent =
+
+            data.minimo.tramo;
+
+    }
+
+
+    if (data.maximo) {
+
+        maxPrice.textContent =
+
+            data.maximo.precio_eur_kwh.toFixed(
+
+                5
+
+            );
+
+
+        maxPrice.className =
+
+            'summary-card-value ' +
+
+            clasePorPrecio(
+
+                data.maximo.precio_eur_kwh
+
+            );
+
+
+        maxTramo.textContent =
+
+            data.maximo.tramo;
+
+    }
+
+
+    if (data.medio) {
+
+        avgPrice.textContent =
+
+            data.medio.precio_eur_kwh.toFixed(
+
+                5
+
+            );
+
+
+        avgPrice.className =
+
+            'summary-card-value ' +
+
+            clasePorPrecio(
+
+                data.medio.precio_eur_kwh
+
+            );
+
+    }
+
+
+    const ahora =
+
+        new Date();
+
+
+    lastUpdate.textContent =
+
+        ahora.toLocaleTimeString(
+
+            'es-ES',
+
+            {
+
+                hour: '2-digit',
+
+                minute: '2-digit'
+
+            }
+
+        );
+
+
+    dibujarGrafico(
+
+        data.horas
+
+    );
+
+}
+
+
+async function actualizarDatos() {
+
+
+    try {
+
+
+        const response =
+
+            await fetch(
+
+                REE_URL +
+
+                '?t=' +
+
+                Date.now()
+
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                'HTTP ' +
+
+                response.status
+
+            );
+
+        }
+
+
+        const data =
+
+            await response.json();
+
+
+        statusDot.classList.add(
+
+            'ok'
+
+        );
+
+
+        statusText.textContent =
+
+            'CONECTADO';
+
+
+        apiStatusDot.classList.add(
+
+            'ok'
+
+        );
+
+
+        apiStatus.textContent =
+
+            'API REE: CONECTADO';
+
+
+        apiStatus.className =
+
+            'status-text ok';
+
+
+        actualizarResumen(
+
+            data
+
+        );
+
+
+    } catch (error) {
+
+
+        statusDot.classList.remove(
+
+            'ok'
+
+        );
+
+
+        statusText.textContent =
+
+            'DESCONECTADO';
+
+
+        apiStatusDot.classList.remove(
+
+            'ok'
+
+        );
+
+
+        apiStatus.textContent =
+
+            'API REE: DESCONECTADO';
+
+
+        apiStatus.className =
+
+            'status-text error';
+
+    }
+
+}
+
+
+actualizarDatos();
+
+
+setInterval(
+
+    actualizarDatos,
+
+    60000
+
+);
+
+
+window.addEventListener(
+
+    'resize',
+
+    () => {
+
+        const canvas =
+
+            document.getElementById(
+
+                'reeChart'
+
+            );
+
+
+        canvas.width =
+
+            canvas.offsetWidth;
+
+
+        canvas.height =
+
+            canvas.offsetHeight;
+
+    }
+
+);
+
+</script>
+
+
+</body>
+
+</html>
