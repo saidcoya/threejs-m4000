@@ -17,22 +17,23 @@
 
 :root {
 
-    --bg: #080c11;
-    --panel: #111820;
-    --panel-2: #151e28;
-    --panel-3: #0c1218;
+    --bg: #070a0f;
+    --bg-2: #0c1218;
+    --panel: rgba(16, 24, 33, 0.88);
+    --panel-2: rgba(22, 32, 43, 0.75);
+    --panel-3: rgba(12, 19, 26, 0.72);
 
-    --border: #263746;
-    --border-light: #34495a;
+    --border: rgba(54, 76, 98, 0.55);
+    --border-light: rgba(88, 118, 148, 0.35);
 
-    --text: #e8edf2;
-    --muted: #8796a5;
+    --text: #f0f5fa;
+    --muted: #8fa4b8;
 
-    --cyan: #00d9ff;
-    --blue: #258dff;
-    --green: #00d084;
-    --yellow: #ffb020;
-    --red: #ff4d5a;
+    --cyan: #00e0ff;
+    --blue: #2fb3ff;
+    --green: #00e096;
+    --yellow: #ffb624;
+    --red: #ff5c6c;
 
 }
 
@@ -64,25 +65,16 @@ body {
 body {
 
     background:
-
-        radial-gradient(
-
-            circle at center,
-
-            #101923 0%,
-
-            #080c11 70%
-
-        );
+        radial-gradient(ellipse at 20% 0%, #0f1926 0%, transparent 45%),
+        radial-gradient(ellipse at 80% 100%, #0c151f 0%, transparent 45%),
+        radial-gradient(circle at center, #0d141c 0%, #070a0f 70%);
 
     color: var(--text);
 
     font-family:
-
+        "Inter",
         "Segoe UI",
-
         Arial,
-
         sans-serif;
 
 }
@@ -94,7 +86,7 @@ body {
 
 .topbar {
 
-    height: 64px;
+    height: 68px;
 
     width: 100%;
 
@@ -104,21 +96,18 @@ body {
 
     justify-content: space-between;
 
-    padding: 0 22px;
+    padding: 0 28px;
 
-    background: rgba(
-
-        10,
-
-        15,
-
-        21,
-
-        0.98
-
-    );
+    background:
+        linear-gradient(180deg, rgba(13, 20, 28, 0.97), rgba(10, 15, 21, 0.95));
 
     border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
 
     position: relative;
 
@@ -129,11 +118,34 @@ body {
 
 .logo {
 
-    font-size: 20px;
+    font-size: 21px;
 
     font-weight: 800;
 
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.logo::before {
+
+    content: '';
+
+    width: 9px;
+
+    height: 28px;
+
+    background: linear-gradient(180deg, var(--cyan), var(--blue));
+
+    border-radius: 3px;
+
+    box-shadow: 0 0 14px rgba(0, 224, 255, 0.45);
 
 }
 
@@ -142,6 +154,8 @@ body {
 
     color: var(--cyan);
 
+    font-weight: 700;
+
 }
 
 
@@ -149,16 +163,24 @@ body {
 
     display: flex;
 
-    gap: 8px;
+    gap: 10px;
+
+    background: rgba(0, 0, 0, 0.18);
+
+    padding: 5px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.04);
 
 }
 
 
 .nav button {
 
-    height: 38px;
+    height: 40px;
 
-    padding: 0 18px;
+    padding: 0 20px;
 
     background: transparent;
 
@@ -166,59 +188,40 @@ body {
 
     border: 1px solid transparent;
 
-    border-radius: 6px;
+    border-radius: 7px;
 
     cursor: pointer;
 
     font-weight: 700;
 
-    transition: 0.2s;
+    font-size: 13px;
+
+    transition: all 0.18s ease;
 
 }
 
 
 .nav button:hover {
 
-    color: white;
+    color: #fff;
 
-    background: var(--panel-2);
-
-    border-color: var(--border);
+    background: rgba(255, 255, 255, 0.05);
 
 }
 
 
 .nav button.active {
 
-    color: white;
+    color: #fff;
 
     background:
+        linear-gradient(180deg, rgba(38, 56, 74, 0.95), rgba(24, 36, 48, 0.95));
 
-        linear-gradient(
-
-            180deg,
-
-            #203443,
-
-            #172530
-
-        );
-
-    border-color: var(--cyan);
+    border-color: rgba(0, 224, 255, 0.45);
 
     box-shadow:
-
-        0 0 12px rgba(
-
-            0,
-
-            217,
-
-            255,
-
-            0.15
-
-        );
+        0 0 18px rgba(0, 224, 255, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
 }
 
@@ -234,9 +237,7 @@ body {
     width: 100%;
 
     height: calc(
-
-        100vh - 64px
-
+        100vh - 68px
     );
 
 }
@@ -269,13 +270,13 @@ canvas.webgl {
 
     position: absolute;
 
-    top: 18px;
+    top: 20px;
 
-    left: 18px;
+    left: 20px;
 
-    bottom: 18px;
+    bottom: 20px;
 
-    width: 355px;
+    width: 360px;
 
     z-index: 20;
 
@@ -283,7 +284,7 @@ canvas.webgl {
 
     flex-direction: column;
 
-    gap: 12px;
+    gap: 14px;
 
     overflow-y: auto;
 
@@ -315,56 +316,21 @@ canvas.webgl {
 .panel {
 
     background:
-
-        linear-gradient(
-
-            145deg,
-
-            rgba(
-
-                21,
-
-                30,
-
-                40,
-
-                0.97
-
-            ),
-
-            rgba(
-
-                11,
-
-                17,
-
-                23,
-
-                0.97
-
-            )
-
-        );
+        linear-gradient(145deg, rgba(22, 32, 43, 0.88), rgba(11, 17, 23, 0.88));
 
     border: 1px solid var(--border);
 
-    border-radius: 9px;
+    border-radius: 14px;
 
     box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
-        0 12px 30px rgba(
+    padding: 17px;
 
-            0,
+    backdrop-filter: blur(12px);
 
-            0,
-
-            0,
-
-            0.28
-
-        );
-
-    padding: 15px;
+    -webkit-backdrop-filter: blur(12px);
 
 }
 
@@ -377,20 +343,20 @@ canvas.webgl {
 
     justify-content: space-between;
 
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 
 }
 
 
 .panel-title {
 
-    font-size: 14px;
+    font-size: 13px;
 
     font-weight: 800;
 
     text-transform: uppercase;
 
-    letter-spacing: 0.7px;
+    letter-spacing: 0.8px;
 
 }
 
@@ -403,33 +369,13 @@ canvas.webgl {
 
     color: var(--cyan);
 
-    border: 1px solid rgba(
+    border: 1px solid rgba(0, 224, 255, 0.35);
 
-        0,
+    background: rgba(0, 224, 255, 0.08);
 
-        217,
+    padding: 4px 8px;
 
-        255,
-
-        0.35
-
-    );
-
-    background: rgba(
-
-        0,
-
-        217,
-
-        255,
-
-        0.08
-
-    );
-
-    padding: 4px 7px;
-
-    border-radius: 4px;
+    border-radius: 5px;
 
 }
 
@@ -444,19 +390,19 @@ canvas.webgl {
 
     align-items: center;
 
-    gap: 9px;
+    gap: 10px;
 
-    padding: 10px 11px;
+    padding: 11px 12px;
 
     background: var(--panel-3);
 
     border: 1px solid var(--border);
 
-    border-radius: 6px;
+    border-radius: 8px;
 
     font-size: 12px;
 
-    font-weight: 700;
+    font-weight: 800;
 
 }
 
@@ -472,18 +418,9 @@ canvas.webgl {
     background: var(--red);
 
     box-shadow:
+        0 0 10px rgba(255, 92, 108, 0.7);
 
-        0 0 8px rgba(
-
-            255,
-
-            77,
-
-            90,
-
-            0.8
-
-        );
+    animation: pulse 2s infinite;
 
 }
 
@@ -493,18 +430,22 @@ canvas.webgl {
     background: var(--green);
 
     box-shadow:
+        0 0 10px rgba(0, 224, 150, 0.7);
 
-        0 0 8px rgba(
+}
 
-            0,
 
-            208,
+@keyframes pulse {
 
-            132,
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 
-            0.8
-
-        );
+    50% {
+        opacity: 0.7;
+        transform: scale(0.92);
+    }
 
 }
 
@@ -533,20 +474,20 @@ canvas.webgl {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 8px;
+    gap: 10px;
 
 }
 
 
 .summary-item {
 
-    padding: 10px;
+    padding: 12px;
 
     background: var(--panel-3);
 
     border: 1px solid var(--border);
 
-    border-radius: 6px;
+    border-radius: 8px;
 
 }
 
@@ -559,16 +500,18 @@ canvas.webgl {
 
     text-transform: uppercase;
 
+    font-weight: 700;
+
 }
 
 
 .summary-value {
 
-    margin-top: 4px;
+    margin-top: 5px;
 
     color: var(--cyan);
 
-    font-size: 17px;
+    font-size: 18px;
 
     font-weight: 800;
 
@@ -585,7 +528,7 @@ canvas.webgl {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 8px;
+    gap: 10px;
 
 }
 
@@ -596,9 +539,9 @@ canvas.webgl {
 
     border: 1px solid var(--border);
 
-    border-radius: 6px;
+    border-radius: 8px;
 
-    padding: 9px;
+    padding: 11px;
 
 }
 
@@ -609,16 +552,18 @@ canvas.webgl {
 
     font-size: 10px;
 
+    font-weight: 700;
+
 }
 
 
 .stat-value {
 
-    margin-top: 3px;
+    margin-top: 4px;
 
     color: var(--cyan);
 
-    font-size: 16px;
+    font-size: 17px;
 
     font-weight: 800;
 
@@ -631,7 +576,7 @@ canvas.webgl {
 
 .progress-area {
 
-    margin-top: 13px;
+    margin-top: 14px;
 
 }
 
@@ -642,11 +587,13 @@ canvas.webgl {
 
     justify-content: space-between;
 
-    margin-bottom: 6px;
+    margin-bottom: 7px;
 
     color: var(--muted);
 
     font-size: 11px;
+
+    font-weight: 700;
 
 }
 
@@ -655,13 +602,15 @@ canvas.webgl {
 
     width: 100%;
 
-    height: 9px;
+    height: 10px;
 
-    background: #26313b;
+    background: rgba(38, 49, 59, 0.7);
 
-    border-radius: 5px;
+    border-radius: 6px;
 
     overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.04);
 
 }
 
@@ -673,20 +622,11 @@ canvas.webgl {
     width: 0%;
 
     background:
+        linear-gradient(90deg, var(--blue), var(--cyan), var(--green));
 
-        linear-gradient(
+    box-shadow: 0 0 12px rgba(0, 224, 255, 0.35);
 
-            90deg,
-
-            var(--blue),
-
-            var(--cyan),
-
-            var(--green)
-
-        );
-
-    transition: width 0.3s;
+    transition: width 0.3s ease;
 
 }
 
@@ -701,69 +641,130 @@ canvas.webgl {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 7px;
+    gap: 8px;
 
 }
 
 
 .action {
 
-    min-height: 36px;
+    min-height: 38px;
 
-    padding: 8px;
+    padding: 9px;
 
     border: 1px solid var(--border);
 
-    border-radius: 5px;
+    border-radius: 8px;
 
-    color: white;
+    color: #fff;
 
     cursor: pointer;
 
     font-size: 11px;
 
-    font-weight: 700;
+    font-weight: 800;
 
-    background: #202c37;
+    background: rgba(255, 255, 255, 0.05);
 
-    transition: 0.2s;
+    transition: all 0.15s ease;
 
 }
 
 
 .action:hover {
 
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 
-    filter: brightness(1.15);
+    background: rgba(255, 255, 255, 0.1);
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+
+}
+
+
+.action:active {
+
+    transform: translateY(0);
 
 }
 
 
 .action.green {
 
-    background: #087f52;
+    background: rgba(0, 224, 150, 0.14);
+
+    border-color: rgba(0, 224, 150, 0.45);
+
+    color: var(--green);
+
+}
+
+
+.action.green:hover {
+
+    background: rgba(0, 224, 150, 0.22);
+
+    box-shadow: 0 0 16px rgba(0, 224, 150, 0.15);
 
 }
 
 
 .action.orange {
 
-    background: #8b5a08;
+    background: rgba(255, 182, 36, 0.14);
+
+    border-color: rgba(255, 182, 36, 0.45);
+
+    color: var(--yellow);
+
+}
+
+
+.action.orange:hover {
+
+    background: rgba(255, 182, 36, 0.22);
+
+    box-shadow: 0 0 16px rgba(255, 182, 36, 0.15);
 
 }
 
 
 .action.blue {
 
-    background: #1269a5;
+    background: rgba(47, 179, 255, 0.14);
+
+    border-color: rgba(47, 179, 255, 0.45);
+
+    color: var(--blue);
+
+}
+
+
+.action.blue:hover {
+
+    background: rgba(47, 179, 255, 0.22);
+
+    box-shadow: 0 0 16px rgba(47, 179, 255, 0.15);
 
 }
 
 
 .action.red {
 
-    background: #8b2028;
+    background: rgba(255, 92, 108, 0.14);
+
+    border-color: rgba(255, 92, 108, 0.45);
+
+    color: var(--red);
+
+}
+
+
+.action.red:hover {
+
+    background: rgba(255, 92, 108, 0.22);
+
+    box-shadow: 0 0 16px rgba(255, 92, 108, 0.15);
 
 }
 
@@ -776,67 +777,32 @@ canvas.webgl {
 
     position: absolute;
 
-    right: 18px;
+    right: 20px;
 
-    bottom: 18px;
+    bottom: 20px;
 
-    width: 365px;
+    width: 380px;
 
-    height: 265px;
+    height: 275px;
 
     z-index: 30;
 
-    padding: 14px;
+    padding: 16px;
 
     background:
-
-        linear-gradient(
-
-            145deg,
-
-            rgba(
-
-                21,
-
-                30,
-
-                40,
-
-                0.98
-
-            ),
-
-            rgba(
-
-                9,
-
-                14,
-
-                19,
-
-                0.98
-
-            )
-
-        );
+        linear-gradient(145deg, rgba(22, 32, 43, 0.92), rgba(10, 16, 22, 0.92));
 
     border: 1px solid var(--border);
 
-    border-radius: 9px;
+    border-radius: 14px;
 
     box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
-        0 12px 30px rgba(
+    backdrop-filter: blur(12px);
 
-            0,
-
-            0,
-
-            0,
-
-            0.4
-
-        );
+    -webkit-backdrop-filter: blur(12px);
 
 }
 
@@ -849,11 +815,13 @@ canvas.webgl {
 
     align-items: center;
 
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 
     font-size: 13px;
 
     font-weight: 800;
+
+    letter-spacing: 0.5px;
 
 }
 
@@ -863,6 +831,16 @@ canvas.webgl {
     color: var(--cyan);
 
     font-size: 10px;
+
+    font-weight: 800;
+
+    border: 1px solid rgba(0, 224, 255, 0.35);
+
+    background: rgba(0, 224, 255, 0.08);
+
+    padding: 4px 7px;
+
+    border-radius: 5px;
 
 }
 
@@ -876,20 +854,11 @@ canvas.webgl {
     display: block;
 
     background:
-
-        linear-gradient(
-
-            180deg,
-
-            #0c141b,
-
-            #080d12
-
-        );
+        linear-gradient(180deg, #0b1319, #070c11);
 
     border: 1px solid var(--border);
 
-    border-radius: 6px;
+    border-radius: 8px;
 
 }
 
@@ -902,35 +871,40 @@ canvas.webgl {
 
     position: absolute;
 
-    top: 18px;
+    top: 20px;
 
-    right: 18px;
+    right: 20px;
 
     z-index: 20;
 
-    padding: 9px 12px;
+    padding: 11px 14px;
 
-    background: rgba(
-
-        12,
-
-        18,
-
-        24,
-
-        0.9
-
-    );
+    background: rgba(12, 19, 26, 0.88);
 
     border: 1px solid var(--border);
 
-    border-radius: 6px;
+    border-radius: 10px;
 
     color: var(--muted);
 
-    font-size: 10px;
+    font-size: 11px;
 
-    line-height: 1.7;
+    line-height: 1.8;
+
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+
+}
+
+
+.help b {
+
+    color: var(--cyan);
+
+    font-weight: 800;
 
 }
 
@@ -941,11 +915,13 @@ canvas.webgl {
 
 #error {
 
-    margin-top: 8px;
+    margin-top: 10px;
 
     color: var(--red);
 
     font-size: 11px;
+
+    font-weight: 700;
 
 }
 
@@ -955,20 +931,18 @@ canvas.webgl {
 ========================================================= */
 
 @media (
-
-    max-width: 1100px
-
+    max-width: 1150px
 ) {
 
     .side-panel {
 
-        width: 310px;
+        width: 320px;
 
     }
 
     .profile-panel {
 
-        width: 320px;
+        width: 330px;
 
     }
 
@@ -976,9 +950,7 @@ canvas.webgl {
 
 
 @media (
-
-    max-width: 800px
-
+    max-width: 860px
 ) {
 
     body {
@@ -991,13 +963,13 @@ canvas.webgl {
 
         height: auto;
 
-        min-height: 64px;
+        min-height: 68px;
 
         flex-wrap: wrap;
 
-        gap: 8px;
+        gap: 10px;
 
-        padding: 10px;
+        padding: 12px 16px;
 
     }
 
@@ -1014,12 +986,10 @@ canvas.webgl {
     .app {
 
         height: calc(
-
-            100vh - 112px
-
+            100vh - 120px
         );
 
-        min-height: 850px;
+        min-height: 900px;
 
     }
 
@@ -1027,11 +997,11 @@ canvas.webgl {
 
         position: absolute;
 
-        top: 12px;
+        top: 14px;
 
-        left: 12px;
+        left: 14px;
 
-        right: 12px;
+        right: 14px;
 
         bottom: auto;
 
@@ -1045,15 +1015,17 @@ canvas.webgl {
 
         position: absolute;
 
-        top: 650px;
+        top: 680px;
 
-        left: 12px;
+        left: 14px;
 
-        right: 12px;
+        right: 14px;
 
         bottom: auto;
 
         width: auto;
+
+        height: auto;
 
     }
 
@@ -1073,7 +1045,6 @@ canvas.webgl {
 
 <header class="topbar">
 
-```
 <div class="logo">
 
     M4000 <span>INDUSTRIAL</span>
@@ -1103,13 +1074,11 @@ canvas.webgl {
     </button>
 
 </nav>
-```
 
 </header>
 
 <div class="app">
 
-```
 <!-- =================================================
      PANEL LATERAL
 ================================================= -->
@@ -1507,6 +1476,7 @@ canvas.webgl {
 
         </div>
 
+
     </section>
 
 
@@ -1650,7 +1620,6 @@ canvas.webgl {
     Botón derecho: Desplazar
 
 </div>
-```
 
 </div>
 
@@ -1748,11 +1717,8 @@ window.innerHeight,
 
 
 /*
-
    El tronco se crea horizontal
-
    sobre el eje Z.
-
 */
 
 camera.position.set(
@@ -1954,37 +1920,24 @@ sensores
 
 
     const min =
-
         Math.min(
-
             ...sensores
-
         );
 
 
     const max =
-
         Math.max(
-
             ...sensores
-
         );
 
 
     return {
-
         min,
-
         max,
-
         diametroMin:
-
             min * 2,
-
         diametroMax:
-
             max * 2
-
     };
 
 }
@@ -2006,64 +1959,40 @@ max
 
 
     const normalizado =
-
         (
-
             valor - min
-
         )
-
         /
-
         (
-
             max - min || 1
-
         );
 
 
     const color =
-
         new THREE.Color();
 
 
     /*
-
        Azul
-
        Cyan
-
        Verde
-
        Amarillo
-
        Rojo
-
     */
 
     const hue =
-
         (
-
             0.66
-
             -
-
             normalizado *
-
             0.66
-
         );
 
 
     color.setHSL(
-
         hue,
-
         1.0,
-
         0.5
-
     );
 
 
@@ -2084,379 +2013,237 @@ perfiles
 
 
     if (
-
         !Array.isArray(
-
             perfiles
-
         )
-
         ||
-
         perfiles.length < 2
-
     ) {
-
         return;
-
     }
 
 
     const vertices = [];
-
     const colores = [];
-
     const indices = [];
 
 
     const numPerfiles =
-
         perfiles.length;
 
 
     let valorMin =
-
         Infinity;
 
 
     let valorMax =
-
         -Infinity;
 
 
     for (
-
         const perfil of perfiles
-
     ) {
 
-
         for (
-
             const valor of
-
             perfil.sensors
-
         ) {
 
-
             valorMin =
-
                 Math.min(
-
                     valorMin,
-
                     valor
-
                 );
 
 
             valorMax =
-
                 Math.max(
-
                     valorMax,
-
                     valor
-
                 );
-
         }
 
     }
 
 
     for (
-
         let p = 0;
-
         p < numPerfiles;
-
         p++
-
     ) {
 
-
         const perfil =
-
             perfiles[p];
 
-
         for (
-
             let s = 0;
-
             s < NUM_SENSORES;
-
             s++
-
         ) {
 
-
             const valor =
-
                 perfil.sensors[s];
 
 
             const angulo =
-
                 (
-
                     s /
-
                     NUM_SENSORES
-
                 )
-
                 *
-
                 Math.PI
-
                 *
-
                 2;
 
 
             const radio =
-
                 valor;
 
 
             /*
-
                Perfil circular en X/Y
-
                Tronco longitudinal en Z
-
             */
 
             const x =
-
                 radio *
-
                 Math.cos(
-
                     angulo
-
                 );
 
 
             const y =
-
                 radio *
-
                 Math.sin(
-
                     angulo
-
                 );
 
 
             const z =
-
                 (
-
                     p
-
                     -
-
                     (
-
                         numPerfiles - 1
-
                     )
-
                     / 2
-
                 )
-
                 *
-
                 20;
 
 
             vertices.push(
-
                 x,
-
                 y,
-
                 z
-
             );
 
 
             const color =
-
                 obtenerColor(
-
                     valor,
-
                     valorMin,
-
                     valorMax
-
                 );
 
 
             colores.push(
-
                 color.r,
-
                 color.g,
-
                 color.b
-
             );
-
         }
 
     }
 
 
     for (
-
         let p = 0;
-
         p < numPerfiles - 1;
-
         p++
-
     ) {
 
-
         for (
-
             let s = 0;
-
             s < NUM_SENSORES;
-
             s++
-
         ) {
 
-
             const siguiente =
-
                 (
-
                     s + 1
-
                 )
-
                 %
-
                 NUM_SENSORES;
 
 
             const a =
-
                 p *
-
                 NUM_SENSORES +
-
                 s;
 
 
             const b =
-
                 p *
-
                 NUM_SENSORES +
-
                 siguiente;
 
 
             const c =
-
                 (
-
                     p + 1
-
                 )
-
                 *
-
                 NUM_SENSORES +
-
                 siguiente;
 
 
             const d =
-
                 (
-
                     p + 1
-
                 )
-
                 *
-
                 NUM_SENSORES +
-
                 s;
 
 
             indices.push(
-
                 a,
-
                 b,
-
                 d,
-
                 b,
-
                 c,
-
                 d
-
             );
-
         }
 
     }
 
 
     const geometry =
-
         new THREE.BufferGeometry();
 
 
     geometry.setAttribute(
-
         'position',
-
         new THREE.Float32BufferAttribute(
-
             vertices,
-
             3
-
         )
-
     );
 
 
     geometry.setAttribute(
-
         'color',
-
         new THREE.Float32BufferAttribute(
-
             colores,
-
             3
-
         )
-
     );
 
 
     geometry.setIndex(
-
         indices
-
     );
 
 
@@ -2464,130 +2251,85 @@ perfiles
 
 
     const material =
-
         new THREE.MeshStandardMaterial({
-
             vertexColors: true,
-
             roughness: 0.72,
-
             metalness: 0.05,
-
             side: THREE.DoubleSide
-
         });
 
 
     const nuevoMesh =
-
         new THREE.Mesh(
-
             geometry,
-
             material
-
         );
 
 
     scene.add(
-
         nuevoMesh
-
     );
 
 
     if (
-
         troncoMesh
-
     ) {
 
-
         scene.remove(
-
             troncoMesh
-
         );
-
 
         troncoMesh.geometry.dispose();
 
-
         troncoMesh.material.dispose();
-
     }
 
 
     troncoMesh =
-
         nuevoMesh;
 
 
     /*
-
        Ajustar cámara al tamaño real
-
     */
 
     const box =
-
         new THREE.Box3()
-
             .setFromObject(
-
                 troncoMesh
-
             );
 
 
     const center =
-
         box.getCenter(
-
             new THREE.Vector3()
-
         );
 
 
     const size =
-
         box.getSize(
-
             new THREE.Vector3()
-
         );
 
 
     const maxSize =
-
         Math.max(
-
             size.x,
-
             size.y,
-
             size.z
-
         );
 
 
     controls.target.copy(
-
         center
-
     );
 
 
     camera.position.set(
-
         maxSize * 1.6,
-
         maxSize * 1.1,
-
         maxSize * 1.6
-
     );
-
 }
 
 
@@ -2603,185 +2345,121 @@ sensores
 
 
     const canvas =
-
         document.getElementById(
-
             'profileCanvas'
-
         );
 
 
     const ctx =
-
         canvas.getContext(
-
             '2d'
-
         );
 
 
     const width =
-
         canvas.width;
 
 
     const height =
-
         canvas.height;
 
 
     ctx.clearRect(
-
         0,
-
         0,
-
         width,
-
         height
-
     );
 
 
     ctx.fillStyle =
-
         '#080d12';
 
 
     ctx.fillRect(
-
         0,
-
         0,
-
         width,
-
         height
-
     );
 
 
     if (
-
         !sensores
-
         ||
-
         sensores.length === 0
-
     ) {
-
         return;
-
     }
 
 
     const min =
-
         Math.min(
-
             ...sensores
-
         );
 
 
     const max =
-
         Math.max(
-
             ...sensores
-
         );
 
 
     const rango =
-
         max - min || 1;
 
 
     /* Cuadrícula */
 
     ctx.strokeStyle =
-
         '#1e303c';
 
 
     ctx.lineWidth =
-
         1;
 
 
     for (
-
         let x = 0;
-
         x < width;
-
         x += 50
-
     ) {
-
 
         ctx.beginPath();
 
-
         ctx.moveTo(
-
             x,
-
             0
-
         );
-
 
         ctx.lineTo(
-
             x,
-
             height
-
         );
 
-
         ctx.stroke();
-
     }
 
 
     for (
-
         let y = 0;
-
         y < height;
-
         y += 40
-
     ) {
-
 
         ctx.beginPath();
 
-
         ctx.moveTo(
-
             0,
-
             y
-
         );
-
 
         ctx.lineTo(
-
             width,
-
             y
-
         );
 
-
         ctx.stroke();
-
     }
 
 
@@ -2791,116 +2469,71 @@ sensores
 
 
     sensores.forEach(
-
         (
-
             valor,
-
             index
-
         ) => {
 
 
             const x =
-
                 index *
-
                 (
-
                     width /
-
                     (
-
                         sensores.length - 1
-
                     )
-
                 );
 
 
             const y =
-
                 height
-
                 -
-
                 (
-
                     (
-
                         valor - min
-
                     )
-
                     /
-
                     rango
-
                 )
-
                 *
-
                 (
-
                     height - 20
-
                 )
-
                 -
-
                 10;
 
 
             if (
-
                 index === 0
-
             ) {
-
                 ctx.moveTo(
-
                     x,
-
                     y
-
                 );
-
             }
-
             else {
-
                 ctx.lineTo(
-
                     x,
-
                     y
-
                 );
-
             }
-
         }
-
     );
 
 
     ctx.strokeStyle =
-
         '#00d9ff';
 
 
     ctx.lineWidth =
-
         3;
 
 
     ctx.shadowBlur =
-
         10;
 
 
     ctx.shadowColor =
-
         '#00d9ff';
 
 
@@ -2908,102 +2541,64 @@ sensores
 
 
     ctx.shadowBlur =
-
         0;
 
 
     /* Puntos */
 
     sensores.forEach(
-
         (
-
             valor,
-
             index
-
         ) => {
 
 
             const x =
-
                 index *
-
                 (
-
                     width /
-
                     (
-
                         sensores.length - 1
-
                     )
-
                 );
 
 
             const y =
-
                 height
-
                 -
-
                 (
-
                     (
-
                         valor - min
-
                     )
-
                     /
-
                     rango
-
                 )
-
                 *
-
                 (
-
                     height - 20
-
                 )
-
                 -
-
                 10;
 
 
             ctx.beginPath();
 
-
             ctx.arc(
-
                 x,
-
                 y,
-
                 3,
-
                 0,
-
                 Math.PI * 2
-
             );
 
 
             ctx.fillStyle =
-
                 '#ffffff';
 
 
             ctx.fill();
-
         }
-
     );
-
 }
 
 
@@ -3016,391 +2611,248 @@ async function actualizarDatos() {
 
     try {
 
-
         const response =
-
             await fetch(
-
                 PROFILE_URL
-
                 +
-
                 '?t='
-
                 +
-
                 Date.now()
-
             );
 
 
         if (
-
             !response.ok
-
         ) {
-
             throw new Error(
-
                 'HTTP '
-
                 +
-
                 response.status
-
             );
-
         }
 
 
         const data =
-
             await response.json();
 
 
         const perfiles =
-
             data.profiles || [];
 
 
         const activa =
-
             Boolean(
-
                 data.adquisicionActiva
-
             );
 
 
         const status =
-
             document.getElementById(
-
                 'status'
-
             );
 
 
         const statusDot =
-
             document.getElementById(
-
                 'statusDot'
-
             );
 
 
         status.textContent =
-
             activa
-
                 ?
-
                 'Adquisición ACTIVA'
-
                 :
-
                 'Adquisición PARADA';
 
 
         status.className =
-
             activa
-
                 ?
-
                 'status-text ok'
-
                 :
-
                 'status-text error';
 
 
         statusDot.className =
-
             activa
-
                 ?
-
                 'status-dot ok'
-
                 :
-
                 'status-dot';
 
 
         document.getElementById(
-
             'profileCount'
-
         ).textContent =
-
             perfiles.length;
 
 
         if (
-
             perfiles.length === 0
-
         ) {
 
-
             document.getElementById(
-
                 'progressText'
-
             ).textContent =
-
                 '0 / '
-
                 +
-
                 MAX_PERFILES;
 
 
             document.getElementById(
-
                 'progressFill'
-
             ).style.width =
-
                 '0%';
 
-
             return;
-
         }
 
 
         const ultimo =
-
             perfiles[
-
                 perfiles.length - 1
-
             ];
 
 
         document.getElementById(
-
             'angle'
-
         ).textContent =
-
             ultimo.angle
-
             +
-
             '°';
 
 
         document.getElementById(
-
             'sensorCount'
-
         ).textContent =
-
             ultimo.sensors.length;
 
 
         const stats =
-
             calcularEstadisticas(
-
                 ultimo.sensors
-
             );
 
 
         document.getElementById(
-
             'sensorMin'
-
         ).textContent =
-
             stats.min
-
             +
-
             ' mm';
 
 
         document.getElementById(
-
             'sensorMax'
-
         ).textContent =
-
             stats.max
-
             +
-
             ' mm';
 
 
         document.getElementById(
-
             'diameterMin'
-
         ).textContent =
-
             stats.diametroMin
-
             +
-
             ' mm';
 
 
         document.getElementById(
-
             'diameterMax'
-
         ).textContent =
-
             stats.diametroMax
-
             +
-
             ' mm';
 
 
         const porcentaje =
-
             Math.min(
-
                 perfiles.length
-
                 /
-
                 MAX_PERFILES
-
                 *
-
                 100,
-
                 100
-
             );
 
 
         document.getElementById(
-
             'progressFill'
-
         ).style.width =
-
             porcentaje
-
             +
-
             '%';
 
 
         document.getElementById(
-
             'progressText'
-
         ).textContent =
-
             perfiles.length
-
             +
-
             ' / '
-
             +
-
             MAX_PERFILES;
 
 
         dibujarPerfil(
-
             ultimo.sensors
-
         );
 
 
         currentData =
-
             data;
 
 
         if (
-
             perfiles.length !==
-
             ultimaCantidadPerfiles
-
         ) {
 
-
             crearTronco3D(
-
                 perfiles
-
             );
 
-
             ultimaCantidadPerfiles =
-
                 perfiles.length;
-
         }
 
 
         document.getElementById(
-
             'error'
-
         ).textContent =
-
             '';
 
     }
 
 
     catch (
-
         error
-
     ) {
 
-
         document.getElementById(
-
             'status'
-
         ).textContent =
-
             'Node-RED: DESCONECTADO';
 
 
         document.getElementById(
-
             'status'
-
         ).className =
-
             'status-text error';
 
 
         document.getElementById(
-
             'statusDot'
-
         ).className =
-
             'status-dot';
 
 
         document.getElementById(
-
             'error'
-
         ).textContent =
-
             error.message;
-
     }
 
 }
@@ -3412,36 +2864,22 @@ async function actualizarDatos() {
 
 async function nuevaMedicion() {
 
-
     const response =
-
         await fetch(
-
             '/api/m4000/demo/new',
-
             {
-
                 method: 'POST'
-
             }
-
         );
 
 
     if (
-
         response.ok
-
     ) {
-
-
         ultimaCantidadPerfiles =
-
             0;
 
-
         await actualizarDatos();
-
     }
 
 }
@@ -3449,19 +2887,12 @@ async function nuevaMedicion() {
 
 async function pararAdquisicion() {
 
-
     await fetch(
-
         '/api/m4000/demo/stop',
-
         {
-
             method: 'POST'
-
         }
-
     );
-
 
     await actualizarDatos();
 
@@ -3470,19 +2901,12 @@ async function pararAdquisicion() {
 
 async function reanudarAdquisicion() {
 
-
     await fetch(
-
         '/api/m4000/demo/resume',
-
         {
-
             method: 'POST'
-
         }
-
     );
-
 
     await actualizarDatos();
 
@@ -3491,113 +2915,73 @@ async function reanudarAdquisicion() {
 
 async function borrarPerfiles() {
 
-
     if (
-
         !confirm(
-
             '¿Borrar todos los perfiles?'
-
         )
-
     ) {
-
         return;
-
     }
 
 
     await fetch(
-
         '/api/m4000/demo/clear',
-
         {
-
             method: 'POST'
-
         }
-
     );
 
 
     ultimaCantidadPerfiles =
-
         0;
 
 
     currentData =
-
         null;
 
 
     if (
-
         troncoMesh
-
     ) {
 
-
         scene.remove(
-
             troncoMesh
-
         );
-
 
         troncoMesh.geometry.dispose();
 
-
         troncoMesh.material.dispose();
 
-
         troncoMesh =
-
             null;
-
     }
 
 
     document.getElementById(
-
         'profileCount'
-
     ).textContent =
-
         '0';
 
 
     document.getElementById(
-
         'progressFill'
-
     ).style.width =
-
         '0%';
 
 
     const canvas =
-
         document.getElementById(
-
             'profileCanvas'
-
         );
 
 
     canvas.getContext(
-
         '2d'
-
     ).clearRect(
-
         0,
-
         0,
-
         canvas.width,
-
         canvas.height
-
     );
 
 }
@@ -3605,38 +2989,30 @@ async function borrarPerfiles() {
 
 function descargarArchivo(
 
-    blob,
+blob,
 
-    nombre
+nombre
 
 ) {
 
 
     const url =
-
         URL.createObjectURL(
-
             blob
-
         );
 
 
     const a =
-
         document.createElement(
-
             'a'
-
         );
 
 
     a.href =
-
         url;
 
 
     a.download =
-
         nombre;
 
 
@@ -3644,9 +3020,7 @@ function descargarArchivo(
 
 
     URL.revokeObjectURL(
-
         url
-
     );
 
 }
@@ -3656,54 +3030,32 @@ function exportarJSON() {
 
 
     if (
-
         !currentData
-
     ) {
 
-
         alert(
-
             'No hay medición disponible'
-
         );
 
-
         return;
-
     }
 
 
     descargarArchivo(
-
         new Blob(
-
             [
-
                 JSON.stringify(
-
                     currentData,
-
                     null,
-
                     2
-
                 )
-
             ],
-
             {
-
                 type:
-
                     'application/json'
-
             }
-
         ),
-
         'medicion_m4000.json'
-
     );
 
 }
@@ -3713,137 +3065,84 @@ function exportarCSV() {
 
 
     if (
-
         !currentData
-
     ) {
 
-
         alert(
-
             'No hay medición disponible'
-
         );
 
-
         return;
-
     }
 
 
     let csv =
-
         'perfil,angulo,timestamp';
 
 
     for (
-
         let i = 0;
-
         i < NUM_SENSORES;
-
         i++
-
     ) {
 
-
         csv +=
-
             ',sensor_'
-
             +
-
             i;
-
     }
 
 
     csv +=
-
         '\n';
 
 
     currentData.profiles.forEach(
-
         (
-
             perfil,
-
             index
-
         ) => {
 
-
             csv +=
-
                 index
-
                 +
-
                 ','
-
                 +
-
                 perfil.angle
-
                 +
-
                 ','
-
                 +
-
                 perfil.timestamp;
 
 
             perfil.sensors.forEach(
-
                 valor => {
 
-
                     csv +=
-
                         ','
-
                         +
-
                         valor;
-
                 }
-
             );
 
 
             csv +=
-
                 '\n';
-
         }
-
     );
 
 
     descargarArchivo(
-
         new Blob(
-
             [
-
                 csv
-
             ],
-
             {
-
                 type:
-
                     'text/csv;charset=utf-8;'
-
             }
-
         ),
-
         'medicion_m4000.csv'
-
     );
 
 }
@@ -3853,54 +3152,35 @@ function guardarMedicion() {
 
 
     if (
-
         !currentData
-
     ) {
 
-
         alert(
-
             'No hay medición disponible'
-
         );
 
-
         return;
-
     }
 
 
     savedMeasurement =
-
         JSON.parse(
-
             JSON.stringify(
-
                 currentData
-
             )
-
         );
 
 
     localStorage.setItem(
-
         'm4000_saved_measurement',
-
         JSON.stringify(
-
             savedMeasurement
-
         )
-
     );
 
 
     alert(
-
         'Medición guardada'
-
     );
 
 }
@@ -3910,176 +3190,103 @@ function compararMediciones() {
 
 
     const guardada =
-
         localStorage.getItem(
-
             'm4000_saved_measurement'
-
         );
 
 
     if (
-
         !guardada
-
         ||
-
         !currentData
-
     ) {
 
-
         alert(
-
             'Necesitas una medición guardada y una medición actual'
-
         );
 
-
         return;
-
     }
 
 
     const saved =
-
         JSON.parse(
-
             guardada
-
         );
 
 
     const actual =
-
         currentData.profiles;
 
 
     const anterior =
-
         saved.profiles;
 
 
     if (
-
         !actual.length
-
         ||
-
         !anterior.length
-
     ) {
-
-
         return;
-
     }
 
 
     const actualMax =
-
         Math.max(
-
             ...
-
             actual[
-
                 actual.length - 1
-
             ].sensors
-
         );
 
 
     const anteriorMax =
-
         Math.max(
-
             ...
-
             anterior[
-
                 anterior.length - 1
-
             ].sensors
-
         );
 
 
     alert(
-
         'Diámetro máximo actual: '
-
         +
-
         (
-
             actualMax * 2
-
         ).toFixed(
-
             1
-
         )
-
         +
-
         ' mm\n'
-
         +
-
         'Diámetro máximo guardado: '
-
         +
-
         (
-
             anteriorMax * 2
-
         ).toFixed(
-
             1
-
         )
-
         +
-
         ' mm\n'
-
         +
-
         'Diferencia: '
-
         +
-
         (
-
             (
-
                 actualMax
-
                 -
-
                 anteriorMax
-
             )
-
             *
-
             2
-
         ).toFixed(
-
             1
-
         )
-
         +
-
         ' mm'
-
     );
-
 }
 
 
@@ -4088,74 +3295,50 @@ function compararMediciones() {
 ================================================= */
 
 document.getElementById(
-
     'btnNueva'
-
 ).onclick =
-
     nuevaMedicion;
 
 
 document.getElementById(
-
     'btnParar'
-
 ).onclick =
-
     pararAdquisicion;
 
 
 document.getElementById(
-
     'btnReanudar'
-
 ).onclick =
-
     reanudarAdquisicion;
 
 
 document.getElementById(
-
     'btnBorrar'
-
 ).onclick =
-
     borrarPerfiles;
 
 
 document.getElementById(
-
     'btnCSV'
-
 ).onclick =
-
     exportarCSV;
 
 
 document.getElementById(
-
     'btnJSON'
-
 ).onclick =
-
     exportarJSON;
 
 
 document.getElementById(
-
     'btnGuardar'
-
 ).onclick =
-
     guardarMedicion;
 
 
 document.getElementById(
-
     'btnComparar'
-
 ).onclick =
-
     compararMediciones;
 
 
@@ -4165,25 +3348,16 @@ document.getElementById(
 
 function animate() {
 
-
     requestAnimationFrame(
-
         animate
-
     );
-
 
     controls.update();
 
-
     renderer.render(
-
         scene,
-
         camera
-
     );
-
 }
 
 
@@ -4195,16 +3369,11 @@ animate();
 ================================================= */
 
 window.addEventListener(
-
     'resize',
-
     () => {
 
-
         camera.aspect =
-
             window.innerWidth /
-
             window.innerHeight;
 
 
@@ -4212,15 +3381,10 @@ window.addEventListener(
 
 
         renderer.setSize(
-
             window.innerWidth,
-
             window.innerHeight
-
         );
-
     }
-
 );
 
 
@@ -4232,11 +3396,8 @@ actualizarDatos();
 
 
 setInterval(
-
     actualizarDatos,
-
     1000
-
 );
 
 </script>
