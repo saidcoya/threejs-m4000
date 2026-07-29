@@ -818,8 +818,7 @@
         "y": 140,
         "wires": [
             [
-                "9f1f297f6fb5d561",
-                "00ee45de4b75d5cb"
+                "9f1f297f6fb5d561"
             ]
         ]
     },
@@ -929,22 +928,6 @@
         "bucket": "db",
         "x": 810,
         "y": 440,
-        "wires": []
-    },
-    {
-        "id": "00ee45de4b75d5cb",
-        "type": "debug",
-        "z": "183358061bda4294",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 260,
-        "y": 300,
         "wires": []
     },
     {
@@ -1190,9 +1173,7 @@
         "x": 620,
         "y": 200,
         "wires": [
-            [
-                "c03925497793d6e2"
-            ]
+            []
         ]
     },
     {
@@ -1379,22 +1360,6 @@
         ]
     },
     {
-        "id": "c03925497793d6e2",
-        "type": "debug",
-        "z": "5153723528a78bdb",
-        "name": "debug 4",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 770,
-        "y": 80,
-        "wires": []
-    },
-    {
         "id": "post_in",
         "type": "http in",
         "z": "recorder_tab",
@@ -1473,8 +1438,7 @@
         "y": 240,
         "wires": [
             [
-                "get_resp",
-                "634455089522a0e7"
+                "get_resp"
             ]
         ]
     },
@@ -1490,52 +1454,7 @@
         "wires": []
     },
     {
-        "id": "634455089522a0e7",
-        "type": "debug",
-        "z": "recorder_tab",
-        "name": "debug 5",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 680,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "0a16a0387fd6bca5",
-        "type": "inject",
-        "z": "recorder_tab",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "1",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 340,
-        "wires": [
-            [
-                "get_snapshot"
-            ]
-        ]
-    },
-    {
-        "id": "94f7ce7a5158a03a",
+        "id": "3778e47e0be59bd9",
         "type": "global-config",
         "env": [],
         "modules": {
