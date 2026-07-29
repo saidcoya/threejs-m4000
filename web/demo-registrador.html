@@ -515,6 +515,88 @@ input[type="checkbox"] {
 }
 
 /* =====================================
+   ALARMAS
+===================================== */
+
+.alarm-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.alarm-item {
+    flex: 0 0 auto;
+    min-width: 180px;
+    max-width: 240px;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.alarm-item.ok {
+    background: rgba(0, 224, 150, 0.12);
+    border-color: rgba(0, 224, 150, 0.4);
+    box-shadow: inset 0 0 18px rgba(0, 224, 150, 0.06);
+}
+
+.alarm-item.alarm {
+    background: rgba(255, 92, 108, 0.15);
+    border-color: rgba(255, 92, 108, 0.45);
+    box-shadow: inset 0 0 22px rgba(255, 92, 108, 0.1), 0 0 12px rgba(255, 92, 108, 0.15);
+    animation: pulse-border 1.6s infinite;
+}
+
+@keyframes pulse-border {
+    0%, 100% { box-shadow: inset 0 0 22px rgba(255, 92, 108, 0.1), 0 0 12px rgba(255, 92, 108, 0.15); }
+    50% { box-shadow: inset 0 0 30px rgba(255, 92, 108, 0.18), 0 0 18px rgba(255, 92, 108, 0.25); }
+}
+
+.alarm-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.alarm-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+}
+
+.alarm-name {
+    font-size: 13px;
+    font-weight: 800;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.alarm-state {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.alarm-value {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+}
+
+.alarm-limits {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+/* =====================================
    GRÁFICAS
 ===================================== */
 
@@ -849,13 +931,13 @@ input[type="checkbox"] {
             </div>
         </section>
 
-        <!-- RESUMEN RÁPIDO -->
+        <!-- ALARMAS -->
         <section class="panel">
             <div class="panel-header">
-                <h2>Resumen del rango</h2>
-                <span id="rangeBadge" class="badge">Última hora</span>
+                <h2>Alarmas</h2>
+                <span id="alarmBadge" class="badge">EN VIVO</span>
             </div>
-            <div id="quickStats" class="stats-grid">
+            <div id="alarmGrid" class="alarm-grid">
                 <!-- generado dinámicamente -->
             </div>
         </section>
@@ -1078,7 +1160,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initSimState();
     renderChannelConfig();
     initChart();
-    updateRangeBadge();
     updateUI();
     startPolling();
     bindEvents();
@@ -1273,7 +1354,6 @@ function bindEvents() {
             btn.classList.add('active');
             const range = btn.dataset.range;
             APP.currentRangeMs = range === 'all' ? null : parseInt(range);
-            updateRangeBadge();
             updateUI();
         });
     });
@@ -1300,17 +1380,6 @@ function bindEvents() {
         if (APP.currentMode === 'heatmap') renderHeatmap();
         if (APP.currentMode === 'state') renderStateTimeline();
     });
-}
-
-function updateRangeBadge() {
-    const labels = {
-        '300000': 'Últimos 5 min',
-        '3600000': 'Última hora',
-        '21600000': 'Últimas 6 h',
-        '86400000': 'Últimas 24 h',
-        '604800000': 'Últimos 7 días'
-    };
-    document.getElementById('rangeBadge').textContent = APP.currentRangeMs ? labels[APP.currentRangeMs] : 'Todo el histórico';
 }
 
 /* =====================================
@@ -1482,10 +1551,12 @@ function getSamples(rangeMs) {
 }
 
 function updateStats(samples) {
-    const quick = document.getElementById('quickStats');
+    const alarmGrid = document.getElementById('alarmGrid');
     const grid = document.getElementById('statsGrid');
-    quick.innerHTML = '';
+    alarmGrid.innerHTML = '';
     grid.innerHTML = '';
+
+    let totalAlarms = 0;
 
     channels.forEach((ch, i) => {
         if (!ch.enabled) return;
@@ -1501,21 +1572,23 @@ function updateStats(samples) {
         const pctAlarm = values.length ? (alarmCount / values.length * 100).toFixed(1) : '0.0';
 
         const state = current !== null ? alarmState(current, ch) : 'ok';
+        const isAlarm = state !== 'ok';
         const stateClass = state === 'ok' ? '' : (state === 'low' ? 'alarm-low' : 'alarm-high');
+        if (isAlarm) totalAlarms++;
 
-        // quick stat (solo actual)
-        const qCard = document.createElement('div');
-        qCard.className = 'stat-card';
-        qCard.style.setProperty('--ch-color', ch.color);
-        qCard.innerHTML = `
-            <div class="stat-header">
-                <div class="stat-name">${escapeHtml(ch.label)}</div>
-                <div class="stat-unit">${escapeHtml(ch.unit)}</div>
+        // tarjeta de alarma
+        const aCard = document.createElement('div');
+        aCard.className = `alarm-item ${isAlarm ? 'alarm' : 'ok'}`;
+        aCard.innerHTML = `
+            <div class="alarm-header">
+                <span class="alarm-dot" style="background:${ch.color};box-shadow:0 0 8px ${ch.color}"></span>
+                <span class="alarm-name">${escapeHtml(ch.label)}</span>
+                <span class="alarm-state">${isAlarm ? 'ALARMA' : 'OK'}</span>
             </div>
-            <div class="stat-value ${stateClass}">${current !== null ? formatValue(current, ch.decimals) : '---'}</div>
-            <div class="stat-row">Estado <span>${state === 'ok' ? 'OK' : (state === 'low' ? 'BAJA' : 'ALTA')}</span></div>
+            <div class="alarm-value">${current !== null ? formatValue(current, ch.decimals) : '---'} <span style="font-size:14px;color:var(--muted)">${escapeHtml(ch.unit)}</span></div>
+            <div class="alarm-limits">Baja ${ch.alarmLow} / Alta ${ch.alarmHigh}</div>
         `;
-        quick.appendChild(qCard);
+        alarmGrid.appendChild(aCard);
 
         // detailed stat
         const dCard = document.createElement('div');
@@ -1534,6 +1607,15 @@ function updateStats(samples) {
         `;
         grid.appendChild(dCard);
     });
+
+    const alarmBadge = document.getElementById('alarmBadge');
+    if (totalAlarms > 0) {
+        alarmBadge.textContent = `${totalAlarms} ALARMA${totalAlarms > 1 ? 'S' : ''}`;
+        alarmBadge.className = 'badge alarm';
+    } else {
+        alarmBadge.textContent = 'OK';
+        alarmBadge.className = 'badge';
+    }
 }
 
 function updateRecords() {
