@@ -885,6 +885,110 @@ input[type="checkbox"] {
     }
 }
 
+/* =====================================
+   VISTAS FULLSCREEN POR MONITOR
+===================================== */
+
+.view-mode .topbar,
+.view-mode .page-title,
+.view-mode .panel:not(.view-target) {
+    display: none;
+}
+
+.view-mode {
+    overflow: hidden;
+}
+
+.view-mode .container {
+    padding: 0;
+    max-width: none;
+}
+
+.view-mode .grid {
+    display: block;
+    height: 100vh;
+}
+
+.view-mode .panel.view-target {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.view-mode .panel.view-target .panel-header {
+    flex: 0 0 auto;
+}
+
+.view-back {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background: var(--panel-solid);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+}
+
+.view-back:hover {
+    opacity: 1;
+    color: var(--cyan);
+    border-color: var(--cyan);
+}
+
+.view-tendencia .chart-container {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+}
+
+.view-alarmas .alarm-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    align-content: start;
+    overflow-y: auto;
+}
+
+.view-stats .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    align-content: start;
+    overflow-y: auto;
+}
+
+.view-stats.stats-single .stats-grid {
+    grid-template-columns: 1fr;
+}
+
+.view-stats.stats-single .stat-card {
+    padding: 30px;
+}
+
+.view-stats.stats-single .stat-value {
+    font-size: 56px;
+}
+
+.view-stats.stats-single .stat-row {
+    font-size: 16px;
+}
+
+.view-registro .table-wrap {
+    flex: 1 1 auto;
+    max-height: none;
+    overflow-y: auto;
+}
+
+.view-registro .export-grid {
+    grid-template-columns: repeat(4, 1fr);
+}
+
 </style>
 
 </head>
@@ -948,7 +1052,7 @@ input[type="checkbox"] {
         </section>
 
         <!-- ALARMAS -->
-        <section class="panel full-width">
+        <section class="panel full-width" id="panelAlarmas" data-view="alarmas">
             <div class="panel-header">
                 <h2>Alarmas</h2>
                 <span id="alarmBadge" class="badge">EN VIVO</span>
@@ -994,7 +1098,7 @@ input[type="checkbox"] {
         </section>
 
         <!-- GRÁFICO PRINCIPAL -->
-        <section class="panel full-width">
+        <section class="panel full-width" id="panelTendencia" data-view="tendencia">
             <div class="panel-header">
                 <h2>Tendencia</h2>
                 <div class="chart-controls">
@@ -1029,7 +1133,7 @@ input[type="checkbox"] {
         </section>
 
         <!-- ESTADÍSTICAS DETALLADAS -->
-        <section class="panel full-width">
+        <section class="panel full-width" id="panelStats" data-view="stats">
             <div class="panel-header">
                 <h2>Estadísticas por canal</h2>
                 <span class="badge">EN VIVO</span>
@@ -1040,7 +1144,7 @@ input[type="checkbox"] {
         </section>
 
         <!-- TABLA DE REGISTROS + EXPORTAR -->
-        <section class="panel full-width">
+        <section class="panel full-width" id="panelRegistros" data-view="registro">
             <div class="panel-header">
                 <h2>Registros y exportación</h2>
                 <span class="badge">CSV</span>
@@ -1127,6 +1231,7 @@ const APP = {
     currentRangeMs: 3600000,
     autoplay: true,
     lastSource: 'none',
+    singleChannel: null,
     nextId: 1
 };
 
@@ -1175,6 +1280,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     initSimState();
     renderChannelConfig();
+    applyView();
     initChart();
     restoreBackendCheckbox();
     updateUI();
@@ -1371,6 +1477,7 @@ function bindEvents() {
             btn.classList.add('active');
             const range = btn.dataset.range;
             APP.currentRangeMs = range === 'all' ? null : parseInt(range);
+            applyWindow(true);
             updateUI();
         });
     });
@@ -1378,10 +1485,13 @@ function bindEvents() {
     document.getElementById('btnAutoplay').addEventListener('click', () => {
         APP.autoplay = !APP.autoplay;
         document.getElementById('btnAutoplay').classList.toggle('active', APP.autoplay);
+        if (APP.autoplay) applyWindow(true);
+        updateUI();
     });
 
     document.getElementById('btnResetZoom').addEventListener('click', () => {
         if (mainChart && typeof mainChart.resetZoom === 'function') mainChart.resetZoom();
+        applyWindow(true);
     });
 
     document.getElementById('btnPause').addEventListener('click', () => {
@@ -1414,6 +1524,43 @@ function restoreBackendCheckbox() {
     const cb = document.getElementById('enableBackend');
     cb.checked = localStorage.getItem('m4000_recorder_backend') === '1';
     updateRecordingIndicator();
+}
+
+function applyView() {
+    const params = new URLSearchParams(location.search);
+    const view = params.get('view');
+    if (!view) return;
+
+    const targetId = {
+        alarmas: 'panelAlarmas',
+        tendencia: 'panelTendencia',
+        stats: 'panelStats',
+        registro: 'panelRegistros'
+    }[view];
+    if (!targetId) return;
+
+    const chParam = params.get('ch');
+    if (view === 'stats' && chParam !== null) {
+        APP.singleChannel = parseInt(chParam, 10);
+        document.body.classList.add('stats-single');
+    }
+
+    document.body.classList.add('view-mode', 'view-' + view);
+    const target = document.getElementById(targetId);
+    if (target) target.classList.add('view-target');
+
+    const back = document.createElement('a');
+    back.href = 'demo-registrador.html';
+    back.className = 'view-back';
+    back.textContent = '← Volver';
+    document.body.appendChild(back);
+
+    setTimeout(() => {
+        if (mainChart) mainChart.resize();
+        if (APP.currentMode === 'sparkline') renderSparklines();
+        if (APP.currentMode === 'heatmap') renderHeatmap();
+        if (APP.currentMode === 'state') renderStateTimeline();
+    }, 100);
 }
 
 /* =====================================
@@ -1612,6 +1759,7 @@ function updateStats(samples) {
 
     channels.forEach((ch, i) => {
         if (!ch.enabled) return;
+        if (APP.singleChannel != null && i !== APP.singleChannel) return;
         const values = samples.map(s => engFromRaw(s.raw[i], ch));
         const current = values.length ? values[values.length - 1] : null;
         const min = values.length ? Math.min(...values) : null;
@@ -1831,19 +1979,23 @@ function updateChart(samples) {
 
     mainChart.data.datasets = datasets;
 
-    const now = Date.now();
-    if (APP.currentRangeMs && APP.autoplay) {
-        mainChart.options.scales.x.min = now - APP.currentRangeMs;
-        mainChart.options.scales.x.max = now;
-    } else if (APP.currentRangeMs) {
-        mainChart.options.scales.x.min = now - APP.currentRangeMs;
-        mainChart.options.scales.x.max = now;
-    } else {
-        mainChart.options.scales.x.min = undefined;
-        mainChart.options.scales.x.max = undefined;
-    }
+    applyWindow();
 
     mainChart.update('none');
+}
+
+function applyWindow(force) {
+    if (!mainChart) return;
+    const now = Date.now();
+    if (!APP.currentRangeMs) {
+        mainChart.options.scales.x.min = undefined;
+        mainChart.options.scales.x.max = undefined;
+        return;
+    }
+    if (APP.autoplay || force || mainChart.options.scales.x.min == null || mainChart.options.scales.x.max == null) {
+        mainChart.options.scales.x.min = now - APP.currentRangeMs;
+        mainChart.options.scales.x.max = now;
+    }
 }
 
 function hexToRgba(hex, alpha) {
