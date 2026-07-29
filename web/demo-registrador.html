@@ -923,10 +923,10 @@ input[type="checkbox"] {
 }
 
 .view-back {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
     background: var(--panel-solid);
     border: 1px solid var(--border);
     color: var(--text);
@@ -943,6 +943,37 @@ input[type="checkbox"] {
     opacity: 1;
     color: var(--cyan);
     border-color: var(--cyan);
+}
+
+.view-mode .panel.view-target .panel-header {
+    justify-content: flex-start;
+}
+
+.btn-fs {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-left: auto;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.15s ease;
+    flex: 0 0 auto;
+}
+
+.btn-fs:hover {
+    color: var(--cyan);
+    border-color: var(--cyan);
+    background: rgba(0, 224, 255, 0.08);
+}
+
+.view-mode .btn-fs {
+    display: none;
 }
 
 .view-tendencia .chart-container {
@@ -1056,6 +1087,7 @@ input[type="checkbox"] {
             <div class="panel-header">
                 <h2>Alarmas</h2>
                 <span id="alarmBadge" class="badge">EN VIVO</span>
+                <a href="demo-registrador.html?view=alarmas" class="btn-fs" target="_blank" rel="noopener" title="Pantalla completa">⛶</a>
             </div>
             <div id="alarmGrid" class="alarm-grid">
                 <!-- generado dinámicamente -->
@@ -1122,6 +1154,7 @@ input[type="checkbox"] {
                     <button id="btnAutoplay" class="btn active">Autoplay</button>
                     <button id="btnResetZoom" class="btn">Reset zoom</button>
                 </div>
+                <a href="demo-registrador.html?view=tendencia" class="btn-fs" target="_blank" rel="noopener" title="Pantalla completa">⛶</a>
             </div>
             <div class="chart-container">
                 <canvas id="mainChart"></canvas>
@@ -1137,6 +1170,7 @@ input[type="checkbox"] {
             <div class="panel-header">
                 <h2>Estadísticas por canal</h2>
                 <span class="badge">EN VIVO</span>
+                <a href="demo-registrador.html?view=stats" class="btn-fs" target="_blank" rel="noopener" title="Pantalla completa">⛶</a>
             </div>
             <div id="statsGrid" class="stats-grid">
                 <!-- generado dinámicamente -->
@@ -1148,6 +1182,7 @@ input[type="checkbox"] {
             <div class="panel-header">
                 <h2>Registros y exportación</h2>
                 <span class="badge">CSV</span>
+                <a href="demo-registrador.html?view=registro" class="btn-fs" target="_blank" rel="noopener" title="Pantalla completa">⛶</a>
             </div>
 
             <div class="export-grid">
@@ -1549,11 +1584,14 @@ function applyView() {
     const target = document.getElementById(targetId);
     if (target) target.classList.add('view-target');
 
-    const back = document.createElement('a');
-    back.href = 'demo-registrador.html';
-    back.className = 'view-back';
-    back.textContent = '← Volver';
-    document.body.appendChild(back);
+    const header = target ? target.querySelector('.panel-header') : null;
+    if (header) {
+        const back = document.createElement('a');
+        back.href = 'demo-registrador.html';
+        back.className = 'view-back';
+        back.textContent = '← Volver';
+        header.appendChild(back);
+    }
 
     setTimeout(() => {
         if (mainChart) mainChart.resize();
