@@ -1,0 +1,1550 @@
+[
+    {
+        "id": "fdedaf2b87a14ccb",
+        "type": "tab",
+        "label": "M4000 CONTROL",
+        "disabled": false,
+        "info": "Lectura y escritura centralizada del M4000"
+    },
+    {
+        "id": "98849886ee3b8895",
+        "type": "tab",
+        "label": "M4000 HTML IO",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9b396ea318fca661",
+        "type": "tab",
+        "label": "M4000 HTML DEMO TRONCOS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "183358061bda4294",
+        "type": "tab",
+        "label": "M4000 DEMO API REE",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "tab_m4000_dashboard",
+        "type": "tab",
+        "label": "M4000 DASHBOARD",
+        "disabled": false,
+        "info": "Dashboard de estado y mando para el M4000"
+    },
+    {
+        "id": "5153723528a78bdb",
+        "type": "tab",
+        "label": "M4000 DATAHUB",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "recorder_tab",
+        "type": "tab",
+        "label": "M4000 Recorder",
+        "disabled": false,
+        "info": "Endpoint POST para recibir muestras del registrador y GET para snapshot"
+    },
+    {
+        "id": "03dcf6e32f97a5b8",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "INFLUXDB",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.1.211:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "f3e237497dde27b4",
+        "type": "u-os-hub-oauth-config",
+        "name": "UC20-M4000",
+        "clientName": "node_red",
+        "host": "192.168.1.211",
+        "unauthenticated": false,
+        "addCustomScopes": false,
+        "customScopes": [],
+        "scopes": [
+            "hub.variables.readonly",
+            "hub.variables.provide",
+            "hub.variables.readwrite"
+        ],
+        "requestTimeout": 10000,
+        "debug": false
+    },
+    {
+        "id": "ce52a2833317c136",
+        "type": "OpcUa-Endpoint",
+        "name": "NX102",
+        "endpoint": "opc.tcp://192.168.1.210",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
+    },
+    {
+        "id": "f49f7871fd4ac9b7",
+        "type": "python.config",
+        "name": "Test",
+        "pythonPath": "/usr/bin/python3"
+    },
+    {
+        "id": "f2322ea96e341d05",
+        "type": "postgreSQLConfig",
+        "name": "Postgres",
+        "host": "127.0.0.1",
+        "hostFieldType": "str",
+        "port": 5432,
+        "portFieldType": "num",
+        "database": "db",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": 10,
+        "maxFieldType": "num",
+        "idle": 1000,
+        "idleFieldType": "num",
+        "connectionTimeout": 10000,
+        "connectionTimeoutFieldType": "num",
+        "user": "admin",
+        "userFieldType": "str",
+        "password": "123456",
+        "passwordFieldType": "str"
+    },
+    {
+        "id": "a9225165f710dd65",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "2ddef095aa0616be",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "406aeb3b063ab0bb",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "a9225165f710dd65",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "2ddef095aa0616be",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "60b7f313cbda79e8",
+        "type": "ui-group",
+        "name": "Group 1",
+        "page": "406aeb3b063ab0bb",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": true,
+        "disabled": false,
+        "groupType": "default"
+    },
+    {
+        "id": "2b384f1cb7ec9a3a",
+        "type": "inject",
+        "z": "fdedaf2b87a14ccb",
+        "name": "Inicializar globales",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "41d6f7671c3b1018"
+            ]
+        ]
+    },
+    {
+        "id": "41d6f7671c3b1018",
+        "type": "function",
+        "z": "fdedaf2b87a14ccb",
+        "name": "Inicializar global.io y command",
+        "func": "let io = global.get('io');\nlet command = global.get('command');\n\nif (!io) {\n    io = {\n        DI: [],\n        DO: [],\n        AI: []\n    };\n    global.set('io', io);\n}\n\nif (!command) {\n    command = {\n        DO: []\n    };\n    global.set('command', command);\n}\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bb096857a0c8a5d1",
+        "type": "function",
+        "z": "fdedaf2b87a14ccb",
+        "name": "LECTURA → global.io",
+        "func": "let io = {\n    DI: [],\n    DO: [],\n    AI: []\n};\n\nif (!Array.isArray(msg.payload)) {\n    node.error('msg.payload debe ser un array', msg);\n    return null;\n}\n\nfor (const item of msg.payload) {\n    let m;\n\n    m = item.key.match(/^ur20_16di_p_1\\.process_data\\.channel_(\\d+)\\.di$/);\n    if (m) {\n        io.DI[Number(m[1])] = item.value;\n        continue;\n    }\n\n    m = item.key.match(/^ur20_16do_p_1\\.process_data\\.channel_(\\d+)\\.do$/);\n    if (m) {\n        io.DO[Number(m[1])] = item.value;\n        continue;\n    }\n\n    m = item.key.match(/^ur20_4ai_ui_12_1\\.process_data\\.channel_(\\d+)\\.ai$/);\n    if (m) {\n        io.AI[Number(m[1])] = item.value;\n    }\n}\n\nglobal.set('io', io);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3164be8b9400a3a4",
+        "type": "inject",
+        "z": "fdedaf2b87a14ccb",
+        "name": "Procesar órdenes",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "1e012e1d241fdc6e"
+            ]
+        ]
+    },
+    {
+        "id": "1e012e1d241fdc6e",
+        "type": "function",
+        "z": "fdedaf2b87a14ccb",
+        "name": "Detectar cambios de órdenes",
+        "func": "const command = global.get('command');\n\nif (!command || !Array.isArray(command.DO)) {\n    return null;\n}\n\nlet lastValues = context.get('lastValues');\n\nif (!Array.isArray(lastValues)) {\n    lastValues = [];\n}\n\nfor (let channel = 0; channel < command.DO.length; channel++) {\n    const value = command.DO[channel];\n\n    if (value === undefined) {\n        continue;\n    }\n\n    if (lastValues[channel] === value) {\n        continue;\n    }\n\n    lastValues[channel] = value;\n    context.set('lastValues', lastValues);\n\n    msg.key = `ur20_16do_p_1.process_data.channel_${channel}.do`;\n    msg.payload = Boolean(value);\n\n    return msg;\n}\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 220,
+        "wires": [
+            [
+                "966d55b415105ca0"
+            ]
+        ]
+    },
+    {
+        "id": "febb3edee93e2a71",
+        "type": "inject",
+        "z": "fdedaf2b87a14ccb",
+        "name": "Lectura globales",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [
+                "de13e222bd73945a"
+            ]
+        ]
+    },
+    {
+        "id": "de13e222bd73945a",
+        "type": "u-os-hub-http",
+        "z": "fdedaf2b87a14ccb",
+        "name": "u-OS - Acceso variables",
+        "config": "f3e237497dde27b4",
+        "apiType": "variableApi",
+        "category": "consumer",
+        "action": "getMultipleVariables",
+        "format": "list",
+        "providerId": "u_os_sbm",
+        "method": "GET",
+        "endpoint": "",
+        "x": 450,
+        "y": 160,
+        "wires": [
+            [
+                "bb096857a0c8a5d1"
+            ]
+        ]
+    },
+    {
+        "id": "966d55b415105ca0",
+        "type": "u-os-hub-http",
+        "z": "fdedaf2b87a14ccb",
+        "name": "u-OS - Escritura variables",
+        "config": "f3e237497dde27b4",
+        "apiType": "variableApi",
+        "category": "consumer",
+        "action": "setSingleVariable",
+        "format": "list",
+        "providerId": "u_os_sbm",
+        "method": "GET",
+        "endpoint": "",
+        "x": 770,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8859f807e96f4576",
+        "type": "http in",
+        "z": "98849886ee3b8895",
+        "name": "GET Estados",
+        "url": "/api/m4000/status",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 320,
+        "wires": [
+            [
+                "cfdf94738f7a1c7c"
+            ]
+        ]
+    },
+    {
+        "id": "cfdf94738f7a1c7c",
+        "type": "function",
+        "z": "98849886ee3b8895",
+        "name": "Function Leer Estados",
+        "func": "// Obtener el objeto global de estados\nconst io = global.get(\"io\") || {\n    DI: [],\n    DO: [],\n    AI: []\n};\n\n// Devolver los datos actuales\nmsg.payload = {\n    DI: io.DI || [],\n    DO: io.DO || [],\n    AI: io.AI || []\n};\n\n// Indicar que la respuesta es JSON\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 320,
+        "wires": [
+            [
+                "bd419ea08c1ccbb4"
+            ]
+        ]
+    },
+    {
+        "id": "bd419ea08c1ccbb4",
+        "type": "http response",
+        "z": "98849886ee3b8895",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 710,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a25e88d0d28ae125",
+        "type": "http in",
+        "z": "98849886ee3b8895",
+        "name": "POST Escritura",
+        "url": "/api/m4000/do",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 240,
+        "y": 240,
+        "wires": [
+            [
+                "7ab0d3799d383d13"
+            ]
+        ]
+    },
+    {
+        "id": "7ab0d3799d383d13",
+        "type": "function",
+        "z": "98849886ee3b8895",
+        "name": "Function - Escritura Salidas",
+        "func": "const channel = Number(msg.payload.channel);\nconst value = Boolean(msg.payload.value);\n\nif (\n    !Number.isInteger(channel) ||\n    channel < 0 ||\n    channel > 15\n) {\n    msg.statusCode = 400;\n\n    msg.payload = {\n        error: \"Canal DO no válido\"\n    };\n\n    return msg;\n}\n\nlet command = global.get(\"command\") || {\n    DO: []\n};\n\ncommand.DO[channel] = value;\n\nglobal.set(\"command\", command);\n\nmsg.payload = {\n    ok: true,\n    channel: channel,\n    value: value\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a33998eb38e96f56",
+        "type": "inject",
+        "z": "9b396ea318fca661",
+        "name": "Adquisición cada 1 segundo",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "ad49c4679ea12b63"
+            ]
+        ]
+    },
+    {
+        "id": "ad49c4679ea12b63",
+        "type": "function",
+        "z": "9b396ea318fca661",
+        "name": "Function - Generar datos",
+        "func": "// ======================================\n// DATOS DE PRUEBA - PERFIL 3D DE TRONCO\n// ======================================\n\nconst NUM_PERFILES = 200;\nconst NUM_SENSORES = 36;\nconst PASO_ANGULO = 10;\n\n// ======================================\n// COMPROBAR ESTADO DE ADQUISICIÓN\n// ======================================\n\nlet adquisicionActiva = flow.get(\"demo_adquisicion_activa\");\n\nif (adquisicionActiva === undefined) {\n    adquisicionActiva = false;\n    flow.set(\"demo_adquisicion_activa\", false);\n}\n\nif (!adquisicionActiva) {\n    return null;\n}\n\n// ======================================\n// LEER ÍNDICE ACTUAL\n// ======================================\n\nlet perfilIndex = flow.get(\"demo_profile_index\") || 0;\n\nlet perfiles = flow.get(\"demo_profiles\") || [];\n\n// ======================================\n// COMPROBAR SI YA ESTÁ COMPLETA\n// ======================================\n\nif (perfiles.length >= NUM_PERFILES) {\n\n    flow.set(\"demo_adquisicion_activa\", false);\n\n    return null;\n}\n\n// ======================================\n// CALCULAR ÁNGULO\n// ======================================\n\nconst angle = perfilIndex * PASO_ANGULO;\n\nconst sensores = [];\n\nconst anguloEje = angle * Math.PI / 180;\n\n// ======================================\n// GENERAR SENSORES\n// ======================================\n\nfor (let i = 0; i < NUM_SENSORES; i++) {\n\n    const anguloSensor =\n        (i / NUM_SENSORES) * Math.PI * 2;\n\n    let radio = 1000;\n\n    radio +=\n        Math.sin(anguloSensor * 3) * 80;\n\n    radio +=\n        Math.sin(anguloSensor * 7) * 35;\n\n    radio +=\n        Math.cos(anguloSensor * 5) * 20;\n\n    radio +=\n        Math.sin(anguloEje * 2) * 40;\n\n    radio +=\n        Math.sin(\n            anguloSensor * 2 +\n            anguloEje * 3\n        ) * 25;\n\n    radio +=\n        (Math.random() - 0.5) * 10;\n\n    sensores.push(Math.round(radio));\n}\n\n// ======================================\n// CREAR PERFIL\n// ======================================\n\nconst perfilActual = {\n    angle: angle,\n    sensors: sensores,\n    timestamp: Date.now()\n};\n\n// ======================================\n// GUARDAR PERFIL\n// ======================================\n\nperfiles.push(perfilActual);\n\nflow.set(\"demo_profiles\", perfiles);\n\n// ======================================\n// SIGUIENTE PERFIL\n// ======================================\n\nperfilIndex++;\n\nflow.set(\"demo_profile_index\", perfilIndex);\n\n// ======================================\n// COMPLETAR ADQUISICIÓN\n// ======================================\n\nif (perfiles.length >= NUM_PERFILES) {\n\n    flow.set(\"demo_adquisicion_activa\", false);\n}\n\n// ======================================\n// SALIDA\n// ======================================\n\nmsg.payload = {\n    angle: angle,\n    sensors: sensores,\n    timestamp: Date.now(),\n    totalProfiles: perfiles.length,\n    adquisicionActiva: flow.get(\"demo_adquisicion_activa\")\n};\n\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 80,
+        "wires": [
+            [
+                "0cadf14a98c0d793"
+            ]
+        ]
+    },
+    {
+        "id": "0cadf14a98c0d793",
+        "type": "debug",
+        "z": "9b396ea318fca661",
+        "name": "Datos perfil generado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c6ba3f64c458f92b",
+        "type": "http in",
+        "z": "9b396ea318fca661",
+        "name": "GET Perfil",
+        "url": "/api/m4000/demo/profile",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "fe4e1fcbfe0b01a2"
+            ]
+        ]
+    },
+    {
+        "id": "fe4e1fcbfe0b01a2",
+        "type": "function",
+        "z": "9b396ea318fca661",
+        "name": "Leer perfiles",
+        "func": "const perfiles = flow.get(\"demo_profiles\") || [];\nconst adquisicionActiva = flow.get(\"demo_adquisicion_activa\") || false;\nconst perfilIndex = flow.get(\"demo_profile_index\") || 0;\n\nmsg.statusCode = 200;\n\nmsg.payload = {\n    totalProfiles: perfiles.length,\n    profiles: perfiles,\n    adquisicionActiva: adquisicionActiva,\n    siguientePerfil: perfilIndex\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 260,
+        "wires": [
+            [
+                "3e26939ef00a783b"
+            ]
+        ]
+    },
+    {
+        "id": "3e26939ef00a783b",
+        "type": "http response",
+        "z": "9b396ea318fca661",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 700,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "570e32ed6efef452",
+        "type": "http in",
+        "z": "9b396ea318fca661",
+        "name": "Nueva medición",
+        "url": "/api/m4000/demo/new",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 360,
+        "wires": [
+            [
+                "17a42bf44e5e53d1"
+            ]
+        ]
+    },
+    {
+        "id": "17a42bf44e5e53d1",
+        "type": "function",
+        "z": "9b396ea318fca661",
+        "name": "Iniciar nueva medición",
+        "func": "const activa = flow.get(\"demo_adquisicion_activa\") || false;\n\nif (activa) {\n\n    msg.statusCode = 409;\n\n    msg.payload = {\n        ok: false,\n        error: \"No se puede iniciar una nueva medición mientras la adquisición está activa\"\n    };\n\n    return msg;\n}\n\nflow.set(\"demo_profiles\", []);\nflow.set(\"demo_profile_index\", 0);\nflow.set(\"demo_adquisicion_activa\", true);\n\nmsg.statusCode = 200;\n\nmsg.payload = {\n    ok: true,\n    message: \"Nueva medición iniciada\",\n    adquisicionActiva: true\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 360,
+        "wires": [
+            [
+                "102c79ddf4a65c45"
+            ]
+        ]
+    },
+    {
+        "id": "102c79ddf4a65c45",
+        "type": "http response",
+        "z": "9b396ea318fca661",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 740,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "8d1a4d2b6c7e9f01",
+        "type": "http in",
+        "z": "9b396ea318fca661",
+        "name": "Parar adquisición",
+        "url": "/api/m4000/demo/stop",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 440,
+        "wires": [
+            [
+                "8d1a4d2b6c7e9f02"
+            ]
+        ]
+    },
+    {
+        "id": "8d1a4d2b6c7e9f02",
+        "type": "function",
+        "z": "9b396ea318fca661",
+        "name": "Parar adquisición",
+        "func": "flow.set(\"demo_adquisicion_activa\", false);\n\nmsg.statusCode = 200;\n\nmsg.payload = {\n    ok: true,\n    message: \"Adquisición parada\",\n    adquisicionActiva: false\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 440,
+        "wires": [
+            [
+                "8d1a4d2b6c7e9f03"
+            ]
+        ]
+    },
+    {
+        "id": "8d1a4d2b6c7e9f03",
+        "type": "http response",
+        "z": "9b396ea318fca661",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 730,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "7a2b3c4d5e6f7001",
+        "type": "http in",
+        "z": "9b396ea318fca661",
+        "name": "Reanudar adquisición",
+        "url": "/api/m4000/demo/resume",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 520,
+        "wires": [
+            [
+                "7a2b3c4d5e6f7002"
+            ]
+        ]
+    },
+    {
+        "id": "7a2b3c4d5e6f7002",
+        "type": "function",
+        "z": "9b396ea318fca661",
+        "name": "Reanudar adquisición",
+        "func": "const perfiles = flow.get(\"demo_profiles\") || [];\nconst NUM_PERFILES = 72;\n\nif (perfiles.length >= NUM_PERFILES) {\n\n    flow.set(\"demo_adquisicion_activa\", false);\n\n    msg.statusCode = 409;\n\n    msg.payload = {\n        ok: false,\n        error: \"La medición ya está completa\",\n        totalProfiles: perfiles.length,\n        adquisicionActiva: false\n    };\n\n    return msg;\n}\n\nflow.set(\"demo_adquisicion_activa\", true);\n\nmsg.statusCode = 200;\n\nmsg.payload = {\n    ok: true,\n    message: \"Adquisición reanudada\",\n    totalProfiles: perfiles.length,\n    adquisicionActiva: true\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 520,
+        "wires": [
+            [
+                "7a2b3c4d5e6f7003"
+            ]
+        ]
+    },
+    {
+        "id": "7a2b3c4d5e6f7003",
+        "type": "http response",
+        "z": "9b396ea318fca661",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 750,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "1ef14afdb9fc02a8",
+        "type": "http in",
+        "z": "9b396ea318fca661",
+        "name": "Borrar perfiles",
+        "url": "/api/m4000/demo/clear",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 600,
+        "wires": [
+            [
+                "17441dcf2e1d4c43"
+            ]
+        ]
+    },
+    {
+        "id": "17441dcf2e1d4c43",
+        "type": "function",
+        "z": "9b396ea318fca661",
+        "name": "Borrar perfiles",
+        "func": "flow.set(\"demo_profiles\", []);\nflow.set(\"demo_profile_index\", 0);\nflow.set(\"demo_adquisicion_activa\", false);\n\nmsg.statusCode = 200;\n\nmsg.payload = {\n    ok: true,\n    message: \"Perfiles borrados\",\n    totalProfiles: 0,\n    adquisicionActiva: false\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 600,
+        "wires": [
+            [
+                "8a306438a0fd36fe"
+            ]
+        ]
+    },
+    {
+        "id": "8a306438a0fd36fe",
+        "type": "http response",
+        "z": "9b396ea318fca661",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 730,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "5db02cc0dd029d88",
+        "type": "http request",
+        "z": "183358061bda4294",
+        "name": "REE",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.esios.ree.es/indicators/1001",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Accept",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": "application/json"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": "application/json"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "x-api-key",
+                "valueType": "other",
+                "valueValue": "4e534d9fab6b5cff43a0d4d094e77eafe13f1029abd4a88b41c032243fabdb34"
+            }
+        ],
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "9f1f297f6fb5d561",
+                "00ee45de4b75d5cb"
+            ]
+        ]
+    },
+    {
+        "id": "fcdca9bb93d0beeb",
+        "type": "inject",
+        "z": "183358061bda4294",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "5db02cc0dd029d88"
+            ]
+        ]
+    },
+    {
+        "id": "9f1f297f6fb5d561",
+        "type": "function",
+        "z": "183358061bda4294",
+        "name": "F_Consulta_REE",
+        "func": "// =====================================================\n// DATOS PVPC - SOLO PENÍNSULA\n// =====================================================\n\nconst datos = msg.payload.indicator.values.filter(\n    item => item.geo_id === 8741\n);\n\n\n// =====================================================\n// HORA ACTUAL EN MADRID\n// =====================================================\n\nconst ahoraMadrid = new Date().toLocaleString(\"en-US\", {\n    timeZone: \"Europe/Madrid\"\n});\n\nconst ahora = new Date(ahoraMadrid);\n\n\n// =====================================================\n// HORA EN MADRID\n// =====================================================\n\nfunction horaMadrid(item) {\n\n    return Number(\n        new Date(item.datetime).toLocaleString(\"en-US\", {\n            timeZone: \"Europe/Madrid\",\n            hour: \"numeric\",\n            hour12: false\n        })\n    );\n\n}\n\n\n// =====================================================\n// TRAMO HORARIO\n// =====================================================\n\nfunction obtenerTramo(item) {\n\n    const hora = horaMadrid(item);\n\n    const siguienteHora = (hora + 1) % 24;\n\n    return (\n        String(hora).padStart(2, \"0\") +\n        \":00-\" +\n        String(siguienteHora).padStart(2, \"0\") +\n        \":00\"\n    );\n\n}\n\n\n// =====================================================\n// PRECIO ACTUAL\n// =====================================================\n\nconst actual = datos.find(item => {\n\n    return horaMadrid(item) === ahora.getHours();\n\n});\n\n\n// =====================================================\n// PRECIOS\n// =====================================================\n\nconst precios = datos.map(item => item.value);\n\n\n// =====================================================\n// MÍNIMO\n// =====================================================\n\nconst minimo = Math.min(...precios);\n\nconst datoMinimo = datos.find(\n    item => item.value === minimo\n);\n\n\n// =====================================================\n// MÁXIMO\n// =====================================================\n\nconst maximo = Math.max(...precios);\n\nconst datoMaximo = datos.find(\n    item => item.value === maximo\n);\n\n\n// =====================================================\n// MEDIO\n// =====================================================\n\nconst medio =\n    precios.reduce((a, b) => a + b, 0) / precios.length;\n\n\n// =====================================================\n// SALIDA 1\n// ACTUAL\n// =====================================================\n\nconst salida1 = {\n\n    payload: {\n\n        tipo: \"precio_actual\",\n\n        tramo: actual\n            ? obtenerTramo(actual)\n            : null,\n\n        precio_eur_mwh: actual\n            ? actual.value\n            : null,\n\n        precio_eur_kwh: actual\n            ? Number((actual.value / 1000).toFixed(5))\n            : null\n\n    }\n\n};\n\n\n// =====================================================\n// SALIDA 2\n// MÍNIMO\n// =====================================================\n\nconst salida2 = {\n\n    payload: {\n\n        tipo: \"precio_minimo\",\n\n        tramo: obtenerTramo(datoMinimo),\n\n        precio_eur_mwh: minimo,\n\n        precio_eur_kwh:\n            Number((minimo / 1000).toFixed(5))\n\n    }\n\n};\n\n\n// =====================================================\n// SALIDA 3\n// MÁXIMO\n// =====================================================\n\nconst salida3 = {\n\n    payload: {\n\n        tipo: \"precio_maximo\",\n\n        tramo: obtenerTramo(datoMaximo),\n\n        precio_eur_mwh: maximo,\n\n        precio_eur_kwh:\n            Number((maximo / 1000).toFixed(5))\n\n    }\n\n};\n\n\n// =====================================================\n// SALIDA 4\n// PRECIO MEDIO\n// =====================================================\n\nconst salida4 = {\n\n    payload: {\n\n        tipo: \"precio_medio\",\n\n        precio_eur_mwh:\n            Number(medio.toFixed(2)),\n\n        precio_eur_kwh:\n            Number((medio / 1000).toFixed(5))\n\n    }\n\n};\n\n\n// =====================================================\n// SALIDA 5\n// 24 HORAS\n// =====================================================\n\nconst salida5 = {\n\n    payload: datos.map(item => {\n\n        const hora = horaMadrid(item);\n\n        const siguienteHora = (hora + 1) % 24;\n\n        return {\n\n            tramo:\n                String(hora).padStart(2, \"0\") +\n                \":00-\" +\n                String(siguienteHora).padStart(2, \"0\") +\n                \":00\",\n\n            precio_eur_mwh: item.value,\n\n            precio_eur_kwh:\n                Number((item.value / 1000).toFixed(5))\n\n        };\n\n    })\n\n};\n\n\n// =====================================================\n// 5 SALIDAS\n// =====================================================\n\nreturn [\n\n    salida1,\n    salida2,\n    salida3,\n    salida4,\n    salida5\n\n];",
+        "outputs": 5,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "88b0ed986f8f4521"
+            ],
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7b1ccbd78e56072d",
+        "type": "influxdb out",
+        "z": "183358061bda4294",
+        "influxdb": "03dcf6e32f97a5b8",
+        "name": "Precio Luz Actual",
+        "measurement": "ree_precio_actual_mwh",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "mlago",
+        "bucket": "db",
+        "x": 810,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "88b0ed986f8f4521",
+        "type": "function",
+        "z": "183358061bda4294",
+        "name": "F2_Precios_InfluxDB",
+        "func": "const datos = msg.payload;\n\n// Salida 1: precio €/MWh\nconst salidaMwh = {\n    payload: datos.precio_eur_mwh\n};\n\n// Salida 2: precio €/kWh\nconst salidaKwh = {\n    payload: datos.precio_eur_kwh\n};\n\nreturn [\n    salidaMwh,\n    salidaKwh\n];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 400,
+        "wires": [
+            [
+                "7b1ccbd78e56072d"
+            ],
+            [
+                "77070b79bda960f1"
+            ]
+        ]
+    },
+    {
+        "id": "77070b79bda960f1",
+        "type": "influxdb out",
+        "z": "183358061bda4294",
+        "influxdb": "03dcf6e32f97a5b8",
+        "name": "Precio Luz Actual",
+        "measurement": "ree_precio_actual_kwh",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "mlago",
+        "bucket": "db",
+        "x": 810,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "00ee45de4b75d5cb",
+        "type": "debug",
+        "z": "183358061bda4294",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 260,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ree_http_in",
+        "type": "http in",
+        "z": "183358061bda4294",
+        "name": "GET /api/m4000/ree",
+        "url": "/api/m4000/ree",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 700,
+        "wires": [
+            [
+                "ab6fddc4a6d63a31"
+            ]
+        ]
+    },
+    {
+        "id": "ree_function",
+        "type": "function",
+        "z": "183358061bda4294",
+        "name": "Procesar PVPC",
+        "func": "// =====================================================\n// FUNCIÓN NODE-RED: /api/m4000/ree\n// =====================================================\n// Entrada esperada: msg.payload.indicator.values\n// (respuesta de la API de PVPC con datos de la Península)\n// Salida: msg.payload con JSON consolidado para la web\n// =====================================================\n\nconst datos = msg.payload.indicator.values.filter(\n    item => item.geo_id === 8741\n);\n\n// =====================================================\n// HORA ACTUAL EN MADRID\n// =====================================================\n\nconst ahoraMadrid = new Date().toLocaleString(\"en-US\", {\n    timeZone: \"Europe/Madrid\"\n});\n\nconst ahora = new Date(ahoraMadrid);\n\n// =====================================================\n// HORA EN MADRID\n// =====================================================\n\nfunction horaMadrid(item) {\n    return Number(\n        new Date(item.datetime).toLocaleString(\"en-US\", {\n            timeZone: \"Europe/Madrid\",\n            hour: \"numeric\",\n            hour12: false\n        })\n    );\n}\n\n// =====================================================\n// TRAMO HORARIO\n// =====================================================\n\nfunction obtenerTramo(item) {\n    const hora = horaMadrid(item);\n    const siguienteHora = (hora + 1) % 24;\n    return (\n        String(hora).padStart(2, \"0\") +\n        \":00-\" +\n        String(siguienteHora).padStart(2, \"0\") +\n        \":00\"\n    );\n}\n\n// =====================================================\n// PRECIO ACTUAL\n// =====================================================\n\nconst actual = datos.find(item => {\n    return horaMadrid(item) === ahora.getHours();\n});\n\n// =====================================================\n// PRECIOS\n// =====================================================\n\nconst precios = datos.map(item => item.value);\n\n// =====================================================\n// MÍNIMO\n// =====================================================\n\nconst minimo = Math.min(...precios);\nconst datoMinimo = datos.find(item => item.value === minimo);\n\n// =====================================================\n// MÁXIMO\n// =====================================================\n\nconst maximo = Math.max(...precios);\nconst datoMaximo = datos.find(item => item.value === maximo);\n\n// =====================================================\n// MEDIO\n// =====================================================\n\nconst medio = precios.reduce((a, b) => a + b, 0) / precios.length;\n\n// =====================================================\n// RESPUESTA JSON CONSOLIDADA\n// =====================================================\n\nmsg.payload = {\n    actual: actual ? {\n        tipo: \"precio_actual\",\n        tramo: obtenerTramo(actual),\n        precio_eur_mwh: actual.value,\n        precio_eur_kwh: Number((actual.value / 1000).toFixed(5))\n    } : null,\n\n    minimo: {\n        tipo: \"precio_minimo\",\n        tramo: obtenerTramo(datoMinimo),\n        precio_eur_mwh: minimo,\n        precio_eur_kwh: Number((minimo / 1000).toFixed(5))\n    },\n\n    maximo: {\n        tipo: \"precio_maximo\",\n        tramo: obtenerTramo(datoMaximo),\n        precio_eur_mwh: maximo,\n        precio_eur_kwh: Number((maximo / 1000).toFixed(5))\n    },\n\n    medio: {\n        tipo: \"precio_medio\",\n        precio_eur_mwh: Number(medio.toFixed(2)),\n        precio_eur_kwh: Number((medio / 1000).toFixed(5))\n    },\n\n    horas: datos.map(item => {\n        const hora = horaMadrid(item);\n        const siguienteHora = (hora + 1) % 24;\n        return {\n            tramo:\n                String(hora).padStart(2, \"0\") +\n                \":00-\" +\n                String(siguienteHora).padStart(2, \"0\") +\n                \":00\",\n            precio_eur_mwh: item.value,\n            precio_eur_kwh: Number((item.value / 1000).toFixed(5))\n        };\n    })\n};\n\nmsg.statusCode = 200;\nmsg.headers = msg.headers || {};\nmsg.headers[\"Content-Type\"] = \"application/json\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 700,
+        "wires": [
+            [
+                "ree_http_response"
+            ]
+        ]
+    },
+    {
+        "id": "ree_http_response",
+        "type": "http response",
+        "z": "183358061bda4294",
+        "name": "Respuesta JSON",
+        "statusCode": "",
+        "headers": {},
+        "x": 810,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "ab6fddc4a6d63a31",
+        "type": "http request",
+        "z": "183358061bda4294",
+        "name": "REE",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.esios.ree.es/indicators/1001",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Accept",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": "application/json"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": "application/json"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "x-api-key",
+                "valueType": "other",
+                "valueValue": "4e534d9fab6b5cff43a0d4d094e77eafe13f1029abd4a88b41c032243fabdb34"
+            }
+        ],
+        "x": 390,
+        "y": 700,
+        "wires": [
+            [
+                "ree_function"
+            ]
+        ]
+    },
+    {
+        "id": "function_refresh_dashboard",
+        "type": "function",
+        "z": "tab_m4000_dashboard",
+        "name": "Refrescar dashboard",
+        "func": "const io = global.get('io') || {\n    DI: [],\n    DO: [],\n    AI: []\n};\n\nconst outputs = [];\n\n\n// =========================\n// DI\n// =========================\n\nfor (let index = 0; index < 16; index++) {\n    outputs.push({\n        payload: io.DI[index] ? 'ON' : 'OFF'\n    });\n}\n\n\n// =========================\n// DO\n// =========================\n\nfor (let index = 0; index < 16; index++) {\n    outputs.push({\n        payload: io.DO[index] ? 'ON' : 'OFF'\n    });\n}\n\n\n// =========================\n// AI\n// =========================\n\n// Valor máximo bruto del PLC\nconst RAW_MAX = 27648;\n\n// Máximo independiente de cada sensor\nconst AI_MAX = [\n    1000,  // AI0\n    1000,  // AI1\n    1000,  // AI2\n    1000   // AI3\n];\n\nconst ai = [];\n\nfor (let index = 0; index < 4; index++) {\n\n    // Valor bruto independiente de cada AI\n    let raw = Number(io.AI[index] ?? 0);\n\n    // Si no es válido, poner 0\n    if (!Number.isFinite(raw)) {\n        raw = 0;\n    }\n\n    // Limitar cada AI entre 0 y 27648\n    raw = Math.max(0, Math.min(RAW_MAX, raw));\n\n    // Escalado independiente de cada sensor\n    const valor = (raw * AI_MAX[index]) / RAW_MAX;\n\n    // Guardar valor escalado\n    ai.push(valor);\n\n    // Salida independiente para Dashboard\n    outputs.push({\n        payload: valor\n    });\n}\n\n\n// =========================\n// SQL PARA POSTGRESQL\n// =========================\n\nconst sqlMsg = {\n    query: `\n        INSERT INTO public.analogicas\n        (ai0, ai1, ai2, ai3, \"timestamp\")\n        VALUES (\n            ${ai[0]},\n            ${ai[1]},\n            ${ai[2]},\n            ${ai[3]},\n            NOW()\n        );\n    `\n};\n\n\n// =========================\n// 37 SALIDAS\n// =========================\n\n// Salidas 1-16  → DI\n// Salidas 17-32 → DO\n// Salidas 33-36 → AI escaladas\n// Salida 37 → PostgreSQL\n\nreturn [\n    ...outputs,\n    sqlMsg\n];",
+        "outputs": 37,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 380,
+        "wires": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [
+                "706fdd57a71cbed3"
+            ],
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "24616d18994977e7",
+        "type": "inject",
+        "z": "tab_m4000_dashboard",
+        "name": "Actualizar LED",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "function_refresh_dashboard"
+            ]
+        ]
+    },
+    {
+        "id": "706fdd57a71cbed3",
+        "type": "influxdb out",
+        "z": "tab_m4000_dashboard",
+        "influxdb": "03dcf6e32f97a5b8",
+        "name": "AI0",
+        "measurement": "ai0",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "mlago",
+        "bucket": "db",
+        "x": 710,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "b85de4e2bddf2b58",
+        "type": "postgresql",
+        "z": "tab_m4000_dashboard",
+        "name": "PG",
+        "query": "INSERT INTO public.analogicas\n(ai0, ai1, ai2, ai3, \"timestamp\")\nVALUES ($1, $2, $3, $4, $5);",
+        "postgreSQLConfig": "f2322ea96e341d05",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 710,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fe0d2280256b5b8d",
+        "type": "u-os-hub-http",
+        "z": "5153723528a78bdb",
+        "name": "u-OS - Acceso variables",
+        "config": "f3e237497dde27b4",
+        "apiType": "variableApi",
+        "category": "consumer",
+        "action": "getMultipleVariables",
+        "format": "list",
+        "providerId": "u_os_sbm",
+        "method": "GET",
+        "endpoint": "",
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "0a09729a4f6186a1",
+                "203b5648a119bffb"
+            ]
+        ]
+    },
+    {
+        "id": "203b5648a119bffb",
+        "type": "function",
+        "z": "5153723528a78bdb",
+        "name": "F_Listado_Vars_Todo",
+        "func": "let io = {\n    DI: [],\n    DO: [],\n    AI: []\n};\n\nfor (const item of msg.payload) {\n\n    let m;\n\n    m = item.key.match(/^ur20_16di_p_1\\.process_data\\.channel_(\\d+)\\.di$/);\n    if (m) {\n        io.DI[parseInt(m[1])] = item.value;\n        continue;\n    }\n\n    m = item.key.match(/^ur20_16do_p_1\\.process_data\\.channel_(\\d+)\\.do$/);\n    if (m) {\n        io.DO[parseInt(m[1])] = item.value;\n        continue;\n    }\n\n    m = item.key.match(/^ur20_4ai_ui_12_1\\.process_data\\.channel_(\\d+)\\.ai$/);\n    if (m) {\n        io.AI[parseInt(m[1])] = item.value;\n    }\n}\n\n// Guardar globalmente\nglobal.set(\"io\", io);\n\n// También dejarlo en el mensaje\nmsg.payload = io;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 200,
+        "wires": [
+            [
+                "c03925497793d6e2"
+            ]
+        ]
+    },
+    {
+        "id": "0a09729a4f6186a1",
+        "type": "function",
+        "z": "5153723528a78bdb",
+        "name": "F_Listado_Vars_Modulo",
+        "func": "let di = [];\nlet dout = [];\nlet ai = [];\n\n\n// Escalado analógico\n// Entrada: 0...27648\n// Salida: rango de ingeniería definido\nfunction scale(raw, min, max) {\n\n    // Limitar valor bruto\n    raw = Math.max(0, Math.min(27648, raw));\n\n    return ((raw / 27648) * (max - min)) + min;\n}\n\n\n// Rangos de cada entrada analógica\nconst aiRanges = [\n    { min: 0, max: 1000 }, // AI0\n    { min: 0, max: 500 },  // AI1\n    { min: 0, max: 100 },  // AI2\n    { min: 0, max: 50 }    // AI3\n];\n\n\nfor (const item of msg.payload) {\n\n    let m;\n\n\n    // -----------------------------\n    // Entradas digitales DI\n    // -----------------------------\n    m = item.key.match(/^ur20_16di_p_1\\.process_data\\.channel_(\\d+)\\.di$/);\n\n    if (m) {\n        di[Number(m[1])] = item.value;\n        continue;\n    }\n\n\n    // -----------------------------\n    // Salidas digitales DO\n    // -----------------------------\n    m = item.key.match(/^ur20_16do_p_1\\.process_data\\.channel_(\\d+)\\.do$/);\n\n    if (m) {\n        dout[Number(m[1])] = item.value;\n        continue;\n    }\n\n\n    // -----------------------------\n    // Entradas analógicas AI\n    // -----------------------------\n    m = item.key.match(/^ur20_4ai_ui_12_1\\.process_data\\.channel_(\\d+)\\.ai$/);\n\n    if (m) {\n\n        let ch = Number(m[1]);\n\n        ai[ch] = scale(\n            item.value,\n            aiRanges[ch].min,\n            aiRanges[ch].max\n        );\n\n        continue;\n    }\n}\n\n\n// Tres salidas del Function Node\nreturn [\n    {\n        topic: \"DI\",\n        payload: di\n    },\n    {\n        topic: \"DO\",\n        payload: dout\n    },\n    {\n        topic: \"AI\",\n        payload: ai\n    }\n];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 260,
+        "wires": [
+            [],
+            [],
+            [
+                "ad3d04d05e776c63",
+                "bbe90b8e10198e2c"
+            ]
+        ]
+    },
+    {
+        "id": "36226802979b85c3",
+        "type": "inject",
+        "z": "5153723528a78bdb",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "fe0d2280256b5b8d"
+            ]
+        ]
+    },
+    {
+        "id": "bbe90b8e10198e2c",
+        "type": "python.queue",
+        "z": "5153723528a78bdb",
+        "name": "T0",
+        "pythonConfig": "f49f7871fd4ac9b7",
+        "queue": 1,
+        "streamMode": "delimited",
+        "delimiter": "\\n",
+        "template": "import json\n\ndata = json.loads('{{ payload | dump | safe }}')\n\nprint(\"Datos recibidos:\", data)\n\n# coger AI canal 0\nai0 = data[0]\n\nprint(\"AI0 =\", ai0)",
+        "output": "str",
+        "field": "payload",
+        "fieldType": "msg",
+        "currentLine": {
+            "row": 9,
+            "column": 19
+        },
+        "x": 610,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad3d04d05e776c63",
+        "type": "python.queue",
+        "z": "5153723528a78bdb",
+        "name": "T1",
+        "pythonConfig": "f49f7871fd4ac9b7",
+        "queue": "1",
+        "streamMode": "delimited",
+        "delimiter": "\\n",
+        "template": "import json\n\ndata = json.loads('{{ payload | dump | safe }}')\n\nprint(\"Datos recibidos:\", data)\n\n# coger AI canal 1\nai1 = data[1]\n\nprint(\"AI1 =\", ai1)",
+        "output": "str",
+        "field": "payload",
+        "fieldType": "msg",
+        "currentLine": {
+            "row": 9,
+            "column": 10
+        },
+        "x": 770,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2160210e42e6d1e9",
+        "type": "u-os-hub-http",
+        "z": "5153723528a78bdb",
+        "name": "u-OS - Escritura variables",
+        "config": "f3e237497dde27b4",
+        "apiType": "variableApi",
+        "category": "consumer",
+        "action": "setSingleVariable",
+        "format": "list",
+        "providerId": "u_os_sbm",
+        "method": "GET",
+        "endpoint": "",
+        "x": 730,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5240fc95356c5313",
+        "type": "inject",
+        "z": "5153723528a78bdb",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "765dad64dc64106d"
+            ]
+        ]
+    },
+    {
+        "id": "765dad64dc64106d",
+        "type": "trigger",
+        "z": "5153723528a78bdb",
+        "name": "",
+        "op1": "{\"channel\":0,\"value\":true}",
+        "op2": "{     \"channel\": 0,     \"value\": false }",
+        "op1type": "json",
+        "op2type": "json",
+        "duration": "10",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 290,
+        "y": 440,
+        "wires": [
+            [
+                "49f27363cbf38929"
+            ]
+        ]
+    },
+    {
+        "id": "49f27363cbf38929",
+        "type": "function",
+        "z": "5153723528a78bdb",
+        "name": "F_Escritura_Salidas",
+        "func": "const channel = msg.payload.channel;\nconst value = msg.payload.value;\n\nlet io = global.get(\"io\") || {\n    DI: [],\n    DO: [],\n    AI: []\n};\n\n// Actualizar la variable global\nio.DO[channel] = value;\n\nglobal.set(\"io\", io);\n\n// Preparar escritura en Weidmüller\nmsg.key = `ur20_16do_p_1.process_data.channel_${channel}.do`;\nmsg.payload = Boolean(value);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 560,
+        "wires": [
+            [
+                "2160210e42e6d1e9"
+            ]
+        ]
+    },
+    {
+        "id": "c03925497793d6e2",
+        "type": "debug",
+        "z": "5153723528a78bdb",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "post_in",
+        "type": "http in",
+        "z": "recorder_tab",
+        "name": "POST /api/m4000/recorder/samples",
+        "url": "/api/m4000/recorder/samples",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "post_store"
+            ]
+        ]
+    },
+    {
+        "id": "post_store",
+        "type": "function",
+        "z": "recorder_tab",
+        "name": "guardar última muestra",
+        "func": "const sample = msg.payload || {};\nglobal.set('recorderLast', sample);\nmsg.statusCode = 204;\nmsg.payload = '';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 120,
+        "wires": [
+            [
+                "post_resp"
+            ]
+        ]
+    },
+    {
+        "id": "post_resp",
+        "type": "http response",
+        "z": "recorder_tab",
+        "name": "",
+        "statusCode": "204",
+        "headers": {},
+        "x": 740,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "get_in",
+        "type": "http in",
+        "z": "recorder_tab",
+        "name": "GET /api/m4000/recorder/samples",
+        "url": "/api/m4000/recorder/samples",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "get_snapshot"
+            ]
+        ]
+    },
+    {
+        "id": "get_snapshot",
+        "type": "function",
+        "z": "recorder_tab",
+        "name": "devolver snapshot",
+        "func": "const last = global.get('recorderLast');\nif (!last) {\n  msg.statusCode = 200;\n  msg.payload = { timestamp: null, source: null, simulated: true, enabledChannels: 0, channels: [] };\n  return msg;\n}\nmsg.statusCode = 200;\nmsg.payload = last;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 240,
+        "wires": [
+            [
+                "get_resp",
+                "634455089522a0e7"
+            ]
+        ]
+    },
+    {
+        "id": "get_resp",
+        "type": "http response",
+        "z": "recorder_tab",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 670,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "634455089522a0e7",
+        "type": "debug",
+        "z": "recorder_tab",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "0a16a0387fd6bca5",
+        "type": "inject",
+        "z": "recorder_tab",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 340,
+        "wires": [
+            [
+                "get_snapshot"
+            ]
+        ]
+    },
+    {
+        "id": "94f7ce7a5158a03a",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0",
+            "@weidmueller/node-red-contrib-u-os-hub": "2.0.0",
+            "node-red-contrib-opcua": "0.2.354",
+            "@inteli.city/node-red-contrib-exec-collection": "2.1.5",
+            "node-red-contrib-postgresql": "0.15.4",
+            "@flowfuse/node-red-dashboard": "1.30.2"
+        }
+    }
+]

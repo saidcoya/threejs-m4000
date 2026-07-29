@@ -376,6 +376,20 @@ input[type="checkbox"] {
     50% { opacity: 0.7; transform: scale(0.92); }
 }
 
+.recording-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: rgba(0, 224, 150, 0.12);
+    border: 1px solid rgba(0, 224, 150, 0.4);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--green);
+}
+
 /* =====================================
    CONFIGURACIÓN CANALES
 ===================================== */
@@ -927,6 +941,10 @@ input[type="checkbox"] {
                     Enviar a backend (/api/m4000/recorder/samples)
                 </label>
             </div>
+            <div id="recordingIndicator" class="recording-indicator" style="display:none;">
+                <div class="status-dot ok"></div>
+                <span>Recording to backend</span>
+            </div>
         </section>
 
         <!-- ALARMAS -->
@@ -1158,6 +1176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSimState();
     renderChannelConfig();
     initChart();
+    restoreBackendCheckbox();
     updateUI();
     startPolling();
     bindEvents();
@@ -1378,6 +1397,23 @@ function bindEvents() {
         if (APP.currentMode === 'heatmap') renderHeatmap();
         if (APP.currentMode === 'state') renderStateTimeline();
     });
+
+    document.getElementById('enableBackend').addEventListener('change', e => {
+        localStorage.setItem('m4000_recorder_backend', e.target.checked ? '1' : '0');
+        updateRecordingIndicator();
+    });
+}
+
+function updateRecordingIndicator() {
+    const el = document.getElementById('recordingIndicator');
+    if (!el) return;
+    el.style.display = document.getElementById('enableBackend').checked ? 'flex' : 'none';
+}
+
+function restoreBackendCheckbox() {
+    const cb = document.getElementById('enableBackend');
+    cb.checked = localStorage.getItem('m4000_recorder_backend') === '1';
+    updateRecordingIndicator();
 }
 
 /* =====================================
