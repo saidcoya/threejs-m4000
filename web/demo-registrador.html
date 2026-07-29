@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Registrador industrial - M4000</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+
+<style>
+
+:root {
+    --bg: #131a24;
+    --bg-2: #1a2330;
+    --panel: rgba(28, 38, 50, 0.85);
+    --panel-solid: #1c2633;
+    --panel-light: rgba(40, 52, 68, 0.72);
+    --border: rgba(70, 92, 118, 0.55);
+    --border-light: rgba(108, 136, 168, 0.38);
+    --text: #f4f7fb;
+    --muted: #9db0c4;
+    --green: #00e096;
+    --red: #ff5c6c;
+    --yellow: #ffb624;
+    --orange: #ff8c42;
+    --blue: #2fb3ff;
+    --cyan: #00e0ff;
+    --purple: #a259ff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(ellipse at 10% 0%, #1b2736 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 100%, #182230 0%, transparent 50%),
+        var(--bg);
+    color: var(--text);
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+/* =====================================
+   BARRA SUPERIOR
+===================================== */
+
+.topbar {
+    height: 68px;
+    background: linear-gradient(180deg, rgba(24, 33, 44, 0.95), rgba(18, 25, 34, 0.92));
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo::before {
+    content: '';
+    width: 9px;
+    height: 28px;
+    background: linear-gradient(180deg, var(--cyan), var(--blue));
+    border-radius: 3px;
+    box-shadow: 0 0 14px rgba(0, 224, 255, 0.45);
+}
+
+.logo span {
+    color: var(--cyan);
+    font-weight: 700;
+}
+
+.nav {
+    display: flex;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav button {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid transparent;
+    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+    transition: all 0.18s ease;
+}
+
+.nav button:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.nav button.active {
+    color: #fff;
+    background: linear-gradient(180deg, rgba(52, 72, 94, 0.9), rgba(36, 50, 66, 0.9));
+    border-color: rgba(0, 224, 255, 0.45);
+    box-shadow: 0 0 16px rgba(0, 224, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.connection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.connection-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 10px rgba(255, 92, 108, 0.6);
+}
+
+.connection-dot.ok {
+    background: var(--green);
+    box-shadow: 0 0 10px rgba(0, 224, 150, 0.6);
+}
+
+.connection-dot.sim {
+    background: var(--yellow);
+    box-shadow: 0 0 10px rgba(255, 182, 36, 0.6);
+}
+
+/* =====================================
+   CONTENEDOR
+===================================== */
+
+.container {
+    padding: 26px 28px 40px;
+    max-width: 1600px;
+    margin: auto;
+}
+
+.page-title {
+    margin-bottom: 22px;
+}
+
+.page-title h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+
+.page-title p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =====================================
+   GRID
+===================================== */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 22px;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.panel.full-width {
+    grid-column: 1 / -1;
+}
+
+.panel h2 {
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: 0.2px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.badge {
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: rgba(47, 179, 255, 0.1);
+    color: var(--blue);
+    font-weight: 800;
+    border: 1px solid rgba(47, 179, 255, 0.2);
+}
+
+.badge.warn {
+    background: rgba(255, 182, 36, 0.1);
+    color: var(--yellow);
+    border-color: rgba(255, 182, 36, 0.2);
+}
+
+.badge.alarm {
+    background: rgba(255, 92, 108, 0.1);
+    color: var(--red);
+    border-color: rgba(255, 92, 108, 0.2);
+}
+
+/* =====================================
+   CONTROLES
+===================================== */
+
+.control-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.control-group label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.btn {
+    background: linear-gradient(180deg, rgba(52, 72, 94, 0.9), rgba(36, 50, 66, 0.9));
+    border: 1px solid var(--border-light);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+    transition: all 0.15s ease;
+}
+
+.btn:hover {
+    background: linear-gradient(180deg, rgba(62, 86, 112, 0.95), rgba(46, 64, 84, 0.95));
+    border-color: rgba(0, 224, 255, 0.45);
+}
+
+.btn.active {
+    background: linear-gradient(180deg, rgba(0, 224, 255, 0.22), rgba(47, 179, 255, 0.18));
+    border-color: rgba(0, 224, 255, 0.55);
+    color: #fff;
+    box-shadow: 0 0 14px rgba(0, 224, 255, 0.15);
+}
+
+.btn.danger {
+    background: linear-gradient(180deg, rgba(255, 92, 108, 0.18), rgba(255, 92, 108, 0.12));
+    border-color: rgba(255, 92, 108, 0.4);
+    color: var(--red);
+}
+
+.btn.danger:hover {
+    background: linear-gradient(180deg, rgba(255, 92, 108, 0.28), rgba(255, 92, 108, 0.18));
+}
+
+select, input[type="number"], input[type="text"], input[type="color"] {
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 10px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+}
+
+select:focus, input:focus {
+    border-color: var(--cyan);
+}
+
+input[type="color"] {
+    padding: 2px;
+    width: 36px;
+    height: 30px;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--cyan);
+    cursor: pointer;
+}
+
+/* =====================================
+   ESTADO
+===================================== */
+
+.status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 10px rgba(255, 92, 108, 0.7);
+    animation: pulse 2s infinite;
+}
+
+.status-dot.ok {
+    background: var(--green);
+    box-shadow: 0 0 10px rgba(0, 224, 150, 0.7);
+}
+
+.status-dot.sim {
+    background: var(--yellow);
+    box-shadow: 0 0 10px rgba(255, 182, 36, 0.7);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.92); }
+}
+
+/* =====================================
+   CONFIGURACIÓN CANALES
+===================================== */
+
+.config-table-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+.config-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    min-width: 900px;
+}
+
+.config-table th,
+.config-table td {
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.config-table th {
+    background: rgba(0, 0, 0, 0.18);
+    color: var(--muted);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+}
+
+.config-table td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.config-table tr:hover td {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.config-table input[type="text"],
+.config-table input[type="number"] {
+    width: 80px;
+    padding: 6px 8px;
+    font-size: 12px;
+}
+
+.config-table input.wide {
+    width: 120px;
+}
+
+.config-table input.narrow {
+    width: 64px;
+}
+
+.channel-color {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.channel-color input[type="color"] {
+    width: 30px;
+    height: 24px;
+}
+
+/* =====================================
+   TARJETAS ESTADÍSTICAS
+===================================== */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.stat-card {
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--ch-color, var(--cyan));
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.stat-name {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.stat-unit {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.stat-value {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -1px;
+}
+
+.stat-value.alarm-low { color: var(--blue); }
+.stat-value.alarm-high { color: var(--red); }
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.stat-row span {
+    color: var(--text);
+}
+
+/* =====================================
+   GRÁFICAS
+===================================== */
+
+.chart-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+.chart-mode-group,
+.chart-range-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.chart-container {
+    position: relative;
+    height: 460px;
+    background:
+        linear-gradient(180deg, #0b1319, #070c11);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#mainChart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.custom-view {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.custom-view.active {
+    display: block;
+}
+
+/* Gauge grid */
+.gauge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    align-content: start;
+}
+
+.gauge-card {
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.gauge-card svg {
+    width: 100%;
+    height: 110px;
+}
+
+.gauge-card .gauge-label {
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.gauge-card .gauge-value {
+    font-size: 24px;
+    font-weight: 800;
+    margin-top: 4px;
+}
+
+.gauge-card .gauge-unit {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+/* Sparkline grid */
+.spark-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    align-content: start;
+}
+
+.spark-card {
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.spark-card canvas {
+    width: 100%;
+    height: 90px;
+    display: block;
+}
+
+.spark-title {
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.spark-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 700;
+}
+
+/* Heatmap / State canvas */
+.custom-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* =====================================
+   TABLA REGISTROS
+===================================== */
+
+.table-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.data-table th,
+.data-table td {
+    padding: 9px 10px;
+    text-align: right;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.data-table th:first-child,
+.data-table td:first-child {
+    text-align: left;
+    position: sticky;
+    left: 0;
+    background: var(--panel-solid);
+    z-index: 1;
+}
+
+.data-table th {
+    background: rgba(0, 0, 0, 0.22);
+    color: var(--muted);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.data-table tr:hover td {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.data-table tr:hover td:first-child {
+    background: rgba(40, 52, 68, 0.9);
+}
+
+.value-alarm { color: var(--red); font-weight: 800; }
+.value-warn { color: var(--yellow); font-weight: 800; }
+
+/* =====================================
+   EXPORTAR
+===================================== */
+
+.export-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    align-items: end;
+}
+
+.export-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 1100px) {
+    .topbar {
+        height: auto;
+        min-height: 64px;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px 18px;
+    }
+
+    .nav {
+        order: 3;
+        width: 100%;
+    }
+
+    .container {
+        padding: 18px;
+    }
+
+    .chart-container {
+        height: 360px;
+    }
+}
+
+@media (max-width: 640px) {
+    .control-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .chart-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .chart-mode-group,
+    .chart-range-group {
+        width: 100%;
+    }
+
+    .chart-mode-group .btn,
+    .chart-range-group .btn {
+        flex: 1;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="logo">
+        M4000 <span>INDUSTRIAL</span>
+    </div>
+
+    <nav class="nav">
+
+        <button onclick="location.href='index.html'">
+            Dashboard
+        </button>
+
+        <button onclick="location.href='demo-troncos.html'">
+            Demo Troncos
+        </button>
+
+        <button onclick="location.href='demo-api-ree.html'">
+            Demo REE
+        </button>
+
+        <button class="active" onclick="location.href='demo-registrador.html'">
+            Registrador
+        </button>
+
+    </nav>
+
+    <div class="connection">
+        <div id="connectionDot" class="connection-dot"></div>
+        <span id="connectionText">DESCONECTADO</span>
+    </div>
+
+</header>
+
+<main class="container">
+
+    <div class="page-title">
+        <h1>Registrador industrial</h1>
+        <p>Registro de temperaturas en cámaras de frío. Escalado 0–27648 puntos, exportación CSV y visualización estilo Grafana.</p>
+    </div>
+
+    <div class="grid">
+
+        <!-- ESTADO / MUESTREO -->
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Estado y muestreo</h2>
+                <span id="apiBadge" class="badge">API</span>
+            </div>
+            <div class="status-row">
+                <div id="statusDot" class="status-dot"></div>
+                <span id="statusText">Controlador: DESCONECTADO</span>
+            </div>
+            <div class="control-row" style="margin-top: 14px;">
+                <div class="control-group">
+                    <label>Muestreo (ms)</label>
+                    <input id="pollMs" type="number" min="500" step="100" value="1000" style="width: 90px;">
+                </div>
+                <div class="control-group">
+                    <label>Máx. muestras</label>
+                    <input id="maxSamples" type="number" min="1000" step="1000" value="20000" style="width: 100px;">
+                </div>
+                <button id="btnApplyConfig" class="btn">Aplicar</button>
+                <button id="btnClearHistory" class="btn danger">Borrar histórico</button>
+            </div>
+            <div class="control-row" style="margin-top: 12px;">
+                <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:700;">
+                    <input id="enableBackend" type="checkbox">
+                    Enviar a backend (/api/m4000/recorder/samples)
+                </label>
+            </div>
+        </section>
+
+        <!-- RESUMEN RÁPIDO -->
+        <section class="panel">
+            <div class="panel-header">
+                <h2>Resumen del rango</h2>
+                <span id="rangeBadge" class="badge">Última hora</span>
+            </div>
+            <div id="quickStats" class="stats-grid">
+                <!-- generado dinámicamente -->
+            </div>
+        </section>
+
+        <!-- CONFIGURACIÓN CANALES -->
+        <section class="panel full-width">
+            <div class="panel-header">
+                <h2>Configuración de canales</h2>
+                <div class="control-row">
+                    <button id="btnAddChannel" class="btn">Añadir canal</button>
+                    <button id="btnRemoveChannel" class="btn danger">Quitar canal</button>
+                    <button id="btnResetChannels" class="btn">Restaurar PT100</button>
+                </div>
+            </div>
+            <div class="config-table-wrap">
+                <table class="config-table">
+                    <thead>
+                        <tr>
+                            <th>Hab.</th>
+                            <th>Canal</th>
+                            <th>Color</th>
+                            <th>Etiqueta</th>
+                            <th>Unidad</th>
+                            <th>Raw min</th>
+                            <th>Raw max</th>
+                            <th>Eng min</th>
+                            <th>Eng max</th>
+                            <th>Alarma baja</th>
+                            <th>Alarma alta</th>
+                            <th>Decimales</th>
+                        </tr>
+                    </thead>
+                    <tbody id="channelConfigBody">
+                        <!-- generado dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- GRÁFICO PRINCIPAL -->
+        <section class="panel full-width">
+            <div class="panel-header">
+                <h2>Tendencia</h2>
+                <div class="chart-controls">
+                    <div class="chart-mode-group">
+                        <button class="btn active" data-mode="line">Línea</button>
+                        <button class="btn" data-mode="area">Área</button>
+                        <button class="btn" data-mode="bar">Barras</button>
+                        <button class="btn" data-mode="gauge">Gauge</button>
+                        <button class="btn" data-mode="sparkline">Sparkline</button>
+                        <button class="btn" data-mode="heatmap">Heatmap</button>
+                        <button class="btn" data-mode="state">Estado</button>
+                    </div>
+                    <div class="chart-range-group">
+                        <button class="btn" data-range="300000">5m</button>
+                        <button class="btn active" data-range="3600000">1h</button>
+                        <button class="btn" data-range="21600000">6h</button>
+                        <button class="btn" data-range="86400000">24h</button>
+                        <button class="btn" data-range="604800000">7d</button>
+                        <button class="btn" data-range="all">Todo</button>
+                    </div>
+                    <button id="btnAutoplay" class="btn active">Autoplay</button>
+                    <button id="btnResetZoom" class="btn">Reset zoom</button>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="mainChart"></canvas>
+                <div id="gaugeView" class="custom-view"></div>
+                <div id="sparklineView" class="custom-view"></div>
+                <canvas id="heatmapView" class="custom-view"></canvas>
+                <canvas id="stateView" class="custom-view"></canvas>
+            </div>
+        </section>
+
+        <!-- ESTADÍSTICAS DETALLADAS -->
+        <section class="panel full-width">
+            <div class="panel-header">
+                <h2>Estadísticas por canal</h2>
+                <span class="badge">EN VIVO</span>
+            </div>
+            <div id="statsGrid" class="stats-grid">
+                <!-- generado dinámicamente -->
+            </div>
+        </section>
+
+        <!-- TABLA DE REGISTROS + EXPORTAR -->
+        <section class="panel full-width">
+            <div class="panel-header">
+                <h2>Registros y exportación</h2>
+                <span class="badge">CSV</span>
+            </div>
+
+            <div class="export-grid">
+                <div class="control-group">
+                    <label>Rango a exportar</label>
+                    <select id="exportRange">
+                        <option value="visible">Rango visible</option>
+                        <option value="3600000">Última hora</option>
+                        <option value="21600000">Últimas 6h</option>
+                        <option value="86400000">Últimas 24h</option>
+                        <option value="604800000">Últimos 7 días</option>
+                        <option value="all">Todo el histórico</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Separador</label>
+                    <select id="exportSeparator">
+                        <option value=";">Punto y coma</option>
+                        <option value=",">Coma</option>
+                        <option value="\t">Tabulador</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Decimal</label>
+                    <select id="exportDecimal">
+                        <option value=",">Coma</option>
+                        <option value=".">Punto</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Incluir</label>
+                    <select id="exportColumns">
+                        <option value="physical">Valores escalados</option>
+                        <option value="raw">Valores raw</option>
+                        <option value="both">Raw + escalado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="export-actions">
+                <button id="btnExportCsv" class="btn">Exportar CSV</button>
+                <button id="btnExportJson" class="btn">Exportar JSON</button>
+                <button id="btnPause" class="btn">Pausar</button>
+            </div>
+
+            <div class="table-wrap" style="margin-top: 18px;">
+                <table class="data-table">
+                    <thead id="recordsHead">
+                        <tr>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsBody">
+                        <!-- generado dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+</main>
+
+<script>
+
+/* =====================================
+   CONFIGURACIÓN GLOBAL
+===================================== */
+
+const APP = {
+    apiUrl: '/api/m4000/status',
+    backendUrl: '/api/m4000/recorder/samples',
+    pollMs: 1000,
+    maxSamples: 20000,
+    maxChannels: 32,
+    defaultChannels: 4,
+    storageKey: 'm4000_recorder_v1',
+    simEnabled: false,
+    paused: false,
+    currentMode: 'line',
+    currentRangeMs: 3600000,
+    autoplay: true,
+    lastSource: 'none',
+    nextId: 1
+};
+
+const PALETTE = [
+    '#00e0ff', '#00e096', '#ffb624', '#ff5c6c',
+    '#2fb3ff', '#a259ff', '#ff8c42', '#ffffff',
+    '#e066ff', '#00ffcc', '#ff4d4d', '#66ff66',
+    '#ffff66', '#ff66ff', '#66ffff', '#ff9966',
+    '#9999ff', '#ff6699', '#99ff99', '#6699ff',
+    '#cc9966', '#66ccff', '#cc66ff', '#ffcc66',
+    '#99cc99', '#cc9999', '#9999cc', '#cccc66',
+    '#66cccc', '#cc66cc', '#cccccc', '#ff6666'
+];
+
+function defaultChannel(index) {
+    return {
+        id: APP.nextId++,
+        enabled: true,
+        label: `Cámara ${index + 1}`,
+        unit: '°C',
+        rawMin: 0,
+        rawMax: 27648,
+        engMin: -50,
+        engMax: 150,
+        alarmLow: -25,
+        alarmHigh: -15,
+        decimals: 1,
+        color: PALETTE[index % PALETTE.length]
+    };
+}
+
+let channels = [];
+let recorder = [];
+let mainChart = null;
+let pollTimer = null;
+let simState = [];
+
+/* =====================================
+   INICIALIZACIÓN
+===================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadState();
+    if (channels.length === 0) {
+        resetChannels();
+    }
+    initSimState();
+    renderChannelConfig();
+    initChart();
+    updateRangeBadge();
+    updateUI();
+    startPolling();
+    bindEvents();
+});
+
+function resetChannels() {
+    channels = [];
+    APP.nextId = 1;
+    for (let i = 0; i < APP.defaultChannels; i++) {
+        channels.push(defaultChannel(i));
+    }
+    initSimState();
+    saveState();
+}
+
+function initSimState() {
+    simState = channels.map((ch, i) => ({
+        base: ch.engMin + (ch.engMax - ch.engMin) * (0.25 + 0.5 * Math.random()),
+        phase: i * 1.2,
+        drift: 0,
+        lastRaw: rawFromEng(ch.base, ch)
+    }));
+}
+
+/* =====================================
+   PERSISTENCIA
+===================================== */
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(APP.storageKey);
+        if (saved) {
+            const data = JSON.parse(saved);
+            if (data.channels) {
+                channels = data.channels;
+                APP.nextId = data.nextId || 1;
+            }
+            if (Array.isArray(data.recorder)) {
+                recorder = data.recorder;
+            }
+            if (data.pollMs) APP.pollMs = data.pollMs;
+            if (data.maxSamples) APP.maxSamples = data.maxSamples;
+        }
+    } catch (e) {
+        console.warn('No se pudo cargar estado', e);
+    }
+}
+
+function saveState() {
+    try {
+        const data = {
+            channels,
+            nextId: APP.nextId,
+            recorder: recorder.slice(-APP.maxSamples),
+            pollMs: APP.pollMs,
+            maxSamples: APP.maxSamples
+        };
+        localStorage.setItem(APP.storageKey, JSON.stringify(data));
+    } catch (e) {
+        console.warn('No se pudo guardar estado', e);
+    }
+}
+
+/* =====================================
+   CANALES Y UI
+===================================== */
+
+function renderChannelConfig() {
+    const tbody = document.getElementById('channelConfigBody');
+    const theadRow = document.querySelector('#recordsHead tr');
+
+    tbody.innerHTML = '';
+
+    channels.forEach((ch, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input type="checkbox" ${ch.enabled ? 'checked' : ''} data-field="enabled" data-index="${i}"></td>
+            <td>AI${i}</td>
+            <td>
+                <div class="channel-color">
+                    <input type="color" value="${ch.color}" data-field="color" data-index="${i}">
+                    <span style="width:12px;height:12px;border-radius:50%;background:${ch.color};display:inline-block;"></span>
+                </div>
+            </td>
+            <td><input type="text" class="wide" value="${escapeHtml(ch.label)}" data-field="label" data-index="${i}"></td>
+            <td><input type="text" class="narrow" value="${escapeHtml(ch.unit)}" data-field="unit" data-index="${i}"></td>
+            <td><input type="number" value="${ch.rawMin}" data-field="rawMin" data-index="${i}"></td>
+            <td><input type="number" value="${ch.rawMax}" data-field="rawMax" data-index="${i}"></td>
+            <td><input type="number" value="${ch.engMin}" data-field="engMin" data-index="${i}"></td>
+            <td><input type="number" value="${ch.engMax}" data-field="engMax" data-index="${i}"></td>
+            <td><input type="number" value="${ch.alarmLow}" data-field="alarmLow" data-index="${i}"></td>
+            <td><input type="number" value="${ch.alarmHigh}" data-field="alarmHigh" data-index="${i}"></td>
+            <td><input type="number" class="narrow" min="0" max="6" value="${ch.decimals}" data-field="decimals" data-index="${i}"></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // encabezado tabla registros
+    theadRow.innerHTML = '<th>Timestamp</th>';
+    channels.forEach(ch => {
+        theadRow.innerHTML += `<th>${escapeHtml(ch.label)} (${escapeHtml(ch.unit)})</th>`;
+    });
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function bindEvents() {
+    document.getElementById('channelConfigBody').addEventListener('change', e => {
+        const el = e.target;
+        const idx = parseInt(el.dataset.index);
+        const field = el.dataset.field;
+        if (isNaN(idx) || !field) return;
+        let value = el.type === 'checkbox' ? el.checked : el.value;
+        if (el.type === 'number') value = parseFloat(value);
+        channels[idx][field] = value;
+        if (field === 'label' || field === 'unit') {
+            renderChannelConfig();
+        }
+        saveState();
+        updateUI();
+    });
+
+    document.getElementById('btnApplyConfig').addEventListener('click', () => {
+        APP.pollMs = Math.max(500, parseInt(document.getElementById('pollMs').value) || 1000);
+        APP.maxSamples = Math.max(1000, parseInt(document.getElementById('maxSamples').value) || 20000);
+        saveState();
+        startPolling();
+    });
+
+    document.getElementById('pollMs').value = APP.pollMs;
+    document.getElementById('maxSamples').value = APP.maxSamples;
+
+    document.getElementById('btnClearHistory').addEventListener('click', () => {
+        if (confirm('¿Borrar todo el histórico almacenado?')) {
+            recorder = [];
+            saveState();
+            updateUI();
+        }
+    });
+
+    document.getElementById('btnResetChannels').addEventListener('click', () => {
+        if (confirm('¿Restaurar configuración por defecto (4 x PT100)?')) {
+            resetChannels();
+            renderChannelConfig();
+            updateUI();
+        }
+    });
+
+    document.getElementById('btnAddChannel').addEventListener('click', () => {
+        if (channels.length >= APP.maxChannels) {
+            alert(`Máximo ${APP.maxChannels} canales.`);
+            return;
+        }
+        channels.push(defaultChannel(channels.length));
+        simState.push({
+            base: channels[channels.length - 1].engMin + 50,
+            phase: channels.length * 1.1,
+            drift: 0,
+            lastRaw: rawFromEng(0, channels[channels.length - 1])
+        });
+        renderChannelConfig();
+        saveState();
+        updateUI();
+    });
+
+    document.getElementById('btnRemoveChannel').addEventListener('click', () => {
+        if (channels.length <= 1) return;
+        channels.pop();
+        simState.pop();
+        renderChannelConfig();
+        saveState();
+        updateUI();
+    });
+
+    document.querySelectorAll('.chart-mode-group .btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.chart-mode-group .btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            APP.currentMode = btn.dataset.mode;
+            updateChartVisibility();
+            updateUI();
+        });
+    });
+
+    document.querySelectorAll('.chart-range-group .btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.chart-range-group .btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const range = btn.dataset.range;
+            APP.currentRangeMs = range === 'all' ? null : parseInt(range);
+            updateRangeBadge();
+            updateUI();
+        });
+    });
+
+    document.getElementById('btnAutoplay').addEventListener('click', () => {
+        APP.autoplay = !APP.autoplay;
+        document.getElementById('btnAutoplay').classList.toggle('active', APP.autoplay);
+    });
+
+    document.getElementById('btnResetZoom').addEventListener('click', () => {
+        if (mainChart && typeof mainChart.resetZoom === 'function') mainChart.resetZoom();
+    });
+
+    document.getElementById('btnPause').addEventListener('click', () => {
+        APP.paused = !APP.paused;
+        document.getElementById('btnPause').textContent = APP.paused ? 'Reanudar' : 'Pausar';
+    });
+
+    document.getElementById('btnExportCsv').addEventListener('click', exportCsv);
+    document.getElementById('btnExportJson').addEventListener('click', exportJson);
+
+    window.addEventListener('resize', () => {
+        if (APP.currentMode === 'sparkline') renderSparklines();
+        if (APP.currentMode === 'heatmap') renderHeatmap();
+        if (APP.currentMode === 'state') renderStateTimeline();
+    });
+}
+
+function updateRangeBadge() {
+    const labels = {
+        '300000': 'Últimos 5 min',
+        '3600000': 'Última hora',
+        '21600000': 'Últimas 6 h',
+        '86400000': 'Últimas 24 h',
+        '604800000': 'Últimos 7 días'
+    };
+    document.getElementById('rangeBadge').textContent = APP.currentRangeMs ? labels[APP.currentRangeMs] : 'Todo el histórico';
+}
+
+/* =====================================
+   ESCALADO
+===================================== */
+
+function engFromRaw(raw, ch) {
+    if (!ch || ch.rawMax === ch.rawMin) return 0;
+    const ratio = (raw - ch.rawMin) / (ch.rawMax - ch.rawMin);
+    return ch.engMin + ratio * (ch.engMax - ch.engMin);
+}
+
+function rawFromEng(eng, ch) {
+    if (!ch || ch.engMax === ch.engMin) return ch.rawMin || 0;
+    const ratio = (eng - ch.engMin) / (ch.engMax - ch.engMin);
+    return ch.rawMin + ratio * (ch.rawMax - ch.rawMin);
+}
+
+function formatValue(value, decimals) {
+    if (value === null || value === undefined || isNaN(value)) return '---';
+    return value.toFixed(decimals ?? 1);
+}
+
+function alarmState(value, ch) {
+    if (value <= ch.alarmLow) return 'low';
+    if (value >= ch.alarmHigh) return 'high';
+    return 'ok';
+}
+
+/* =====================================
+   ADQUISICIÓN
+===================================== */
+
+function startPolling() {
+    if (pollTimer) clearInterval(pollTimer);
+    pollTimer = setInterval(tick, APP.pollMs);
+    tick();
+}
+
+async function tick() {
+    if (APP.paused) return;
+
+    let rawValues = [];
+    let source = 'api';
+
+    try {
+        const response = await fetch(`${APP.apiUrl}?t=${Date.now()}`);
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const data = await response.json();
+        rawValues = Array.isArray(data.AI) ? data.AI.slice() : [];
+        APP.simEnabled = false;
+        setConnection(true);
+    } catch (error) {
+        APP.simEnabled = true;
+        rawValues = generateSimRaw();
+        setConnection(false);
+    }
+
+    // asegurar longitud
+    while (rawValues.length < channels.length) rawValues.push(0);
+
+    const sample = {
+        t: Date.now(),
+        raw: rawValues,
+        source
+    };
+
+    recorder.push(sample);
+    pruneRecorder();
+    saveState();
+
+    if (document.getElementById('enableBackend').checked) {
+        pushToBackend(sample).catch(() => {});
+    }
+
+    updateUI();
+}
+
+function pruneRecorder() {
+    while (recorder.length > APP.maxSamples) recorder.shift();
+}
+
+function generateSimRaw() {
+    return channels.map((ch, i) => {
+        const st = simState[i];
+        const center = (ch.engMin + ch.engMax) / 2;
+        st.phase += 0.05 + i * 0.01;
+        st.drift += (Math.random() - 0.5) * 0.2;
+        st.drift *= 0.98;
+
+        let eng = center + Math.sin(st.phase) * (ch.engMax - ch.engMin) * 0.15 + st.drift;
+        eng += (Math.random() - 0.5) * (ch.engMax - ch.engMin) * 0.03;
+
+        // picos de alarma ocasionales
+        if (Math.random() < 0.005) eng = ch.alarmHigh + 3;
+        if (Math.random() < 0.005) eng = ch.alarmLow - 3;
+
+        eng = Math.max(ch.engMin, Math.min(ch.engMax, eng));
+        return rawFromEng(eng, ch);
+    });
+}
+
+async function pushToBackend(sample) {
+    try {
+        await fetch(APP.backendUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                timestamp: sample.t,
+                raw: sample.raw,
+                scaled: sample.raw.map((r, i) => engFromRaw(r, channels[i]))
+            })
+        });
+    } catch (e) {
+        // endpoint opcional, falla en silencio
+    }
+}
+
+function setConnection(ok) {
+    const dot = document.getElementById('connectionDot');
+    const text = document.getElementById('connectionText');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const badge = document.getElementById('apiBadge');
+
+    if (ok) {
+        dot.className = 'connection-dot ok';
+        text.textContent = 'CONECTADO';
+        statusDot.className = 'status-dot ok';
+        statusText.textContent = 'Controlador: CONECTADO';
+        statusText.className = '';
+        badge.textContent = 'API';
+        badge.className = 'badge';
+    } else {
+        dot.className = 'connection-dot sim';
+        text.textContent = 'SIMULACIÓN';
+        statusDot.className = 'status-dot sim';
+        statusText.textContent = 'Controlador: SIN SEÑAL (simulado)';
+        statusText.className = '';
+        badge.textContent = 'SIM';
+        badge.className = 'badge warn';
+    }
+}
+
+/* =====================================
+   ACTUALIZACIÓN UI
+===================================== */
+
+function updateUI() {
+    const rangeMs = APP.currentRangeMs;
+    const samples = getSamples(rangeMs);
+
+    updateStats(samples);
+    updateRecords();
+    updateChart(samples);
+}
+
+function getSamples(rangeMs) {
+    if (!rangeMs) return recorder.slice();
+    const cutoff = Date.now() - rangeMs;
+    let start = 0;
+    for (let i = 0; i < recorder.length; i++) {
+        if (recorder[i].t >= cutoff) {
+            start = i;
+            break;
+        }
+    }
+    return recorder.slice(start);
+}
+
+function updateStats(samples) {
+    const quick = document.getElementById('quickStats');
+    const grid = document.getElementById('statsGrid');
+    quick.innerHTML = '';
+    grid.innerHTML = '';
+
+    channels.forEach((ch, i) => {
+        if (!ch.enabled) return;
+        const values = samples.map(s => engFromRaw(s.raw[i], ch));
+        const current = values.length ? values[values.length - 1] : null;
+        const min = values.length ? Math.min(...values) : null;
+        const max = values.length ? Math.max(...values) : null;
+        const avg = values.length ? values.reduce((a, b) => a + b, 0) / values.length : null;
+        let alarmCount = 0;
+        values.forEach(v => {
+            if (v <= ch.alarmLow || v >= ch.alarmHigh) alarmCount++;
+        });
+        const pctAlarm = values.length ? (alarmCount / values.length * 100).toFixed(1) : '0.0';
+
+        const state = current !== null ? alarmState(current, ch) : 'ok';
+        const stateClass = state === 'ok' ? '' : (state === 'low' ? 'alarm-low' : 'alarm-high');
+
+        // quick stat (solo actual)
+        const qCard = document.createElement('div');
+        qCard.className = 'stat-card';
+        qCard.style.setProperty('--ch-color', ch.color);
+        qCard.innerHTML = `
+            <div class="stat-header">
+                <div class="stat-name">${escapeHtml(ch.label)}</div>
+                <div class="stat-unit">${escapeHtml(ch.unit)}</div>
+            </div>
+            <div class="stat-value ${stateClass}">${current !== null ? formatValue(current, ch.decimals) : '---'}</div>
+            <div class="stat-row">Estado <span>${state === 'ok' ? 'OK' : (state === 'low' ? 'BAJA' : 'ALTA')}</span></div>
+        `;
+        quick.appendChild(qCard);
+
+        // detailed stat
+        const dCard = document.createElement('div');
+        dCard.className = 'stat-card';
+        dCard.style.setProperty('--ch-color', ch.color);
+        dCard.innerHTML = `
+            <div class="stat-header">
+                <div class="stat-name">${escapeHtml(ch.label)} (AI${i})</div>
+                <div class="stat-unit">${escapeHtml(ch.unit)}</div>
+            </div>
+            <div class="stat-value ${stateClass}">${current !== null ? formatValue(current, ch.decimals) : '---'}</div>
+            <div class="stat-row">Mínimo <span>${min !== null ? formatValue(min, ch.decimals) : '---'}</span></div>
+            <div class="stat-row">Máximo <span>${max !== null ? formatValue(max, ch.decimals) : '---'}</span></div>
+            <div class="stat-row">Media <span>${avg !== null ? formatValue(avg, ch.decimals) : '---'}</span></div>
+            <div class="stat-row">% fuera de rango <span class="${parseFloat(pctAlarm) > 0 ? 'value-alarm' : ''}">${pctAlarm}%</span></div>
+        `;
+        grid.appendChild(dCard);
+    });
+}
+
+function updateRecords() {
+    const tbody = document.getElementById('recordsBody');
+    const recent = recorder.slice(-50).reverse();
+
+    tbody.innerHTML = '';
+    recent.forEach(sample => {
+        const tr = document.createElement('tr');
+        const dateStr = new Date(sample.t).toLocaleString('es-ES');
+        let html = `<td>${dateStr}</td>`;
+        channels.forEach((ch, i) => {
+            const val = engFromRaw(sample.raw[i], ch);
+            const state = alarmState(val, ch);
+            const cls = state === 'ok' ? '' : 'value-alarm';
+            html += `<td class="${cls}">${formatValue(val, ch.decimals)}</td>`;
+        });
+        tr.innerHTML = html;
+        tbody.appendChild(tr);
+    });
+}
+
+/* =====================================
+   CHART.JS
+===================================== */
+
+function initChart() {
+    if (typeof Chart === 'undefined') {
+        console.error('Chart.js no se cargó');
+        return;
+    }
+
+    const ctx = document.getElementById('mainChart').getContext('2d');
+
+    mainChart = new Chart(ctx, {
+        type: 'line',
+        data: { datasets: [] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: false,
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    labels: { color: '#9db0c4', font: { weight: '700' } }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(18, 25, 34, 0.95)',
+                    titleColor: '#f4f7fb',
+                    bodyColor: '#f4f7fb',
+                    borderColor: 'rgba(70, 92, 118, 0.8)',
+                    borderWidth: 1,
+                    callbacks: {
+                        label: function(context) {
+                            const ch = channels[context.dataset.channelIndex];
+                            return `${ch.label}: ${formatValue(context.parsed.y, ch.decimals)} ${ch.unit}`;
+                        }
+                    }
+                },
+                zoom: {
+                    zoom: {
+                        wheel: { enabled: true },
+                        pinch: { enabled: true },
+                        mode: 'x'
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: 'x'
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        tooltipFormat: 'dd/MM/yyyy HH:mm:ss',
+                        displayFormats: {
+                            millisecond: 'HH:mm:ss.SSS',
+                            second: 'HH:mm:ss',
+                            minute: 'HH:mm',
+                            hour: 'dd/MM HH:mm',
+                            day: 'dd/MM'
+                        }
+                    },
+                    grid: { color: 'rgba(70, 92, 118, 0.28)' },
+                    ticks: { color: '#9db0c4', maxRotation: 0 }
+                },
+                y: {
+                    grid: { color: 'rgba(70, 92, 118, 0.28)' },
+                    ticks: { color: '#9db0c4' },
+                    title: { display: true, text: 'Valor', color: '#9db0c4' }
+                }
+            }
+        }
+    });
+}
+
+function updateChartVisibility() {
+    const modesUsingChart = ['line', 'area', 'bar'];
+    document.getElementById('mainChart').style.display = modesUsingChart.includes(APP.currentMode) ? 'block' : 'none';
+    document.getElementById('gaugeView').classList.toggle('active', APP.currentMode === 'gauge');
+    document.getElementById('sparklineView').classList.toggle('active', APP.currentMode === 'sparkline');
+    document.getElementById('heatmapView').classList.toggle('active', APP.currentMode === 'heatmap');
+    document.getElementById('stateView').classList.toggle('active', APP.currentMode === 'state');
+}
+
+function updateChart(samples) {
+    updateChartVisibility();
+
+    if (APP.currentMode === 'gauge') {
+        renderGauges(samples);
+        return;
+    }
+    if (APP.currentMode === 'sparkline') {
+        renderSparklines();
+        return;
+    }
+    if (APP.currentMode === 'heatmap') {
+        renderHeatmap();
+        return;
+    }
+    if (APP.currentMode === 'state') {
+        renderStateTimeline();
+        return;
+    }
+
+    if (!mainChart) return;
+
+    const type = APP.currentMode === 'bar' ? 'bar' : 'line';
+    if (mainChart.config.type !== type) {
+        mainChart.config.type = type;
+        mainChart.data.datasets.forEach(ds => ds.type = type);
+    }
+
+    const datasets = [];
+    channels.forEach((ch, i) => {
+        if (!ch.enabled) return;
+        const data = samples.map(s => ({ x: s.t, y: engFromRaw(s.raw[i], ch) }));
+        const fill = APP.currentMode === 'area' ? 'origin' : false;
+        const bg = APP.currentMode === 'bar'
+            ? ch.color
+            : hexToRgba(ch.color, APP.currentMode === 'area' ? 0.18 : 0.05);
+
+        datasets.push({
+            label: `${ch.label} (${ch.unit})`,
+            data,
+            borderColor: ch.color,
+            backgroundColor: bg,
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 5,
+            fill: fill,
+            tension: 0.25,
+            channelIndex: i
+        });
+    });
+
+    mainChart.data.datasets = datasets;
+
+    const now = Date.now();
+    if (APP.currentRangeMs && APP.autoplay) {
+        mainChart.options.scales.x.min = now - APP.currentRangeMs;
+        mainChart.options.scales.x.max = now;
+    } else if (APP.currentRangeMs) {
+        mainChart.options.scales.x.min = now - APP.currentRangeMs;
+        mainChart.options.scales.x.max = now;
+    } else {
+        mainChart.options.scales.x.min = undefined;
+        mainChart.options.scales.x.max = undefined;
+    }
+
+    mainChart.update('none');
+}
+
+function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+/* =====================================
+   GAUGES
+===================================== */
+
+function renderGauges(samples) {
+    const container = document.getElementById('gaugeView');
+    container.innerHTML = '';
+
+    channels.forEach((ch, i) => {
+        if (!ch.enabled) return;
+        const last = samples.length ? samples[samples.length - 1] : null;
+        const val = last ? engFromRaw(last.raw[i], ch) : ch.engMin;
+        const pct = Math.max(0, Math.min(1, (val - ch.engMin) / (ch.engMax - ch.engMin)));
+        const angle = Math.PI + pct * Math.PI;
+        const x2 = 80 + 60 * Math.cos(angle);
+        const y2 = 80 + 60 * Math.sin(angle);
+        const largeArc = pct > 0.5 ? 1 : 0;
+        const state = alarmState(val, ch);
+        const color = state === 'ok' ? ch.color : (state === 'low' ? varColor('blue') : varColor('red'));
+
+        const card = document.createElement('div');
+        card.className = 'gauge-card';
+        card.innerHTML = `
+            <div class="gauge-label">${escapeHtml(ch.label)}</div>
+            <svg viewBox="0 0 160 90">
+                <path d="M 20 80 A 60 60 0 0 1 140 80" stroke="#1e303c" stroke-width="12" fill="none" stroke-linecap="round"/>
+                <path d="M 20 80 A 60 60 0 0 1 140 80" stroke="${color}" stroke-width="12" fill="none" stroke-linecap="round"
+                    stroke-dasharray="188.5" stroke-dashoffset="${188.5 * (1 - pct)}" style="transition: stroke-dashoffset 0.3s ease;"/>
+                <text x="80" y="72" text-anchor="middle" fill="#f4f7fb" font-size="11" font-weight="700">${escapeHtml(ch.unit)}</text>
+            </svg>
+            <div class="gauge-value" style="color:${color}">${formatValue(val, ch.decimals)}</div>
+            <div class="gauge-unit">${state === 'ok' ? 'OK' : (state === 'low' ? 'BAJA' : 'ALTA')}</div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function varColor(name) {
+    const map = { green: '#00e096', red: '#ff5c6c', yellow: '#ffb624', blue: '#2fb3ff', cyan: '#00e0ff' };
+    return map[name] || '#9db0c4';
+}
+
+/* =====================================
+   SPARKLINES
+===================================== */
+
+function renderSparklines() {
+    const container = document.getElementById('sparklineView');
+    container.innerHTML = '';
+    const samples = getSamples(APP.currentRangeMs);
+
+    channels.forEach((ch, i) => {
+        if (!ch.enabled) return;
+        const card = document.createElement('div');
+        card.className = 'spark-card';
+        const canvas = document.createElement('canvas');
+        canvas.width = 300;
+        canvas.height = 90;
+        card.appendChild(canvas);
+
+        const values = samples.map(s => engFromRaw(s.raw[i], ch));
+        const last = values.length ? values[values.length - 1] : null;
+        const min = values.length ? Math.min(...values) : 0;
+        const max = values.length ? Math.max(...values) : 0;
+
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (values.length < 2) {
+            const text = document.createElement('div');
+            text.innerHTML = `
+                <div class="spark-title">${escapeHtml(ch.label)}</div>
+                <div class="spark-footer"><span>Sin datos</span></div>
+            `;
+            card.appendChild(text);
+            container.appendChild(card);
+            return;
+        }
+
+        const pad = { top: 8, right: 8, bottom: 8, left: 8 };
+        const w = canvas.width - pad.left - pad.right;
+        const h = canvas.height - pad.top - pad.bottom;
+        const range = (max - min) || 1;
+
+        ctx.strokeStyle = ch.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        values.forEach((v, idx) => {
+            const x = pad.left + (idx / (values.length - 1)) * w;
+            const y = pad.top + h - ((v - min) / range) * h;
+            if (idx === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+
+        // punto final
+        const lastX = pad.left + w;
+        const lastY = pad.top + h - ((last - min) / range) * h;
+        ctx.fillStyle = ch.color;
+        ctx.beginPath();
+        ctx.arc(lastX, lastY, 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        const text = document.createElement('div');
+        text.innerHTML = `
+            <div class="spark-title">${escapeHtml(ch.label)}</div>
+            <div class="spark-footer">
+                <span>${formatValue(last, ch.decimals)} ${escapeHtml(ch.unit)}</span>
+                <span>min ${formatValue(min, ch.decimals)} · max ${formatValue(max, ch.decimals)}</span>
+            </div>
+        `;
+        card.appendChild(text);
+        container.appendChild(card);
+    });
+}
+
+/* =====================================
+   HEATMAP
+===================================== */
+
+function renderHeatmap() {
+    const canvas = document.getElementById('heatmapView');
+    const parent = canvas.parentElement;
+    canvas.width = parent.clientWidth;
+    canvas.height = parent.clientHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const enabledChannels = channels.filter(ch => ch.enabled);
+    if (enabledChannels.length === 0 || recorder.length === 0) return;
+
+    const samples = getSamples(APP.currentRangeMs);
+    if (samples.length === 0) return;
+
+    const pad = { top: 30, right: 20, bottom: 40, left: 120 };
+    const w = canvas.width - pad.left - pad.right;
+    const h = canvas.height - pad.top - pad.bottom;
+
+    // calcular rango global visual
+    let globalMin = Infinity, globalMax = -Infinity;
+    enabledChannels.forEach(ch => {
+        globalMin = Math.min(globalMin, ch.engMin);
+        globalMax = Math.max(globalMax, ch.engMax);
+    });
+
+    const cellW = Math.max(1, w / samples.length);
+    const laneH = h / enabledChannels.length;
+
+    enabledChannels.forEach((ch, row) => {
+        const y = pad.top + row * laneH;
+        samples.forEach((s, col) => {
+            const val = engFromRaw(s.raw[channels.indexOf(ch)], ch);
+            const ratio = Math.max(0, Math.min(1, (val - globalMin) / (globalMax - globalMin)));
+            ctx.fillStyle = heatColor(ratio);
+            ctx.fillRect(pad.left + col * cellW, y, cellW + 1, laneH);
+        });
+
+        // etiqueta
+        ctx.fillStyle = '#9db0c4';
+        ctx.font = '12px Inter, Segoe UI, Arial';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(ch.label, pad.left - 10, y + laneH / 2);
+    });
+
+    // leyenda
+    const gradW = 160, gradH = 10;
+    const gradX = pad.left + w - gradW;
+    const gradY = canvas.height - 22;
+    const grad = ctx.createLinearGradient(gradX, 0, gradX + gradW, 0);
+    grad.addColorStop(0, '#2fb3ff');
+    grad.addColorStop(0.5, '#00e096');
+    grad.addColorStop(1, '#ff5c6c');
+    ctx.fillStyle = grad;
+    ctx.fillRect(gradX, gradY, gradW, gradH);
+    ctx.fillStyle = '#9db0c4';
+    ctx.font = '10px Inter, Segoe UI, Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${formatValue(globalMin, 0)}`, gradX - 4, gradY + gradH + 10);
+    ctx.textAlign = 'right';
+    ctx.fillText(`${formatValue(globalMax, 0)}`, gradX + gradW + 4, gradY + gradH + 10);
+}
+
+function heatColor(ratio) {
+    // frío -> cálido
+    const h = 220 - ratio * 220;
+    return `hsl(${h}, 85%, 55%)`;
+}
+
+/* =====================================
+   STATE TIMELINE
+===================================== */
+
+function renderStateTimeline() {
+    const canvas = document.getElementById('stateView');
+    const parent = canvas.parentElement;
+    canvas.width = parent.clientWidth;
+    canvas.height = parent.clientHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const enabledChannels = channels.filter(ch => ch.enabled);
+    if (enabledChannels.length === 0 || recorder.length === 0) return;
+
+    const samples = getSamples(APP.currentRangeMs);
+    if (samples.length < 2) return;
+
+    const pad = { top: 30, right: 20, bottom: 50, left: 120 };
+    const w = canvas.width - pad.left - pad.right;
+    const h = canvas.height - pad.top - pad.bottom;
+    const laneH = h / enabledChannels.length;
+    const tMin = samples[0].t;
+    const tMax = samples[samples.length - 1].t;
+    const tRange = Math.max(1, tMax - tMin);
+
+    enabledChannels.forEach((ch, row) => {
+        const y = pad.top + row * laneH + laneH * 0.15;
+        const barH = laneH * 0.7;
+        const idx = channels.indexOf(ch);
+
+        for (let i = 0; i < samples.length - 1; i++) {
+            const s = samples[i];
+            const val = engFromRaw(s.raw[idx], ch);
+            const state = alarmState(val, ch);
+            const color = state === 'ok' ? '#00e096' : (state === 'low' ? '#2fb3ff' : '#ff5c6c');
+            const x1 = pad.left + ((s.t - tMin) / tRange) * w;
+            const x2 = pad.left + ((samples[i + 1].t - tMin) / tRange) * w;
+            ctx.fillStyle = color;
+            ctx.fillRect(x1, y, Math.max(1, x2 - x1), barH);
+        }
+
+        ctx.fillStyle = '#9db0c4';
+        ctx.font = '12px Inter, Segoe UI, Arial';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(ch.label, pad.left - 10, pad.top + row * laneH + laneH / 2);
+    });
+
+    // ejes de tiempo
+    ctx.strokeStyle = 'rgba(70, 92, 118, 0.5)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, pad.top + h);
+    ctx.lineTo(pad.left + w, pad.top + h);
+    ctx.stroke();
+
+    ctx.fillStyle = '#9db0c4';
+    ctx.font = '10px Inter, Segoe UI, Arial';
+    ctx.textAlign = 'center';
+    for (let i = 0; i <= 4; i++) {
+        const x = pad.left + (w * i / 4);
+        const t = tMin + (tRange * i / 4);
+        ctx.fillText(new Date(t).toLocaleTimeString('es-ES'), x, pad.top + h + 18);
+    }
+
+    // leyenda
+    const legends = [
+        { label: 'OK', color: '#00e096' },
+        { label: 'Alarma alta', color: '#ff5c6c' },
+        { label: 'Alarma baja', color: '#2fb3ff' }
+    ];
+    let lx = pad.left;
+    const ly = pad.top + h + 36;
+    legends.forEach(l => {
+        ctx.fillStyle = l.color;
+        ctx.fillRect(lx, ly, 12, 12);
+        ctx.fillStyle = '#9db0c4';
+        ctx.textAlign = 'left';
+        ctx.fillText(l.label, lx + 18, ly + 9);
+        lx += 100;
+    });
+}
+
+/* =====================================
+   EXPORTACIÓN
+===================================== */
+
+function getExportSamples() {
+    const range = document.getElementById('exportRange').value;
+    if (range === 'visible') return getSamples(APP.currentRangeMs);
+    if (range === 'all') return recorder.slice();
+    return getSamples(parseInt(range));
+}
+
+function localizeNumber(value, decimalSep) {
+    const str = value.toFixed(3);
+    return decimalSep === ',' ? str.replace('.', ',') : str;
+}
+
+function exportCsv() {
+    const samples = getExportSamples();
+    const sep = document.getElementById('exportSeparator').value;
+    const dec = document.getElementById('exportDecimal').value;
+    const mode = document.getElementById('exportColumns').value;
+
+    let header = ['Timestamp'];
+    if (mode === 'physical' || mode === 'both') {
+        channels.forEach(ch => header.push(`${ch.label} (${ch.unit})`));
+    }
+    if (mode === 'raw' || mode === 'both') {
+        channels.forEach(ch => header.push(`${ch.label} raw`));
+    }
+
+    const lines = [header.join(sep)];
+
+    samples.forEach(s => {
+        const row = [new Date(s.t).toISOString()];
+        if (mode === 'physical' || mode === 'both') {
+            channels.forEach((ch, i) => row.push(localizeNumber(engFromRaw(s.raw[i], ch), dec)));
+        }
+        if (mode === 'raw' || mode === 'both') {
+            channels.forEach((ch, i) => row.push(localizeNumber(s.raw[i], dec)));
+        }
+        lines.push(row.join(sep));
+    });
+
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    downloadBlob(blob, `registro_m4000_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.csv`);
+}
+
+function exportJson() {
+    const samples = getExportSamples();
+    const data = samples.map(s => {
+        const obj = { timestamp: new Date(s.t).toISOString(), raw: {} };
+        channels.forEach((ch, i) => {
+            obj[ch.label] = engFromRaw(s.raw[i], ch);
+            obj.raw[ch.label] = s.raw[i];
+        });
+        return obj;
+    });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    downloadBlob(blob, `registro_m4000_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.json`);
+}
+
+function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+
+</html>
