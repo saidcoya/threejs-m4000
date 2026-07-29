@@ -135,6 +135,10 @@ body {
 
     display: flex;
 
+    flex-wrap: wrap;
+
+    justify-content: center;
+
     gap: 10px;
 
     background: rgba(255, 255, 255, 0.04);
@@ -215,6 +219,8 @@ body {
     border-radius: 20px;
 
     border: 1px solid var(--border);
+
+    white-space: nowrap;
 
 }
 
@@ -791,83 +797,17 @@ body {
 
 
 <header class="topbar">
-
-
-    <div class="logo">
-
-        M4000 <span>INDUSTRIAL</span>
-
-    </div>
-
-
+    <div class="logo">M4000 <span>INDUSTRIAL</span></div>
     <nav class="nav">
-
-
-        <button
-
-            onclick="location.href='index.html'">
-
-            Dashboard
-
-        </button>
-
-
-        <button
-
-            onclick="location.href='demo-troncos.html'">
-
-            Demo Troncos
-
-        </button>
-
-
-        <button
-
-            onclick="location.href='demo-api-ree.html'">
-
-            Demo REE
-
-        </button>
-
-
-        <button
-
-            class="active"
-
-            onclick="location.href='demo-registrador.html'">
-
-            Demo Registrador
-
-        </button>
-
-
+        <button onclick="location.href='index.html'">Dashboard</button>
+        <button onclick="location.href='demo-troncos.html'">Demo Troncos</button>
+        <button class="active" onclick="location.href='demo-api-ree.html'">Demo REE</button>
+        <button onclick="location.href='demo-registrador.html'">Demo Registrador</button>
     </nav>
-
-
     <div class="connection">
-
-
-        <div
-
-            id="connectionDot"
-
-            class="connection-dot">
-
-        </div>
-
-
-        <span
-
-            id="connectionText">
-
-            DESCONECTADO
-
-        </span>
-
-
+        <div id="connectionDot" class="connection-dot"></div>
+        <span id="connectionText">DESCONECTADO</span>
     </div>
-
-
 </header>
 
 

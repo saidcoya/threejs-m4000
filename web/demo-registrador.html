@@ -520,15 +520,13 @@ input[type="checkbox"] {
 
 .alarm-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     gap: 12px;
-    max-height: 400px;
-    overflow-y: auto;
 }
 
 .alarm-item {
     border-radius: 10px;
-    padding: 12px 14px;
+    padding: 10px 12px;
     border: 1px solid var(--border);
     transition: background 0.2s ease, border-color 0.2s ease;
     min-width: 0;
@@ -584,7 +582,7 @@ input[type="checkbox"] {
 }
 
 .alarm-value {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 800;
     letter-spacing: -1px;
     margin-bottom: 4px;
@@ -831,13 +829,13 @@ input[type="checkbox"] {
     }
 
     .alarm-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 
 @media (max-width: 900px) {
     .alarm-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -880,36 +878,17 @@ input[type="checkbox"] {
 <body>
 
 <header class="topbar">
-
-    <div class="logo">
-        M4000 <span>INDUSTRIAL</span>
-    </div>
-
+    <div class="logo">M4000 <span>INDUSTRIAL</span></div>
     <nav class="nav">
-
-        <button onclick="location.href='index.html'">
-            Dashboard
-        </button>
-
-        <button onclick="location.href='demo-troncos.html'">
-            Demo Troncos
-        </button>
-
-        <button onclick="location.href='demo-api-ree.html'">
-            Demo REE
-        </button>
-
-        <button class="active" onclick="location.href='demo-registrador.html'">
-            Demo Registrador
-        </button>
-
+        <button onclick="location.href='index.html'">Dashboard</button>
+        <button onclick="location.href='demo-troncos.html'">Demo Troncos</button>
+        <button onclick="location.href='demo-api-ree.html'">Demo REE</button>
+        <button class="active" onclick="location.href='demo-registrador.html'">Demo Registrador</button>
     </nav>
-
     <div class="connection">
         <div id="connectionDot" class="connection-dot"></div>
         <span id="connectionText">DESCONECTADO</span>
     </div>
-
 </header>
 
 <main class="container">
@@ -951,7 +930,7 @@ input[type="checkbox"] {
         </section>
 
         <!-- ALARMAS -->
-        <section class="panel">
+        <section class="panel full-width">
             <div class="panel-header">
                 <h2>Alarmas</h2>
                 <span id="alarmBadge" class="badge">EN VIVO</span>
