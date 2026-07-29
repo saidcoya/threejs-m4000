@@ -519,19 +519,19 @@ input[type="checkbox"] {
 ===================================== */
 
 .alarm-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .alarm-item {
-    flex: 0 0 auto;
-    min-width: 180px;
-    max-width: 240px;
     border-radius: 10px;
     padding: 12px 14px;
     border: 1px solid var(--border);
     transition: background 0.2s ease, border-color 0.2s ease;
+    min-width: 0;
 }
 
 .alarm-item.ok {
@@ -829,6 +829,16 @@ input[type="checkbox"] {
     .chart-container {
         height: 360px;
     }
+
+    .alarm-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .alarm-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (max-width: 640px) {
@@ -850,6 +860,16 @@ input[type="checkbox"] {
     .chart-mode-group .btn,
     .chart-range-group .btn {
         flex: 1;
+    }
+
+    .alarm-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 420px) {
+    .alarm-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -880,7 +900,7 @@ input[type="checkbox"] {
         </button>
 
         <button class="active" onclick="location.href='demo-registrador.html'">
-            Registrador
+            Demo Registrador
         </button>
 
     </nav>
@@ -896,7 +916,6 @@ input[type="checkbox"] {
 
     <div class="page-title">
         <h1>Registrador industrial</h1>
-        <p>Registro de temperaturas en cámaras de frío. Escalado 0–27648 puntos, exportación CSV y visualización estilo Grafana.</p>
     </div>
 
     <div class="grid">

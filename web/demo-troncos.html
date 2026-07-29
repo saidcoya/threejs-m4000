@@ -159,6 +159,57 @@ body {
 }
 
 
+.connection {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    padding: 7px 14px;
+
+    border-radius: 20px;
+
+    border: 1px solid var(--border);
+
+    white-space: nowrap;
+
+}
+
+
+.connection-dot {
+
+    width: 9px;
+
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: var(--red);
+
+    box-shadow: 0 0 10px rgba(255, 92, 108, 0.6);
+
+}
+
+
+.connection-dot.ok {
+
+    background: var(--green);
+
+    box-shadow: 0 0 10px rgba(0, 224, 150, 0.6);
+
+}
+
+
 .nav {
 
     display: flex;
@@ -1086,11 +1137,20 @@ canvas.webgl {
 
         onclick="location.href='demo-registrador.html'">
 
-        Registrador
+        Demo Registrador
 
     </button>
 
 </nav>
+
+
+<div class="connection">
+
+    <div class="connection-dot ok"></div>
+
+    <span>DEMO</span>
+
+</div>
 
 </header>
 
