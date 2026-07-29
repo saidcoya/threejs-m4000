@@ -1432,6 +1432,7 @@ async function tick() {
         setConnection(true);
     } catch (error) {
         APP.simEnabled = true;
+        source = 'sim';
         rawValues = generateSimRaw();
         setConnection(false);
     }
@@ -1482,14 +1483,31 @@ function generateSimRaw() {
 
 async function pushToBackend(sample) {
     try {
+        const payload = {
+            timestamp: sample.t,
+            source: sample.source,
+            simulated: sample.source === 'sim',
+            enabledChannels: channels.filter(c => c.enabled).length,
+            channels: channels.map((ch, i) => {
+                const scaled = engFromRaw(sample.raw[i], ch);
+                return {
+                    index: i,
+                    label: ch.label,
+                    enabled: ch.enabled,
+                    unit: ch.unit,
+                    raw: sample.raw[i],
+                    scaled: scaled,
+                    decimals: ch.decimals,
+                    alarmLow: ch.alarmLow,
+                    alarmHigh: ch.alarmHigh,
+                    status: alarmState(scaled, ch)
+                };
+            })
+        };
         await fetch(APP.backendUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                timestamp: sample.t,
-                raw: sample.raw,
-                scaled: sample.raw.map((r, i) => engFromRaw(r, channels[i]))
-            })
+            body: JSON.stringify(payload)
         });
     } catch (e) {
         // endpoint opcional, falla en silencio
