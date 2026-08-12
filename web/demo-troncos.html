@@ -1785,7 +1785,7 @@ try {
 
     document.querySelector('.app').appendChild(renderer.domElement);
 
-    controls = new OrbitControls(camera, renderer.domElement);
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
 
     controls.enableDamping = true;
 
@@ -1795,15 +1795,30 @@ try {
 
 } catch (e) {
 
-    console.error('WebGL no disponible:', e);
+    console.error('Error al iniciar el 3D:', e);
 
-    const aviso = document.createElement('div');
+    const webglDisponible = (() => {
+        try {
+            const prueba = document.createElement('canvas');
+            return Boolean(
+                prueba.getContext('webgl') ||
+                prueba.getContext('experimental-webgl')
+            );
+        } catch (err) {
+            return false;
+        }
+    })();
 
-    aviso.style.cssText = 'position:absolute;bottom:20px;right:20px;z-index:99;background:rgba(255,92,108,0.15);border:1px solid rgba(255,92,108,0.5);color:#ff5c6c;padding:12px 16px;border-radius:10px;font-size:12px;font-weight:800;';
+    if (!webglDisponible) {
 
-    aviso.textContent = 'WebGL no disponible en este dispositivo: no se puede mostrar el 3D.';
+        const aviso = document.createElement('div');
 
-    document.querySelector('.app').appendChild(aviso);
+        aviso.style.cssText = 'position:absolute;bottom:20px;right:20px;z-index:99;background:rgba(255,92,108,0.15);border:1px solid rgba(255,92,108,0.5);color:#ff5c6c;padding:12px 16px;border-radius:10px;font-size:12px;font-weight:800;';
+
+        aviso.textContent = 'WebGL no disponible en este dispositivo: no se puede mostrar el 3D.';
+
+        document.querySelector('.app').appendChild(aviso);
+    }
 }
 
 
