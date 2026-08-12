@@ -1658,23 +1658,10 @@ canvas.webgl {
 
 </div>
 
-<script type="module">
+<script src="vendor/three/three.min.js"></script>
+<script src="vendor/three/OrbitControls.js"></script>
 
-
-import * as THREE from
-
-'https://esm.sh/three@0.178.0';
-
-
-import {
-
-    OrbitControls
-
-}
-
-from
-
-'https://esm.sh/three@0.178.0/examples/jsm/controls/OrbitControls.js';
+<script>
 
 
 /* =================================================
@@ -1772,81 +1759,52 @@ camera.position.set(
 );
 
 
-const renderer =
+let renderer = null;
 
-new THREE.WebGLRenderer({
+let controls = null;
 
-    antialias: true
+try {
 
-});
+    renderer = new THREE.WebGLRenderer({
+        antialias: true
+    });
 
+    renderer.setPixelRatio(
+        Math.min(
+            window.devicePixelRatio,
+            2
+        )
+    );
 
-renderer.setPixelRatio(
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
 
-Math.min(
+    renderer.domElement.className = 'webgl';
 
-window.devicePixelRatio,
+    document.querySelector('.app').appendChild(renderer.domElement);
 
-2
+    controls = new OrbitControls(camera, renderer.domElement);
 
-));
+    controls.enableDamping = true;
 
+    controls.dampingFactor = 0.08;
 
-renderer.setSize(
+    controls.target.set(0, 0, 0);
 
-window.innerWidth,
+} catch (e) {
 
-window.innerHeight
+    console.error('WebGL no disponible:', e);
 
-);
+    const aviso = document.createElement('div');
 
+    aviso.style.cssText = 'position:absolute;bottom:20px;right:20px;z-index:99;background:rgba(255,92,108,0.15);border:1px solid rgba(255,92,108,0.5);color:#ff5c6c;padding:12px 16px;border-radius:10px;font-size:12px;font-weight:800;';
 
-renderer.domElement.className =
+    aviso.textContent = 'WebGL no disponible en este dispositivo: no se puede mostrar el 3D.';
 
-'webgl';
-
-
-document.querySelector(
-
-'.app'
-
-).appendChild(
-
-renderer.domElement
-
-);
-
-
-const controls =
-
-new OrbitControls(
-
-camera,
-
-renderer.domElement
-
-);
-
-
-controls.enableDamping =
-
-true;
-
-
-controls.dampingFactor =
-
-0.08;
-
-
-controls.target.set(
-
-0,
-
-0,
-
-0
-
-);
+    document.querySelector('.app').appendChild(aviso);
+}
 
 
 /* =================================================
@@ -2362,9 +2320,12 @@ perfiles
 
     if (!cameraAjustada) {
 
-        controls.target.copy(
-            center
-        );
+        if (controls) {
+
+            controls.target.copy(
+                center
+            );
+        }
 
 
         camera.position.set(
@@ -2683,6 +2644,19 @@ async function actualizarDatos() {
             await response.json();
 
 
+        document.getElementById(
+            'connectionDot'
+        ).classList.add(
+            'ok'
+        );
+
+
+        document.getElementById(
+            'connectionText'
+        ).textContent =
+            'CONECTADO';
+
+
         const perfiles =
             data.profiles || [];
 
@@ -2877,6 +2851,19 @@ async function actualizarDatos() {
     catch (
         error
     ) {
+
+        document.getElementById(
+            'connectionDot'
+        ).classList.remove(
+            'ok'
+        );
+
+
+        document.getElementById(
+            'connectionText'
+        ).textContent =
+            'DESCONECTADO';
+
 
         document.getElementById(
             'status'
@@ -3406,7 +3393,14 @@ function animate() {
         animate
     );
 
-    controls.update();
+    if (!renderer) {
+        return;
+    }
+
+    if (controls) {
+
+        controls.update();
+    }
 
     renderer.render(
         scene,
@@ -3434,10 +3428,13 @@ window.addEventListener(
         camera.updateProjectionMatrix();
 
 
-        renderer.setSize(
-            window.innerWidth,
-            window.innerHeight
-        );
+        if (renderer) {
+
+            renderer.setSize(
+                window.innerWidth,
+                window.innerHeight
+            );
+        }
     }
 );
 
@@ -3456,11 +3453,6 @@ setInterval(
 
 </script>
 
-
-<script>
-document.getElementById('connectionDot').classList.add('ok');
-document.getElementById('connectionText').textContent = 'DEMO';
-</script>
 </body>
 
 </html>
